@@ -17,3 +17,14 @@ We aim to create a platform that fosters genuine, spontaneous interactions by al
 1. **Post on a feed with your friends**
 2. **Friends system with suggestions**
 3. **Profile**
+
+### Goals and Objectives:
+
+* Increase user adoption rates by 100% within a short time.
+* Improve Google Play scores to 5/5 or above.
+* Generate loads emone in revenue within as fast as possible.
+
+
+### Vision Statement
+
+Our vision is to provide a social-media platform that enables individuals to share their goings-on with close friends in a spontaneous manner. We aim to provide an alternative to the big social-medias and to empower our users and drive positive outcomes.
