@@ -70,6 +70,7 @@ Acceptance Criteria:
 **User Story 6: As a user, I want to create posts so that I can communicate with my friends.**
 
 Acceptance Criteria:
+
 *   "Add New Post" button is available on the main feed.
 *   The post creation form allows text input and optional image upload.
 *   Upon submission, the post appears in the main feed and is visible to all friends.
@@ -81,6 +82,7 @@ Acceptance Criteria:
 ---
 
 **User Story 7: As a user, I want to like and comment on my friends' posts so that I can engage with their content.**
+
 Acceptance Criteria:
 *   Each post has "Like" and "Comment" buttons.
 
@@ -91,6 +93,7 @@ Acceptance Criteria:
 ---
 
 **User Story 8: As a user, I want to view and edit my profile so that I can manage my personal information and preferences.**
+
 Acceptance Criteria:
 *  A "Profile" section is accessible from the main feed.
 *  Users can update their info.
