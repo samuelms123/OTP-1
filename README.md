@@ -1,7 +1,15 @@
-#OTP-1
-Software Engineering Project 1
-
-## Tech-stack:
+# Software Engineering Project 1
+## Group 1
+## Team Members
+* Samuel Sarimo
+* Niko Mehiläinen
+* Auri Laitinen
+## Description
+This project is a small social media desktop application that works as a private chatroom/posting platform for you and your friends.
+## Documentation
+* [Vision]([https://duckduckgo.com](https://github.com/samuelms123/OTP-1/blob/main/documents/vision.md))
+* [UI design](https://github.com/samuelms123/OTP-1/tree/main/documents/FigmaUI)
+## Tech-stack
 ### Front-end:
 * Java
 * JavaFX
