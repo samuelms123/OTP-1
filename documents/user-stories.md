@@ -43,8 +43,56 @@ Acceptance Criteria:
 
 ### Managing Friends & Connections
 
+---
+
+**User Story 4: As a user, I want to see my friends list so that I can keep track with whom I'm posting with.**
+
+Acceptance Criteria:
+
+*   List user friends under profile view.
+
+
+---
+
+**User Story 5: As a user, I want to send friend requests to other users so that I can connect with them on the platform.**
+
+Acceptance Criteria:
+
+*   An 'Add Friend!' functionality is available to find other users by username or email.
+*   The recipient should be able to accept or decline.
+
+---
+
 ### Creating and Viewing Content
+
+---
+
+**User Story 6: As a user, I want to create posts so that I can communicate with my friends.**
+
+Acceptance Criteria:
+*   "Add New Post" button is available on the main feed.
+*   The post creation form allows text input and optional image upload.
+*   Upon submission, the post appears in the main feed and is visible to all friends.
+
+---
 
 ### Interacting with Content
 
+---
+
+**User Story 7: As a user, I want to like and comment on my friends' posts so that I can engage with their content.**
+Acceptance Criteria:
+*   Each post has "Like" and "Comment" buttons.
+
+---
+
 ### User Profile & Customization
+
+---
+
+**User Story 8: As a user, I want to view and edit my profile so that I can manage my personal information and preferences.**
+Acceptance Criteria:
+*  A "Profile" section is accessible from the main feed.
+*  Users can update their info.
+*  Changes are saved and reflected immediately.
+
