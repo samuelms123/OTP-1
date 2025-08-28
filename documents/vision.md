@@ -20,9 +20,9 @@ We aim to create a platform that fosters genuine, spontaneous interactions by al
 
 ### Goals and Objectives:
 
-* Increase user adoption rates by 100% within a short time.
-* Improve Google Play scores to 5/5 or above.
-* Generate loads emone in revenue through donations within as fast as possible.
+* Achieve the milestone of 10000 users within a weej after launch.
+* Improve Google Play scores to 4/5 or above.
+* Start generating revenue through donations in the first days after launch.
 
 
 ### Vision Statement
