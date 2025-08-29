@@ -5,7 +5,7 @@
 
 ---
 
-**User Story 1: As a new user, I want to create an account so that I can access the private social platform.**
+**User Story : As a new user, I want to create an account so that I can access the private social platform.**
 
 Acceptance Criteria:
 
@@ -19,7 +19,7 @@ Acceptance Criteria:
 
 ---
 
-**User Story 2: As a registered user, I want to log into my account securely so that I can access my private content.**
+**User Story : As a registered user, I want to log into my account securely so that I can access my private content.**
 
 Acceptance Criteria:
 
@@ -31,7 +31,7 @@ Acceptance Criteria:
 
 ---
 
-**User Story 3: As a logged-in user, I want to log out so that I can keep my account secure, especially on a shared PC.**
+**User Story : As a logged-in user, I want to log out so that I can keep my account secure, especially on a shared PC.**
 
 Acceptance Criteria:
 
@@ -45,7 +45,7 @@ Acceptance Criteria:
 
 ---
 
-**User Story 4: As a user, I want to see my friends list so that I can keep track with whom I'm posting with.**
+**User Story : As a user, I want to see my friends list so that I can keep track with whom I'm posting with.**
 
 Acceptance Criteria:
 
@@ -54,7 +54,7 @@ Acceptance Criteria:
 
 ---
 
-**User Story 5: As a user, I want to send friend requests to other users so that I can connect with them on the platform.**
+**User Story : As a user, I want to send friend requests to other users so that I can connect with them on the platform.**
 
 Acceptance Criteria:
 
@@ -63,11 +63,20 @@ Acceptance Criteria:
 
 ---
 
-### Creating and Viewing Content
+**User Story : As a user, I want to remove users from my friends list.**
+
+Acceptance Criteria:
+
+*   'Remove friend' button in personal friends list and/or in users page.
 
 ---
 
-**User Story 6: As a user, I want to create posts so that I can communicate with my friends.**
+
+### Creating, deleting and Viewing Content
+
+---
+
+**User Story : As a user, I want to create posts so that I can communicate with my friends.**
 
 Acceptance Criteria:
 
@@ -77,14 +86,35 @@ Acceptance Criteria:
 
 ---
 
+**User Story : As a user, I want to delete my own posts if necessary.**
+
+Acceptance Criteria:
+*   Delete button visible for the owner of the post.
+
+---
+
+**User Story : As a user, I want to delete my own comments from other users posts if necessary.**
+
+Acceptance Criteria:
+*   Delete button visible for the owner of the comment.
+
+---
+
 ### Interacting with Content
 
 ---
 
-**User Story 7: As a user, I want to like and comment on my friends' posts so that I can engage with their content.**
+**User Story : As a user, I want to like and comment on my friends' posts so that I can engage with their content.**
 
 Acceptance Criteria:
 *   Each post has "Like" and "Comment" buttons.
+
+---
+
+**User Story : As a user, I want to see who liked my post.**
+
+Acceptance Criteria:
+*   Make like amount on the post clickable and show list of usernames who liked the post.
 
 ---
 
@@ -92,10 +122,17 @@ Acceptance Criteria:
 
 ---
 
-**User Story 8: As a user, I want to view and edit my profile so that I can manage my personal information and preferences.**
+**User Story : As a user, I want to view and edit my profile so that I can manage my personal information and preferences.**
 
 Acceptance Criteria:
 *  A "Profile" section is accessible from the main feed.
 *  Users can update their info.
 *  Changes are saved and reflected immediately.
+
+---
+
+**User Story : As a user, I want to change my password regularly so that I can keep my account secure.**
+
+Acceptance Criteria:
+*   Change password option in profile.
 
