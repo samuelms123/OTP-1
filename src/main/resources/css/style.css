@@ -1,0 +1,38 @@
+.purple-button {
+    -fx-background-color:  #914182;
+    -fx-text-fill: white;
+    -fx-background-radius: 40;
+    -fx-border-color: transparent;
+}
+
+.purple-button:hover {
+    -fx-background-color: #75366a;
+}
+
+.forgot-password{
+    -fx-text-fill: #914182;
+}
+
+.forgot-password:hover {
+    -fx-text-fill: #da42d9;
+}
+
+.nav-button{
+    -fx-background-color: transparent;
+}
+
+.nav-button:hover{
+    -fx-background-color: #d6d6d6;
+}
+
+.avatar{
+    -fx-background-radius: 200;
+}
+
+.logout-button{
+    -fx-background-color: transparent;
+}
+
+.logout-button:hover{
+    -fx-background-color: #ff1616;
+}
