@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.Controller">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="450.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="SHOUT!" textAlignment="CENTER">
+                     <font>
+                        <Font name="Ebrima Bold" size="28.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" top="25.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" top="15.0" />
+               </padding>
+            </HBox>
+            <Button fx:id="openFeedPage" minWidth="-Infinity" mnemonicParsing="false" onAction="#openFeedPage" prefHeight="51.0" prefWidth="260.0" style="-fx-border-color: transparent;" styleClass="nav-button">
+               <font>
+                  <Font name="Ebrima Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets right="140.0" />
+               </padding>
+               <graphic>
+                  <HBox prefHeight="53.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icons/feed-icon.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="12.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label text="Feed" textFill="#393939">
+                           <font>
+                              <Font name="Ebrima Bold" size="22.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" top="11.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="18.0" />
+                     </padding>
+                  </HBox>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Button>
+            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="51.0" prefWidth="260.0" style="-fx-border-color: transparent;" styleClass="nav-button">
+               <font>
+                  <Font name="Ebrima Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <HBox prefHeight="53.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icons/feed-icon.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="12.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="28.0" prefWidth="103.0" text="Profile" textFill="#393939">
+                           <font>
+                              <Font name="Ebrima Bold" size="22.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" top="11.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="18.0" />
+                     </padding>
+                  </HBox>
+               </graphic>
+               <padding>
+                  <Insets right="140.0" />
+               </padding>
+            </Button>
+            <VBox prefHeight="100.0" prefWidth="100.0">
+               <VBox.margin>
+                  <Insets top="400.0" />
+               </VBox.margin>
+               <children>
+                  <Line endX="130.0" fill="BLACK" startX="-100.0" stroke="#e2e8f0" strokeWidth="2.0">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Line>
+                  <HBox prefHeight="81.0" prefWidth="260.0">
+                     <VBox.margin>
+                        <Insets top="7.0" />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
+                           <HBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../images/mock/mock-avatar.png" />
+                           </image>
+                        </ImageView>
+                        <VBox prefHeight="81.0" prefWidth="133.0">
+                           <children>
+                              <Label text="First Lastname" textFill="#393939">
+                                 <font>
+                                    <Font name="Ebrima Bold" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="\@username" textFill="#7c7c7c">
+                                 <font>
+                                    <Font name="Ebrima" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#logout" prefHeight="0.0" prefWidth="0.0" styleClass="logout-button" text="Button">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
+                                 <image>
+                                    <Image url="@../images/icons/logout-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets right="8.0" top="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Pane prefHeight="720.0" prefWidth="1417.0">
+         <children>
+            <AnchorPane fx:id="profilePage" prefHeight="720.0" prefWidth="763.0" style="-fx-background-color: #F8FAFC;" visible="false">
+               <children>
+                  <VBox prefHeight="720.0" prefWidth="763.0">
+                     <children>
+                        <HBox prefHeight="139.0" prefWidth="763.0" style="-fx-background-color: white;">
+                           <children>
+                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/mock/mock-avatar.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="30.0" top="18.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <VBox prefHeight="139.0" prefWidth="632.0" style="-fx-background-color: transparent;">
+                                 <children>
+                                    <Label text="First Lastname">
+                                       <font>
+                                          <Font name="Ebrima Bold" size="26.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="25.0" top="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="\@Username" textFill="#7c7c7c">
+                                       <padding>
+                                          <Insets left="25.0" />
+                                       </padding>
+                                       <font>
+                                          <Font name="Ebrima" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="420 likes" textFill="#7c7c7c">
+                                       <font>
+                                          <Font name="Ebrima" size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="30.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label text="1 post(s)" textFill="#7c7c7c">
+                                       <font>
+                                          <Font name="Ebrima" size="16.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="30.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Change information">
+                           <font>
+                              <Font name="Ebrima Bold" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="35.0" right="1.0" top="20.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Pane prefHeight="282.0" prefWidth="713.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+                           <VBox.margin>
+                              <Insets left="25.0" right="25.0" top="20.0" />
+                           </VBox.margin>
+                           <effect>
+                              <DropShadow color="#5757574d" height="10.0" radius="4.5" width="10.0" />
+                           </effect>
+                           <children>
+                              <VBox prefHeight="254.0" prefWidth="713.0">
+                                 <children>
+                                    <Label text="Name:">
+                                       <font>
+                                          <Font name="Ebrima Bold" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="40.0" right="40.0" top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="First Lastname">
+                                       <font>
+                                          <Font name="Ebrima" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Username:">
+                                       <font>
+                                          <Font name="Ebrima Bold" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="40.0" right="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="\@Username">
+                                       <font>
+                                          <Font name="Ebrima" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Email:">
+                                       <font>
+                                          <Font name="Ebrima Bold" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="40.0" right="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="example@gmail.com">
+                                       <font>
+                                          <Font name="Ebrima" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Birthday:">
+                                       <font>
+                                          <Font name="Ebrima Bold" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="40.0" right="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="01/01/2025">
+                                       <font>
+                                          <Font name="Ebrima" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="40.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <VBox fx:id="feedPage" prefHeight="720.0" prefWidth="763.0" style="-fx-background-color: #F8FAFC;">
+               <effect>
+                  <InnerShadow color="#0000003a" height="0.0" radius="1.7850000000000001" width="9.14" />
+               </effect>
+               <children>
+                  <Pane prefHeight="139.0" prefWidth="627.0">
+                     <children>
+                        <TextArea prefHeight="89.0" prefWidth="738.0" promptText="What are you thinking today?" style="-fx-background-color: transparent;">
+                           <font>
+                              <Font name="Ebrima" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextArea>
+                        <HBox alignment="TOP_RIGHT" layoutY="75.0" prefHeight="70.0" prefWidth="738.0">
+                           <children>
+                              <Button mnemonicParsing="false" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Add post">
+                                 <font>
+                                    <Font name="Ebrima Bold" size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="12.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </Pane>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="582.0" prefWidth="528.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" prefHeight="651.0" prefWidth="708.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                           <children>
+                              <ListView prefHeight="644.0" prefWidth="738.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <VBox prefHeight="720.0" prefWidth="480.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label text="Friend Suggestions" textFill="#393939">
+               <font>
+                  <Font name="Ebrima Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="25.0" />
+               </VBox.margin>
+            </Label>
+            <Line endX="140.0" startX="-100.0" stroke="#e2e8f0" strokeWidth="2.0">
+               <VBox.margin>
+                  <Insets left="15.0" top="20.0" />
+               </VBox.margin>
+            </Line>
+            <ListView editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+            <Label text="Upcoming Events" textFill="#393939">
+               <font>
+                  <Font name="Ebrima Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="25.0" />
+               </VBox.margin>
+            </Label>
+            <Line endX="140.0" startX="-100.0" stroke="#e2e8f0" strokeWidth="2.0">
+               <VBox.margin>
+                  <Insets left="15.0" top="20.0" />
+               </VBox.margin>
+            </Line>
+            <ListView editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+         </children></VBox>
+   </children>
+</HBox>
