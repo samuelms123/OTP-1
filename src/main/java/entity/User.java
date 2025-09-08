@@ -11,7 +11,7 @@ import jakarta.persistence.*;
  * @GeneratedValue annotation is used to specify the generation strategy for the primary key.
  */
 @Entity
-@Table(name="Users")
+@Table(name="users")
 public class User {
 
     @Id
