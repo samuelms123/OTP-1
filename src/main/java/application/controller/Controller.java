@@ -1,6 +1,8 @@
 package application.controller;
 
-import entity.User;
+import application.model.data_objects.RegistrationResult;
+import application.model.entity.User;
+import application.model.service.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Controller {
+    UserService userService = new UserService();
 
     @FXML
     private VBox loginMenu;
@@ -71,13 +74,34 @@ public class Controller {
 
     public void createAccount(ActionEvent actionEvent){
         createAccountMenu.setVisible(false);
-        String username = newUsername.getText();
         String password = newPassword.getText();
+        String passwordConfirm = newPasswordConfirm.getText();
 
-        //User user = new User(username)
-        loginMenu.setVisible(true);
+        if (!password.equals(passwordConfirm)) {
+            System.out.println("Passwords do not match"); // Do UI message
+            return;
+        }
 
+        String firstName = newFirstname.getText();
+        String lastName = newLastname.getText();
+        String username = newUsername.getText();
+        String email = newEmail.getText();
+        String birthdate = newBirthdate.getValue().toString();
 
+        // check that every field is filled
+
+        User user = new User(firstName, lastName, email, username, birthdate, password);
+        RegistrationResult result = userService.registerUser(user);
+
+        if (result.isSuccess()) {
+            // resultMessage.setText(result.getMessage()) set message to UI! (not implemented yet)
+            System.out.println(result.getMessage());
+            loginMenu.setVisible(true);
+            return;
+        }
+
+        // set result message to UI if fails
+        System.out.println(result.getMessage());
     }
 
     public void openProfilePage(ActionEvent actionEvent){
