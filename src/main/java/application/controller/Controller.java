@@ -3,16 +3,20 @@ package application.controller;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
 import application.model.service.UserService;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +48,9 @@ public class Controller {
     private TextField newEmail;
     @FXML
     private DatePicker newBirthdate;
+    @FXML
+    private Label resultText;
+
 
 
 
@@ -73,35 +80,57 @@ public class Controller {
     }
 
     public void createAccount(ActionEvent actionEvent){
-        createAccountMenu.setVisible(false);
+        resultText.setText("");
         String password = newPassword.getText();
         String passwordConfirm = newPasswordConfirm.getText();
 
-        if (!password.equals(passwordConfirm)) {
-            System.out.println("Passwords do not match"); // Do UI message
+        // check that all of the fields are filled
+        if (newFirstname.getText().isEmpty() ||
+                newLastname.getText().isEmpty() ||
+                newUsername.getText().isEmpty() ||
+                newEmail.getText().isEmpty() ||
+                newBirthdate.getValue() == null ||
+                newPassword.getText().isEmpty() ||
+                newPasswordConfirm.getText().isEmpty()) {
+
+            resultText.setText("Please fill in all fields");
             return;
         }
 
+        // Lazy email validation
+        String email = newEmail.getText();
+        if (!email.contains("@") || !email.contains(".")) {
+            resultText.setText("Please enter a valid email address");
+            return;
+        }
+
+        // check password matching
+        if (!password.equals(passwordConfirm)) {
+            resultText.setText("Passwords not matching");
+            return;
+        }
+        // get other inputs
         String firstName = newFirstname.getText();
         String lastName = newLastname.getText();
         String username = newUsername.getText();
-        String email = newEmail.getText();
         String birthdate = newBirthdate.getValue().toString();
 
-        // check that every field is filled
-
+        // create new user entity
         User user = new User(firstName, lastName, email, username, birthdate, password);
         RegistrationResult result = userService.registerUser(user);
 
         if (result.isSuccess()) {
-            // resultMessage.setText(result.getMessage()) set message to UI! (not implemented yet)
-            System.out.println(result.getMessage());
-            loginMenu.setVisible(true);
-            return;
+            resultText.setText(result.getMessage());
+            PauseTransition pause = new PauseTransition(Duration.seconds(2)); // Cannot use sleep, because it blocks UI
+            pause.setOnFinished(e -> {
+                createAccountMenu.setVisible(false);
+                loginMenu.setVisible(true); // Return to log in menu after 2 sec
+            });
+            pause.play();
         }
-
-        // set result message to UI if fails
-        System.out.println(result.getMessage());
+        else {
+            resultText.setText(result.getMessage());
+        }
     }
 
     public void openProfilePage(ActionEvent actionEvent){
