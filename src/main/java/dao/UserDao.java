@@ -1,6 +1,6 @@
 package dao;
 
-import entity.*;
+import application.model.entity.User;
 import jakarta.persistence.EntityManager;
 
 import java.util.LinkedList;
@@ -12,6 +12,31 @@ import java.util.List;
  */
 
 public class UserDao implements IDao<User>, IReadOnlyDao<User> {
+
+    public boolean isUserNameUnique(String userName) {
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        Long count = (Long) em.createQuery(
+                        "SELECT COUNT(u) FROM User u WHERE u.username = :username"
+                )
+                .setParameter("username", userName)
+                .getSingleResult();
+
+        return count == 0;
+
+
+    }
+
+    public boolean isUserEmailUnique(String userEmail) {
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        Long count = (Long) em.createQuery(
+                        "SELECT COUNT(u) FROM User u WHERE u.email = :email"
+                )
+                .setParameter("email", userEmail)
+                .getSingleResult();
+
+        return count == 0;
+
+    }
     /**
      * Method for persisting User object in the database.
      *
