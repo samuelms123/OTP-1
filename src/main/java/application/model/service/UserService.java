@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
 import dao.UserDao;
@@ -28,6 +29,14 @@ public class UserService {
             e.printStackTrace();
             return new RegistrationResult(false, e.getMessage());
         }
+    }
+
+    public LoginResult loginUser(User user) {
+        if (userDao.findUser(user.getUsername(), user.getPassword()) == null) {
+            return new LoginResult(false, "Username not found or password incorrect");
+        }
+
+        return new LoginResult(true, "Login successful!");
     }
 
 }

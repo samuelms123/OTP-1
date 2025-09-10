@@ -21,7 +21,6 @@ public class GUI extends Application {
         Image icon = new Image(getClass().getResourceAsStream("/images/icons/logo.png"));
         stage.getIcons().add(icon);
 
-
         URL fxml = GUI.class.getResource("/fxml/login.fxml");
         FXMLLoader loader = new FXMLLoader(fxml);
         Scene scene = new Scene(loader.load());
