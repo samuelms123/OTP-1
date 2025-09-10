@@ -38,6 +38,12 @@ public class User {
     @Column(name="password")
     private String password;
 
+    // shorter constructor for login attempt
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User(String firstName, String lastName, String email, String username, String birthdate, String password) {
         super();
         this.firstName = firstName;

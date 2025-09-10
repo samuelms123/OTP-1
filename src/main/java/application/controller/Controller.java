@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
 import application.model.service.UserService;
@@ -33,6 +34,16 @@ public class Controller {
     @FXML
     private VBox feedPage;
 
+    // Login
+    @FXML
+    private TextField loginUsername;
+
+    @FXML
+    private TextField loginPassword;
+
+    @FXML
+    private Label loginResultLabel;
+
     // Register
     @FXML
     private TextField newFirstname;
@@ -51,17 +62,46 @@ public class Controller {
     @FXML
     private Label resultText;
 
-
-
-
     public void login(ActionEvent actionEvent) throws IOException {
-        URL fxml = application.view.GUI.class.getResource("/fxml/app.fxml");
-        FXMLLoader loader = new FXMLLoader(fxml);
-        Scene scene = new Scene(loader.load());
 
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        resultText.setText("");
+        String usernameText = loginUsername.getText();
+        String passwordText = loginPassword.getText();
+
+        // check that all fields are filled
+        if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty())  {
+            loginResultLabel.setText("Please fill in all fields");
+            return;
+        }
+
+        // attempt login
+        User user = new User(usernameText, passwordText);
+        LoginResult result = userService.loginUser(user);
+
+        if (result.isSuccess()) {
+            loginResultLabel.setText(result.getMessage());
+            PauseTransition pause = new PauseTransition(Duration.seconds(2)); // Cannot use sleep, because it blocks UI
+            pause.setOnFinished(e -> {
+                URL fxml = application.view.GUI.class.getResource("/fxml/app.fxml");
+                FXMLLoader loader = new FXMLLoader(fxml);
+                Scene scene = null;
+                try {
+                    scene = new Scene(loader.load());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            });
+            pause.play();
+        }
+        else {
+            loginResultLabel.setText(result.getMessage());
+        }
+
+
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {

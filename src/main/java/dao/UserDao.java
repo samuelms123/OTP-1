@@ -23,7 +23,6 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
 
         return count == 0;
 
-
     }
 
     public boolean isUserEmailUnique(String userEmail) {
@@ -37,6 +36,7 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
         return count == 0;
 
     }
+
     /**
      * Method for persisting User object in the database.
      *
@@ -49,16 +49,33 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
         em.getTransaction().commit();
     }
 
-    /**
-     * Method for finding individual User objects from the database.
-     *
-     * @param id id of the User object to be found.
-     * @return User object with the given id.
-     */
+    // not in use, users are found by String name instead
+    @Override
     public User find(int id) {
+        return null;
+    }
+
+    /**
+     * Method for finding individual User objects from the database with name and password.
+     *
+     * @param name     name of the User object to be found.
+     * @param password password of the User object to be found.
+     * @return User object with the given name and password.
+     */
+    public User findUser(String name, String password) {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-        User emp = em.find(User.class, id);
-        return emp;
+        try {
+            User user = (User) em.createQuery(
+                            "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"
+                    )
+                    .setParameter("username", name)
+                    .setParameter("password", password)
+                    .getSingleResult();
+            return user;
+        } catch (Exception e) {
+            System.err.println("UserDao.java: Error finding user. (Check connection to database.)");
+            return null;
+        }
     }
 
     /**
