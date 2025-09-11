@@ -2,7 +2,7 @@ package application.model.entity;
 import jakarta.persistence.*;
 
 /**
- * Entity class representing an entry in the "Users" table.
+ * Entity class representing an entry in the "users" table.
  * This class maps user data stored in the database.
  * @Column annotations are used to map the fields to the corresponding columns in the database.
  * @Entity annotation is used to mark this class as an entity class.
