@@ -13,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -40,14 +37,14 @@ public class Controller {
     private VBox feedPage;
     @FXML
     private TextArea postContent;
+    @FXML
+    private ListView<Text> feedPagePostList;
 
     // Login
     @FXML
     private TextField loginUsername;
-
     @FXML
     private TextField loginPassword;
-
     @FXML
     private Label loginResultLabel;
 
@@ -68,6 +65,7 @@ public class Controller {
     private DatePicker newBirthdate;
     @FXML
     private Label resultText;
+
 
     public void login(ActionEvent actionEvent) throws IOException {
 
@@ -188,6 +186,11 @@ public class Controller {
     public void openFeedPage(ActionEvent actionEvent){
         profilePage.setVisible(false);
         feedPage.setVisible(true);
+        postService.getAllPosts().forEach(post -> {
+            System.out.println(post.getContent());
+            Text postText = new Text(post.getContent());
+            feedPagePostList.getItems().add(postText);
+        });
     }
 
     public void addPost(ActionEvent actionEvent) {
