@@ -61,17 +61,15 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
      * Method for finding individual User objects from the database with name and password.
      *
      * @param name     name of the User object to be found.
-     * @param password password of the User object to be found.
      * @return User object with the given name and password.
      */
-    public User findUser(String name, String password) {
+    public User findUser(String name) {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
         try {
             User user = (User) em.createQuery(
-                            "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"
+                            "SELECT u FROM User u WHERE u.username = :username"
                     )
                     .setParameter("username", name)
-                    .setParameter("password", password)
                     .getSingleResult();
             return user;
         } catch (Exception e) {
