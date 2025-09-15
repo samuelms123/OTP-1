@@ -1,15 +1,20 @@
 package application.model.service;
 
+import application.controller.SessionManager;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import config.Config;
 import dao.UserDao;
 
 public class UserService {
     UserDao userDao;
+    AuthService authService;
 
     public UserService() {
         userDao = new UserDao();
+        authService = new AuthService();
     }
 
     public RegistrationResult registerUser(User user) {
@@ -22,6 +27,9 @@ public class UserService {
         }
 
         try {
+            String hashedPassword = BCrypt.withDefaults()
+                    .hashToString(Integer.parseInt(Config.SALT_ROUNDS), user.getPassword().toCharArray());
+            user.setPassword(hashedPassword);
             userDao.persist(user);
             return new RegistrationResult(true, "User registered successfully");
 
@@ -31,12 +39,25 @@ public class UserService {
         }
     }
 
+    public boolean verifyPassword(String password, String hashedPassword) {
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
+        return result.verified;
+    }
+
     public LoginResult loginUser(User user) {
-        if (userDao.findUser(user.getUsername(), user.getPassword()) == null) {
-            return new LoginResult(false, "Username not found or password incorrect");
+        User userResult = userDao.findUser(user.getUsername());
+
+        if (userResult == null) {
+            return new LoginResult(false, "User not found");
         }
 
-        return new LoginResult(true, "Login successful!");
+        if (verifyPassword(user.getPassword(), userResult.getPassword())) {
+            String token = authService.createToken(user);
+
+            return new LoginResult(true, "User logged in successfully", token, userResult);
+        }
+
+        return new LoginResult(false, "Password incorrect");
     }
 
 }
