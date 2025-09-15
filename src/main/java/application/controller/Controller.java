@@ -8,6 +8,8 @@ import application.model.entity.User;
 import application.model.service.AuthService;
 import application.model.service.PostService;
 import application.model.service.UserService;
+import application.controller.PostCellController;
+import application.view.PostView;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,14 +40,14 @@ public class Controller {
     private VBox feedPage;
     @FXML
     private TextArea postContent;
+    @FXML
+    private ListView<Post> feedPagePostList;
 
     // Login
     @FXML
     private TextField loginUsername;
-
     @FXML
     private TextField loginPassword;
-
     @FXML
     private Label loginResultLabel;
 
@@ -186,9 +188,32 @@ public class Controller {
         profilePage.setVisible(true);
     }
 
-    public void openFeedPage(ActionEvent actionEvent){
+    public void openFeedPage(ActionEvent actionEvent) {
         profilePage.setVisible(false);
         feedPage.setVisible(true);
+
+        feedPagePostList.setCellFactory(listView -> new ListCell<>() {
+            @Override
+            protected void updateItem(Post post, boolean empty) {
+                super.updateItem(post, empty);
+
+                if (empty || post == null) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/post_cell.fxml"));
+                        Node cellRoot = loader.load();
+                        PostCellController controller = loader.getController();
+                        controller.setPost(post);
+                        setGraphic(cellRoot);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        feedPagePostList.getItems().setAll(postService.getAllPosts());
     }
 
     public void addPost(ActionEvent actionEvent) {
@@ -201,4 +226,5 @@ public class Controller {
         Post post = new Post(1,content, "");
         PostResult result = postService.makePost(post);
     }
+
 }

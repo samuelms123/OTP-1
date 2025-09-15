@@ -39,6 +39,10 @@ public class UserService {
         }
     }
 
+
+    public User findUserById(int id) {
+        return userDao.find(id);
+
     public boolean verifyPassword(String password, String hashedPassword) {
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
         return result.verified;

@@ -49,10 +49,12 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
         em.getTransaction().commit();
     }
 
-    // not in use, users are found by String name instead
+    // find user by id
     @Override
     public User find(int id) {
-        return null;
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        User user = em.find(User.class, id);
+        return user;
     }
 
     /**

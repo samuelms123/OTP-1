@@ -8,6 +8,8 @@ import application.model.entity.User;
 import dao.PostDao;
 import dao.UserDao;
 
+import java.util.List;
+
 public class PostService {
     PostDao postDao;
 
@@ -18,5 +20,9 @@ public class PostService {
     public PostResult makePost(Post post) {
         postDao.persist(post);
         return new PostResult(true, "Post created successfully");
+    }
+
+    public List<Post> getAllPosts() {
+        return postDao.findAll();
     }
 }
