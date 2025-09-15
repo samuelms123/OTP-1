@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.controller.SessionManager;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
@@ -9,9 +10,11 @@ import dao.UserDao;
 
 public class UserService {
     UserDao userDao;
+    AuthService authService;
 
     public UserService() {
         userDao = new UserDao();
+        authService = new AuthService();
     }
 
     public RegistrationResult registerUser(User user) {
@@ -49,7 +52,9 @@ public class UserService {
         }
 
         if (verifyPassword(user.getPassword(), userResult.getPassword())) {
-            return new LoginResult(true, "User logged in successfully");
+            String token = authService.createToken(user);
+
+            return new LoginResult(true, "User logged in successfully", token, userResult);
         }
 
         return new LoginResult(false, "Password incorrect");

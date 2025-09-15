@@ -5,6 +5,7 @@ import application.model.data_objects.PostResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.Post;
 import application.model.entity.User;
+import application.model.service.AuthService;
 import application.model.service.PostService;
 import application.model.service.UserService;
 import javafx.animation.PauseTransition;
@@ -13,10 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -86,6 +84,9 @@ public class Controller {
         LoginResult result = userService.loginUser(user);
 
         if (result.isSuccess()) {
+            SessionManager.getInstance().setUser(result.getUser());
+            SessionManager.getInstance().setToken(result.getToken());
+
             loginResultLabel.setText(result.getMessage());
             PauseTransition pause = new PauseTransition(Duration.seconds(2)); // Cannot use sleep, because it blocks UI
             pause.setOnFinished(e -> {
