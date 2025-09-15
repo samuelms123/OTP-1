@@ -7,6 +7,8 @@ import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.PostService;
 import application.model.service.UserService;
+import application.controller.PostCellController;
+import application.view.PostView;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +40,7 @@ public class Controller {
     @FXML
     private TextArea postContent;
     @FXML
-    private ListView<Text> feedPagePostList;
+    private ListView<Post> feedPagePostList;
 
     // Login
     @FXML
@@ -65,7 +67,6 @@ public class Controller {
     private DatePicker newBirthdate;
     @FXML
     private Label resultText;
-
 
     public void login(ActionEvent actionEvent) throws IOException {
 
@@ -183,14 +184,32 @@ public class Controller {
         profilePage.setVisible(true);
     }
 
-    public void openFeedPage(ActionEvent actionEvent){
+    public void openFeedPage(ActionEvent actionEvent) {
         profilePage.setVisible(false);
         feedPage.setVisible(true);
-        postService.getAllPosts().forEach(post -> {
-            System.out.println(post.getContent());
-            Text postText = new Text(post.getContent());
-            feedPagePostList.getItems().add(postText);
+
+        feedPagePostList.setCellFactory(listView -> new ListCell<>() {
+            @Override
+            protected void updateItem(Post post, boolean empty) {
+                super.updateItem(post, empty);
+
+                if (empty || post == null) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/post_cell.fxml"));
+                        Node cellRoot = loader.load();
+                        PostCellController controller = loader.getController();
+                        controller.setPost(post);
+                        setGraphic(cellRoot);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         });
+
+        feedPagePostList.getItems().setAll(postService.getAllPosts());
     }
 
     public void addPost(ActionEvent actionEvent) {
@@ -203,4 +222,5 @@ public class Controller {
         Post post = new Post(1,content, "");
         PostResult result = postService.makePost(post);
     }
+
 }

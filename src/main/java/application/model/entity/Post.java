@@ -25,6 +25,7 @@ public class Post {
     @Column(name="image_url")
     private String imageUrl;
 
+
     public Post(int userId, String content, String imageUrl) {
         this.userId = userId;
         this.content = content;

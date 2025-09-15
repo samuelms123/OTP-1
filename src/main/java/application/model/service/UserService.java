@@ -31,6 +31,10 @@ public class UserService {
         }
     }
 
+    public User findUserById(int id) {
+        return userDao.find(id);
+    }
+
     public LoginResult loginUser(User user) {
         if (userDao.findUser(user.getUsername(), user.getPassword()) == null) {
             return new LoginResult(false, "Username not found or password incorrect");
