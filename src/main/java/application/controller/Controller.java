@@ -1,8 +1,11 @@
 package application.controller;
 
 import application.model.data_objects.LoginResult;
+import application.model.data_objects.PostResult;
 import application.model.data_objects.RegistrationResult;
+import application.model.entity.Post;
 import application.model.entity.User;
+import application.model.service.PostService;
 import application.model.service.UserService;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -12,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -24,6 +28,7 @@ import java.net.URL;
 
 public class Controller {
     UserService userService = new UserService();
+    PostService postService = new PostService();
 
     @FXML
     private VBox loginMenu;
@@ -33,6 +38,8 @@ public class Controller {
     private AnchorPane profilePage;
     @FXML
     private VBox feedPage;
+    @FXML
+    private TextArea postContent;
 
     // Login
     @FXML
@@ -181,5 +188,16 @@ public class Controller {
     public void openFeedPage(ActionEvent actionEvent){
         profilePage.setVisible(false);
         feedPage.setVisible(true);
+    }
+
+    public void addPost(ActionEvent actionEvent) {
+        String content = postContent.getText();
+        if (content.isEmpty()) {
+            return;
+        }
+        // need to get current Subject with Apache Shiro here
+        // implementation of images still missing
+        Post post = new Post(1,content, "");
+        PostResult result = postService.makePost(post);
     }
 }
