@@ -24,8 +24,12 @@ import java.io.IOException;
 import java.net.URL;
 
 public class AppController {
-    PostService postService = new PostService();
-    AuthService authService = new AuthService();
+    PostService postService;
+    AuthService authService;
+
+    public AppController() {
+        postService = new PostService();
+    }
 
     @FXML
     private AnchorPane profilePage;
@@ -66,10 +70,12 @@ public class AppController {
         if (content.isEmpty()) {
             return;
         }
-        // need to get current Subject with Apache Shiro here
+
         // implementation of images still missing
         Post post = new Post(1,content, "");
         PostResult result = postService.makePost(post);
+        // Make UI error message in case of access denied
+        System.out.println(result);
         updateFeed();
     }
 

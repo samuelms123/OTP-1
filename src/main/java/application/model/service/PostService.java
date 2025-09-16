@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.controller.SessionManager;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.PostResult;
 import application.model.data_objects.RegistrationResult;
@@ -12,14 +13,19 @@ import java.util.List;
 
 public class PostService {
     PostDao postDao;
+    AuthService authService;
 
     public PostService() {
-        this.postDao = new PostDao();
+        postDao = new PostDao();
+        authService = new AuthService();
     }
 
     public PostResult makePost(Post post) {
-        postDao.persist(post);
-        return new PostResult(true, "Post created successfully");
+        if (authService.authMe(SessionManager.getInstance().getToken()) != null) {
+            postDao.persist(post);
+            return new PostResult(true, "Post created successfully");
+        }
+        return new PostResult(false, "Access denied");
     }
 
     public List<Post> getAllPosts() {
