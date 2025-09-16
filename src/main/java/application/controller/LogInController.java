@@ -1,15 +1,12 @@
 package application.controller;
 
 import application.model.data_objects.LoginResult;
-import application.model.data_objects.PostResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.Post;
 import application.model.entity.User;
-import application.model.service.AuthService;
-import application.model.service.PostService;
 import application.model.service.UserService;
-import application.controller.PostCellController;
-import application.view.PostView;
+import application.utils.Paths;
+import application.view.GUI;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,25 +16,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class Controller {
+public class LogInController {
     UserService userService = new UserService();
-    PostService postService = new PostService();
 
     @FXML
     private VBox loginMenu;
     @FXML
     private AnchorPane createAccountMenu;
-    @FXML
-    private AnchorPane profilePage;
-    @FXML
-    private VBox feedPage;
     @FXML
     private TextArea postContent;
     @FXML
@@ -69,6 +60,11 @@ public class Controller {
     @FXML
     private Label resultText;
 
+    public void register(ActionEvent actionEvent){
+        loginMenu.setVisible(false);
+        createAccountMenu.setVisible(true);
+    }
+
     public void login(ActionEvent actionEvent) throws IOException {
 
         resultText.setText("");
@@ -76,7 +72,7 @@ public class Controller {
         String passwordText = loginPassword.getText();
 
         // check that all fields are filled
-        if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty())  {
+        if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty()) {
             loginResultLabel.setText("Please fill in all fields");
             return;
         }
@@ -90,52 +86,16 @@ public class Controller {
             SessionManager.getInstance().setToken(result.getToken());
 
             loginResultLabel.setText(result.getMessage());
+
             PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
             pause.setOnFinished(e -> {
-                URL fxml = application.view.GUI.class.getResource("/fxml/app.fxml");
-                FXMLLoader loader = new FXMLLoader(fxml);
-                Scene scene = null;
-                try {
-                    scene = new Scene(loader.load());
-                    // get new controller
-                    Controller appController = loader.getController();
-                    // pass necessary data to new controller
-                    appController.initializeAfterLogin(result.getUser(), result.getToken());
-
-                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                GUI.getSceneManager().switchScene(Paths.APP);
             });
             pause.play();
 
-        }
-        else {
+        } else {
             loginResultLabel.setText(result.getMessage());
         }
-
-
-    }
-
-    private void initializeAfterLogin(User user, String token) {
-        updateFeed();
-    }
-
-    public void logout(ActionEvent actionEvent) throws IOException {
-        URL fxml = application.view.GUI.class.getResource("/fxml/login.fxml");
-        FXMLLoader loader = new FXMLLoader(fxml);
-        Scene scene = new Scene(loader.load());
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void register(ActionEvent actionEvent){
-        loginMenu.setVisible(false);
-        createAccountMenu.setVisible(true);
     }
 
     public void createAccount(ActionEvent actionEvent){
@@ -191,53 +151,4 @@ public class Controller {
             resultText.setText(result.getMessage());
         }
     }
-
-    public void openProfilePage(ActionEvent actionEvent){
-        feedPage.setVisible(false);
-        profilePage.setVisible(true);
-    }
-
-    public void openFeedPage(ActionEvent actionEvent) {
-        profilePage.setVisible(false);
-        feedPage.setVisible(true);
-        updateFeed();
-    }
-
-    private void updateFeed() {
-        feedPagePostList.setCellFactory(listView -> new ListCell<>() {
-            @Override
-            protected void updateItem(Post post, boolean empty) {
-                super.updateItem(post, empty);
-
-                if (empty || post == null) {
-                    setGraphic(null);
-                } else {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/post_cell.fxml"));
-                        Node cellRoot = loader.load();
-                        PostCellController controller = loader.getController();
-                        controller.setPost(post);
-                        setGraphic(cellRoot);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        feedPagePostList.getItems().setAll(postService.getAllPosts());
-    }
-
-    public void addPost(ActionEvent actionEvent) {
-        String content = postContent.getText();
-        if (content.isEmpty()) {
-            return;
-        }
-        // need to get current Subject with Apache Shiro here
-        // implementation of images still missing
-        Post post = new Post(1,content, "");
-        PostResult result = postService.makePost(post);
-        updateFeed();
-    }
-
 }
