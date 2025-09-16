@@ -97,26 +97,30 @@ public class Controller {
                 Scene scene = null;
                 try {
                     scene = new Scene(loader.load());
+                    // get new controller
+                    Controller appController = loader.getController();
+                    // pass necessary data to new controller
+                    appController.initializeAfterLogin(result.getUser(), result.getToken());
+
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.show();
             });
             pause.play();
-            PauseTransition updateFeedPause = new PauseTransition(Duration.seconds(10));
-            updateFeedPause.setOnFinished(e -> {
-                updateFeed();
-            });
-            updateFeedPause.play();
+
         }
         else {
             loginResultLabel.setText(result.getMessage());
         }
 
 
+    }
+
+    private void initializeAfterLogin(User user, String token) {
+        updateFeed();
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
