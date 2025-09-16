@@ -3,6 +3,8 @@ package application.model.service;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import config.Config;
 import dao.UserDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,7 @@ class UserServiceTest {
         user = new User();
         user.setEmail("test@example.com");
         user.setUsername("testuser");
+        user.setPassword("password");
 
     }
     @Test
@@ -63,18 +66,21 @@ class UserServiceTest {
 
     @Test
     void loginShouldFail() {
-        when(userDao.findUser(user.getUsername(), user.getPassword())).thenReturn(null);
+        when(userDao.findUser(user.getUsername())).thenReturn(null);
 
         LoginResult result = userService.loginUser(user);
         assertFalse(result.isSuccess());
-        assertEquals("Username not found or password incorrect", result.getMessage());
+        assertEquals("User not found", result.getMessage());
     }
 
     @Test
     void loginShouldSuccess() {
-        when(userDao.findUser(user.getUsername(), user.getPassword())).thenReturn(user);
-        LoginResult result = userService.loginUser(user);
+        when(userDao.findUser(user.getUsername())).thenReturn(user);
+        user.setPassword(BCrypt.withDefaults().hashToString(Integer.parseInt(Config.SALT_ROUNDS), user.getPassword().toCharArray()));
+
+        User logInUser = new User("testuser", "password");
+        LoginResult result = userService.loginUser(logInUser);
         assertTrue(result.isSuccess());
-        assertEquals("Login successful!", result.getMessage());
+        assertEquals("User logged in successfully", result.getMessage());
     }
 }
