@@ -29,7 +29,7 @@ class UserServiceTest {
         user = new User();
         user.setEmail("test@example.com");
         user.setUsername("testuser");
-        user.setPassword("password");
+        user.setPassword(BCrypt.withDefaults().hashToString(Integer.parseInt(Config.SALT_ROUNDS), "password".toCharArray()));
 
     }
     @Test
@@ -65,7 +65,7 @@ class UserServiceTest {
     }
 
     @Test
-    void loginShouldFail() {
+    void loginShouldNotFindUser() {
         when(userDao.findUser(user.getUsername())).thenReturn(null);
 
         LoginResult result = userService.loginUser(user);
@@ -74,9 +74,18 @@ class UserServiceTest {
     }
 
     @Test
+    void loginShouldFailWhenPasswordIsIncorrect() {
+        when(userDao.findUser(user.getUsername())).thenReturn(user);
+
+        User logInUser = new User("testuser", "wrongpassword");
+        LoginResult result = userService.loginUser(logInUser);
+        assertFalse(result.isSuccess());
+        assertEquals("Password incorrect", result.getMessage());
+    }
+
+    @Test
     void loginShouldSuccess() {
         when(userDao.findUser(user.getUsername())).thenReturn(user);
-        user.setPassword(BCrypt.withDefaults().hashToString(Integer.parseInt(Config.SALT_ROUNDS), user.getPassword().toCharArray()));
 
         User logInUser = new User("testuser", "password");
         LoginResult result = userService.loginUser(logInUser);
