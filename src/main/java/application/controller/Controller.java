@@ -90,7 +90,7 @@ public class Controller {
             SessionManager.getInstance().setToken(result.getToken());
 
             loginResultLabel.setText(result.getMessage());
-            PauseTransition pause = new PauseTransition(Duration.seconds(2)); // Cannot use sleep, because it blocks UI
+            PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
             pause.setOnFinished(e -> {
                 URL fxml = application.view.GUI.class.getResource("/fxml/app.fxml");
                 FXMLLoader loader = new FXMLLoader(fxml);
@@ -106,6 +106,11 @@ public class Controller {
                 stage.show();
             });
             pause.play();
+            PauseTransition updateFeedPause = new PauseTransition(Duration.seconds(10));
+            updateFeedPause.setOnFinished(e -> {
+                updateFeed();
+            });
+            updateFeedPause.play();
         }
         else {
             loginResultLabel.setText(result.getMessage());
@@ -191,7 +196,10 @@ public class Controller {
     public void openFeedPage(ActionEvent actionEvent) {
         profilePage.setVisible(false);
         feedPage.setVisible(true);
+        updateFeed();
+    }
 
+    private void updateFeed() {
         feedPagePostList.setCellFactory(listView -> new ListCell<>() {
             @Override
             protected void updateItem(Post post, boolean empty) {
@@ -225,6 +233,7 @@ public class Controller {
         // implementation of images still missing
         Post post = new Post(1,content, "");
         PostResult result = postService.makePost(post);
+        updateFeed();
     }
 
 }
