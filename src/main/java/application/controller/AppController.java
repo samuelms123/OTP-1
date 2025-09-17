@@ -5,8 +5,12 @@ import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.AuthService;
 import application.model.service.PostService;
+import application.model.service.UserService;
 import application.utils.Paths;
 import application.view.GUI;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +26,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 public class AppController {
     PostService postService;
     AuthService authService;
+    UserService userService;
 
     public AppController() {
+
         postService = new PostService();
+        userService = new UserService();
     }
 
     @FXML
@@ -40,15 +48,23 @@ public class AppController {
     @FXML
     private ListView<Post> feedPagePostList;
     @FXML
-    private ListView<User> searchFriendList;
+    private ListView<String> searchFriendList;
     @FXML
     private TextField searchFriendTextField;
 
     @FXML
     public void initialize() { // Called automatically when AppController is made aka when switching the scene
         updateFeed();
+        // Add search listener
+        searchFriendTextField.textProperty().addListener((observable, oldText, newText) -> {
+            if (newText.isEmpty()) {
+                searchFriendList.getItems().clear();
+                return;
+            }
+            List<String> users = userService.searchUsers(newText);
+            searchFriendList.setItems(FXCollections.observableList(users));
+        });
     }
-
     public void openProfilePage(ActionEvent actionEvent){
         feedPage.setVisible(false);
         profilePage.setVisible(true);
