@@ -42,7 +42,7 @@ public class UserService {
     }
 
 
-    public User findUserById(int id) {
+    public User getUserById(int id) {
         return userDao.find(id);
     }
 
@@ -69,6 +69,10 @@ public class UserService {
 
     public List<String> searchUsers(String query) {
         return userDao.findUsersByQuery(query);
+    }
+
+    public User getUserByUsername(String username) {
+        return userDao.findUser(username);
     }
 
 }

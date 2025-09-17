@@ -97,20 +97,23 @@
                                     <Font name="Ebrima Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="120.0" top="25.0" />
+                                    <Insets bottom="15.0" left="120.0" top="25.0" />
                                  </VBox.margin>
                               </Button>
-                              <Label fx:id="loginResultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="140.0" textAlignment="CENTER">
+                              <Label fx:id="loginResultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="140.0" prefHeight="18.0" prefWidth="293.0" textAlignment="CENTER">
                                  <font>
-                                    <Font name="Ebrima Bold" size="22.0" />
+                                    <Font name="Ebrima Bold" size="14.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets left="50.0" right="50.0" />
+                                 </VBox.margin>
                               </Label>
                               <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="forgot-password" text="Forgot password?" textFill="#914182">
                                  <font>
                                     <Font name="Ebrima Bold" size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="85.0" top="8.0" />
+                                    <Insets bottom="20.0" left="85.0" top="8.0" />
                                  </VBox.margin>
                               </Button>
                            </children>
