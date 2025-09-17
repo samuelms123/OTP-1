@@ -2,7 +2,9 @@ package dao;
 
 import application.model.entity.User;
 import jakarta.persistence.EntityManager;
+import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,6 +79,23 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
             return null;
         }
     }
+
+    public List<String> findUsersByQuery(String query) {
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        try {
+            return em.createQuery(
+                            "SELECT u.username FROM User u WHERE u.username LIKE :username", String.class
+                    )
+                    .setParameter("username", query + "%")
+                    .setMaxResults(5)
+                    .getResultList();
+        } catch (Exception e) {
+            System.err.println("UserDao.java: Error finding users. " + e.getMessage());
+            return null;
+        }
+    }
+
+
 
     /**
      * Method for finding all User objects from the database.

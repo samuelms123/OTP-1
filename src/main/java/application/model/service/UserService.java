@@ -8,6 +8,8 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import config.Config;
 import dao.UserDao;
 
+import java.util.List;
+
 public class UserService {
     UserDao userDao;
     AuthService authService;
@@ -40,7 +42,7 @@ public class UserService {
     }
 
 
-    public User findUserById(int id) {
+    public User getUserById(int id) {
         return userDao.find(id);
     }
 
@@ -63,6 +65,14 @@ public class UserService {
         }
 
         return new LoginResult(false, "Password incorrect");
+    }
+
+    public List<String> searchUsers(String query) {
+        return userDao.findUsersByQuery(query);
+    }
+
+    public User getUserByUsername(String username) {
+        return userDao.findUser(username);
     }
 
 }

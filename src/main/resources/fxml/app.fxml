@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -80,7 +81,7 @@
                   <Insets top="25.0" />
                </VBox.margin>
             </Button>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="51.0" prefWidth="260.0" style="-fx-border-color: transparent;" styleClass="nav-button">
+            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#openOwnProfilePage" prefHeight="51.0" prefWidth="260.0" style="-fx-border-color: transparent;" styleClass="nav-button">
                <font>
                   <Font name="Ebrima Bold" size="20.0" />
                </font>
@@ -182,7 +183,7 @@
                      <children>
                         <HBox prefHeight="139.0" prefWidth="763.0" style="-fx-background-color: white;">
                            <children>
-                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/mock/mock-avatar.png" />
                                  </image>
@@ -192,7 +193,7 @@
                               </ImageView>
                               <VBox prefHeight="139.0" prefWidth="632.0" style="-fx-background-color: transparent;">
                                  <children>
-                                    <Label text="First Lastname">
+                                    <Label fx:id="realNameFieldTop" text="First Lastname">
                                        <font>
                                           <Font name="Ebrima Bold" size="26.0" />
                                        </font>
@@ -200,7 +201,7 @@
                                           <Insets left="25.0" top="20.0" />
                                        </padding>
                                     </Label>
-                                    <Label text="\@Username" textFill="#7c7c7c">
+                                    <Label fx:id="usernameFieldTop" text="\@Username" textFill="#7c7c7c">
                                        <padding>
                                           <Insets left="25.0" />
                                        </padding>
@@ -208,7 +209,7 @@
                                           <Font name="Ebrima" size="16.0" />
                                        </font>
                                     </Label>
-                                    <Label text="420 likes" textFill="#7c7c7c">
+                                    <Label fx:id="likeAmountField" text="420 likes" textFill="#7c7c7c">
                                        <font>
                                           <Font name="Ebrima" size="16.0" />
                                        </font>
@@ -216,7 +217,7 @@
                                           <Insets left="30.0" />
                                        </padding>
                                     </Label>
-                                    <Label text="1 post(s)" textFill="#7c7c7c">
+                                    <Label fx:id="postAmountField" text="1 post(s)" textFill="#7c7c7c">
                                        <font>
                                           <Font name="Ebrima" size="16.0" />
                                        </font>
@@ -228,7 +229,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Change information">
+                        <Button fx:id="changeInfoButton" mnemonicParsing="false" onAction="#changeInfo" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Change information" visible="false">
                            <font>
                               <Font name="Ebrima Bold" size="20.0" />
                            </font>
@@ -254,7 +255,7 @@
                                           <Insets left="40.0" right="40.0" top="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="First Lastname">
+                                    <Label fx:id="realNameFieldCenter" text="First Lastname">
                                        <font>
                                           <Font name="Ebrima" size="20.0" />
                                        </font>
@@ -270,7 +271,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="\@Username">
+                                    <Label fx:id="usernameFieldCenter" text="\@Username">
                                        <font>
                                           <Font name="Ebrima" size="20.0" />
                                        </font>
@@ -286,7 +287,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="example@gmail.com">
+                                    <Label fx:id="emailFieldCenter" text="example@gmail.com">
                                        <font>
                                           <Font name="Ebrima" size="20.0" />
                                        </font>
@@ -302,7 +303,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="01/01/2025">
+                                    <Label fx:id="birthdayFieldCenter" text="01/01/2025">
                                        <font>
                                           <Font name="Ebrima" size="20.0" />
                                        </font>
@@ -314,6 +315,14 @@
                               </VBox>
                            </children>
                         </Pane>
+                        <Button fx:id="addFriendButton" mnemonicParsing="false" onAction="#addFriend" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Add friend!" visible="false">
+                           <font>
+                              <Font name="Ebrima Bold" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="35.0" top="20.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
                </children>
@@ -365,34 +374,45 @@
       </Pane>
       <VBox prefHeight="720.0" prefWidth="480.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Label text="Friend Suggestions" textFill="#393939">
+            <Label text="Add Friends!" textFill="#393939">
                <font>
                   <Font name="Ebrima Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets left="20.0" top="25.0" />
+                  <Insets left="15.0" top="25.0" />
                </VBox.margin>
             </Label>
             <Line endX="140.0" startX="-100.0" stroke="#e2e8f0" strokeWidth="2.0">
                <VBox.margin>
-                  <Insets left="15.0" top="20.0" />
+                  <Insets left="15.0" right="15.0" top="10.0" />
                </VBox.margin>
             </Line>
-            <ListView editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
+            <TextField fx:id="searchFriendTextField" promptText="Username">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <ListView fx:id="searchFriendList" editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin></ListView>
             <Label text="Upcoming Events" textFill="#393939">
                <font>
                   <Font name="Ebrima Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets left="20.0" top="25.0" />
+                  <Insets left="15.0" top="25.0" />
                </VBox.margin>
             </Label>
             <Line endX="140.0" startX="-100.0" stroke="#e2e8f0" strokeWidth="2.0">
                <VBox.margin>
-                  <Insets left="15.0" top="20.0" />
+                  <Insets left="15.0" right="15.0" top="10.0" />
                </VBox.margin>
             </Line>
             <ListView editable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
-         </children></VBox>
+         </children>
+         <HBox.margin>
+            <Insets left="15.0" right="15.0" />
+         </HBox.margin></VBox>
    </children>
 </HBox>
