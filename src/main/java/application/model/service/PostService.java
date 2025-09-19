@@ -31,4 +31,6 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postDao.findAll();
     }
+
+
 }

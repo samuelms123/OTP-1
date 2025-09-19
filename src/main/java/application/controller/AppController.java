@@ -169,11 +169,15 @@ public class AppController {
                     setGraphic(null);
                 } else {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.POST));
-                        Node cellRoot = loader.load();
-                        PostCellController controller = loader.getController();
+                        FXMLLoader postloader = new FXMLLoader(getClass().getResource(Paths.POST));
+                        Node cellRoot = postloader.load();
+                        PostCellController controller = postloader.getController();
                         controller.setPost(post);
                         setGraphic(cellRoot);
+                        FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
+                        Node comment = commentloader.load();
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
