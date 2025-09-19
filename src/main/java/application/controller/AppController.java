@@ -4,6 +4,7 @@ import application.model.data_objects.PostResult;
 import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.AuthService;
+import application.model.service.CommentService;
 import application.model.service.PostService;
 import application.model.service.UserService;
 import application.utils.Paths;
@@ -29,11 +30,13 @@ public class AppController {
     PostService postService;
     AuthService authService;
     UserService userService;
+    CommentService commentService;
 
     public AppController() {
 
         postService = new PostService();
         userService = new UserService();
+        commentService = new CommentService();
     }
 
     // PROFILE
@@ -149,6 +152,10 @@ public class AppController {
         // Make UI error message in case of access denied
         System.out.println(result);
         updateFeed();
+    }
+
+    public void addComment() {
+
     }
 
     public void changeInfo(ActionEvent actionEvent) {
