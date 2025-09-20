@@ -2,7 +2,9 @@ package application.controller;
 
 import application.model.entity.Comment;
 import application.model.entity.Post;
+import application.model.entity.User;
 import application.model.service.PostService;
+import application.model.service.UserService;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ public class PostCellController {
     @FXML private ListView<String> postComments;
 
     private PostService postService;
+    private UserService userService;
 
     private ObservableList<String> commentItems = FXCollections.observableArrayList();
 
@@ -33,8 +36,8 @@ public class PostCellController {
 
     public void setPost(Post post) {
         this.post = post;
-        // for now hardcode author until you resolve user lookup
-        authorLabel.setText("User #" + post.getUserId());
+        User author = userService.getUserById(post.getUserId());
+        authorLabel.setText(author != null ? author.getUsername() : "Unknown User");
         contentLabel.setText(post.getContent());
     }
 
@@ -42,14 +45,16 @@ public class PostCellController {
         commentItems.clear();
         // add to observable list after clear
         for (Comment comment : comments) {
-            commentItems.add("User #" + comment.getUserId() + ": " + comment.getContent());
+            User commentAuthor = userService.getUserById(comment.getUserId());
+            String username = commentAuthor != null ? commentAuthor.getUsername() : "Unknown User";
+            commentItems.add(username + ": " + comment.getContent());
         }
     }
 
     public void addComment(ActionEvent actionEvent) {
         String commentText = commentField.getText();
         if (!commentText.isEmpty()) {
-            commentItems.add("User #" + SessionManager.getInstance().getUser().getId() + ": " + commentText);
+            commentItems.add(SessionManager.getInstance().getUser().getUsername() + ": " + commentText);
             commentField.clear();
         }
         // persist comment on this post
@@ -59,6 +64,7 @@ public class PostCellController {
     @FXML
     private void initialize() {
         postService = new PostService();
+        userService = new UserService();
 
         // set items for observable list view
         postComments.setItems(commentItems);

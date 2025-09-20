@@ -139,7 +139,7 @@ public class AppController {
         }
 
         // implementation of images still missing
-        Post post = new Post(1,content, "");
+        Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "");
         PostResult result = postService.makePost(post);
         // Make UI error message in case of access denied
         System.out.println(result);
