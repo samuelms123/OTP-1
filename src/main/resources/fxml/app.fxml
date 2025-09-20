@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -18,7 +27,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.AppController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.AppController">
    <children>
       <VBox prefHeight="720.0" prefWidth="450.0" style="-fx-background-color: #ffffff;">
          <children>
@@ -129,25 +138,25 @@
                         <Insets top="7.0" />
                      </VBox.margin>
                      <children>
-                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                            <HBox.margin>
-                              <Insets left="10.0" top="10.0" />
+                              <Insets left="10.0" top="20.0" />
                            </HBox.margin>
                            <image>
-                              <Image url="@../images/mock/mock-avatar.png" />
+                              <Image url="@../images/mock/empty-avatar.jpg" />
                            </image>
                         </ImageView>
                         <VBox prefHeight="81.0" prefWidth="133.0">
                            <children>
-                              <Label text="First Lastname" textFill="#393939">
+                              <Label fx:id="appRealNameField" text="First Lastname" textFill="#393939">
                                  <font>
-                                    <Font name="Ebrima Bold" size="16.0" />
+                                    <Font name="Ebrima Bold" size="14.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="5.0" top="20.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="\@username" textFill="#7c7c7c">
+                              <Label fx:id="appUsernameField" text="\@username" textFill="#7c7c7c">
                                  <font>
                                     <Font name="Ebrima" size="14.0" />
                                  </font>
@@ -177,15 +186,15 @@
       </VBox>
       <Pane prefHeight="720.0" prefWidth="1417.0">
          <children>
-            <AnchorPane fx:id="profilePage" prefHeight="720.0" prefWidth="763.0" style="-fx-background-color: #F8FAFC;" visible="false">
+            <AnchorPane fx:id="profilePage" prefHeight="714.0" prefWidth="713.0" style="-fx-background-color: #F8FAFC;" visible="false">
                <children>
-                  <VBox prefHeight="720.0" prefWidth="763.0">
+                  <VBox prefHeight="714.0" prefWidth="719.0">
                      <children>
                         <HBox prefHeight="139.0" prefWidth="763.0" style="-fx-background-color: white;">
                            <children>
                               <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/mock/mock-avatar.png" />
+                                    <Image url="@../images/mock/empty-avatar.jpg" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="30.0" top="18.0" />
@@ -245,7 +254,7 @@
                               <DropShadow color="#5757574d" height="10.0" radius="4.5" width="10.0" />
                            </effect>
                            <children>
-                              <VBox prefHeight="254.0" prefWidth="713.0">
+                              <VBox prefHeight="279.0" prefWidth="663.0">
                                  <children>
                                     <Label text="Name:">
                                        <font>
@@ -327,30 +336,36 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <VBox fx:id="feedPage" prefHeight="720.0" prefWidth="763.0" style="-fx-background-color: #F8FAFC;">
+            <VBox fx:id="feedPage" prefHeight="720.0" prefWidth="713.0" style="-fx-background-color: #F8FAFC;">
                <effect>
                   <InnerShadow color="#0000003a" height="0.0" radius="1.7850000000000001" width="9.14" />
                </effect>
                <children>
                   <Pane prefHeight="139.0" prefWidth="627.0">
                      <children>
-                        <TextArea fx:id="postContent" prefHeight="89.0" prefWidth="738.0" promptText="What are you thinking today?" style="-fx-background-color: transparent;">
+                        <TextArea fx:id="postContent" prefHeight="100.0" prefWidth="713.0" promptText="What are you thinking today?" style="-fx-background-color: transparent;">
                            <font>
                               <Font name="Ebrima" size="18.0" />
                            </font>
                            <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                            </padding>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </TextArea>
-                        <HBox alignment="TOP_RIGHT" layoutY="75.0" prefHeight="70.0" prefWidth="738.0">
+                        <HBox alignment="TOP_RIGHT" layoutY="75.0" prefHeight="70.0" prefWidth="713.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addPost" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Add post">
+                              <Button mnemonicParsing="false" onAction="#addPost" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Add Post">
                                  <font>
-                                    <Font name="Ebrima Bold" size="20.0" />
+                                    <Font name="Ebrima Bold" size="14.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets top="12.0" />
+                                    <Insets top="20.0" />
                                  </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
                               </Button>
                            </children>
                            <padding>
@@ -358,23 +373,32 @@
                            </padding>
                         </HBox>
                      </children>
+                     <opaqueInsets>
+                        <Insets top="10.0" />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
                   </Pane>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="582.0" prefWidth="528.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" prefHeight="651.0" prefWidth="708.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
-                           <children>
-                              <ListView fx:id="feedPagePostList" prefHeight="644.0" prefWidth="738.0" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </ScrollPane>
+                <AnchorPane minHeight="0.0" prefHeight="577.0" prefWidth="903.0">
+                     <children>
+                        <ListView fx:id="feedPagePostList" focusTraversable="false" layoutY="3.0" prefHeight="572.0" prefWidth="752.0" styleClass="feed">
+                           <padding>
+                              <Insets bottom="30.0" left="30.0" right="30.0" top="5.0" />
+                           </padding>
+                        </ListView>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>
+         <effect>
+            <InnerShadow color="#0000004d" height="0.0" radius="4.5" width="20.0" />
+         </effect>
       </Pane>
       <VBox prefHeight="720.0" prefWidth="480.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Label text="Add Friends!" textFill="#393939">
+            <Label text="Search for Friends" textFill="#393939">
                <font>
                   <Font name="Ebrima Bold" size="18.0" />
                </font>
@@ -413,6 +437,9 @@
          </children>
          <HBox.margin>
             <Insets left="15.0" right="15.0" />
-         </HBox.margin></VBox>
+         </HBox.margin>
+         <effect>
+            <DropShadow color="#00000033" height="0.0" offsetX="-3.0" radius="3.25" width="15.0" />
+         </effect></VBox>
    </children>
 </HBox>

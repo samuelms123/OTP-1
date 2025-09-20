@@ -20,7 +20,8 @@ import java.util.List;
 public class PostCellController {
     private static final double LIST_CELL_HEIGHT = 24.0;
     @FXML private TextField commentField;
-    @FXML private Label authorLabel;
+    @FXML private Label authorUsername;
+    @FXML private Label authorRealName;
     @FXML private Label contentLabel;
     @FXML private Button likeButton;
     @FXML private Button commentButton;
@@ -36,7 +37,8 @@ public class PostCellController {
     public void setPost(Post post) {
         this.post = post;
         User author = userService.getUserById(post.getUserId());
-        authorLabel.setText(author != null ? author.getUsername() : "Unknown User");
+        authorRealName.setText(author != null ? author.getFirstName() + " " + author.getLastName() : "Unknown User");
+        authorUsername.setText(author != null ? "@" + author.getUsername() : "Unknown User");
         contentLabel.setText(post.getContent());
     }
 
@@ -74,7 +76,10 @@ public class PostCellController {
         postComments.setFixedCellSize(LIST_CELL_HEIGHT);
 
         // like service should be called here
-        likeButton.setOnAction(e -> System.out.println("Liked post " + post.getUserId()));
+        likeButton.setOnAction(e -> {
+                    System.out.println("Liked post " + post.getUserId());
+                    likeButton.setText("0" + " Likes"); //put here the amount of likes!!?!?!?!?!?
+                });
         commentButton.setOnAction(this::addComment);
     }
 }
