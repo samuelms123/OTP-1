@@ -108,7 +108,7 @@ public class AppController {
     public boolean IsUserFollowed(User userToCheck) {
         User loggedUser = SessionManager.getInstance().getUser();
         for (User user : loggedUser.getFollowing()) {
-            if (user == userToCheck) {
+            if (user.getUsername().equals(userToCheck.getUsername())) {
                 return true;
             }
         }
