@@ -9,20 +9,15 @@ import application.model.service.UserService;
 import application.utils.Paths;
 import application.view.GUI;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 public class AppController {
@@ -144,7 +139,7 @@ public class AppController {
         }
 
         // implementation of images still missing
-        Post post = new Post(1,content, "");
+        Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "");
         PostResult result = postService.makePost(post);
         // Make UI error message in case of access denied
         System.out.println(result);
@@ -169,11 +164,15 @@ public class AppController {
                     setGraphic(null);
                 } else {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.POST));
-                        Node cellRoot = loader.load();
-                        PostCellController controller = loader.getController();
+                        FXMLLoader postloader = new FXMLLoader(getClass().getResource(Paths.POST));
+                        Node cellRoot = postloader.load();
+                        PostCellController controller = postloader.getController();
                         controller.setPost(post);
+                        controller.setComments(postService.getCommentsForPost(post.getId()));
                         setGraphic(cellRoot);
+// TODO: If comment cell loading is needed in future, implement usage here.
+// FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
+// Node comment = commentloader.load();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
