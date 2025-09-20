@@ -170,10 +170,9 @@ public class AppController {
                         controller.setPost(post);
                         controller.setComments(postService.getCommentsForPost(post.getId()));
                         setGraphic(cellRoot);
-                        FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
-                        Node comment = commentloader.load();
-
-
+// TODO: If comment cell loading is needed in future, implement usage here.
+// FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
+// Node comment = commentloader.load();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
