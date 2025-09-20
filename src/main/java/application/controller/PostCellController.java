@@ -32,7 +32,6 @@ public class PostCellController {
     private ObservableList<String> commentItems = FXCollections.observableArrayList();
 
     private Post post;
-    private Comment comment;
 
     public void setPost(Post post) {
         this.post = post;
