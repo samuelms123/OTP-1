@@ -31,10 +31,10 @@ public class CommentDao implements IDao<Comment>{
     }
 
     // find all comments by given post id
-    public List<Comment> findByPostId(int postId) {
+    public List<Comment> findCommentsByPostId(int postId) {
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-            List<Comment> comments = em.createQuery("SELECT c FROM Comment c WHERE c.post.id = :postId", Comment.class)
+            List<Comment> comments = em.createQuery("SELECT c FROM Comment c WHERE c.post_id = :postId", Comment.class)
                     .setParameter("postId", postId)
                     .getResultList();
             return comments;

@@ -4,39 +4,31 @@ import application.model.data_objects.PostResult;
 import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.AuthService;
-import application.model.service.CommentService;
 import application.model.service.PostService;
 import application.model.service.UserService;
 import application.utils.Paths;
 import application.view.GUI;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 public class AppController {
     PostService postService;
     AuthService authService;
     UserService userService;
-    CommentService commentService;
 
     public AppController() {
 
         postService = new PostService();
         userService = new UserService();
-        commentService = new CommentService();
     }
 
     // PROFILE
@@ -154,10 +146,6 @@ public class AppController {
         updateFeed();
     }
 
-    public void addComment() {
-
-    }
-
     public void changeInfo(ActionEvent actionEvent) {
         System.out.println("changeInfo");
     }
@@ -180,6 +168,7 @@ public class AppController {
                         Node cellRoot = postloader.load();
                         PostCellController controller = postloader.getController();
                         controller.setPost(post);
+                        controller.setComments(postService.getCommentsForPost(post.getId()));
                         setGraphic(cellRoot);
                         FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
                         Node comment = commentloader.load();
