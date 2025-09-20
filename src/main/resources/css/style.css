@@ -17,6 +17,31 @@
     -fx-text-fill: #da42d9;
 }
 
+.comment-button{
+    -fx-background-color: white;
+    -fx-background-radius: 100;
+    -fx-text-fill: #914182;
+    -fx-border-color: #914182;
+    -fx-border-width: 1;
+    -fx-border-radius: 100;
+    padding: 10;
+}
+
+.comment-button:hover{
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #da42d9;
+}
+
+.interactive-button{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.interactive-button:hover{
+    -fx-text-fill: #914182;
+    -fx-underline: true;
+}
+
 .nav-button{
     -fx-background-color: transparent;
 }
@@ -35,4 +60,49 @@
 
 .logout-button:hover{
     -fx-background-color: #ff1616;
+}
+
+/*FEED WINDOW*/
+.feed, .feed .list-cell .list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+/*COMMENT BOX*/
+.feed .list-cell .list-view{
+    -fx-border-color: white;
+}
+
+
+
+.feed:focused, .feed .list-cell .list-view:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.feed .scroll-bar:horizontal,
+.feed .scroll-bar:vertical {
+    -fx-opacity: 0;  /* Hides the scrollbar */
+}
+
+
+.feed .list-cell,
+.feed .list-cell:selected,
+.feed .list-cell:focused,
+.feed .list-cell:hover,
+.feed .list-cell:focused:selected
+ {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.post{
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
 }

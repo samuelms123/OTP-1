@@ -19,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AppController {
@@ -56,7 +58,8 @@ public class AppController {
     private Label emailFieldCenter;
     @FXML
     private Label birthdayFieldCenter;
-
+    @FXML private Label appRealNameField;
+    @FXML private Label appUsernameField;
 
     @FXML
     private VBox feedPage;
@@ -72,6 +75,8 @@ public class AppController {
     @FXML
     public void initialize() { // Called automatically when AppController is made aka when switching the scene
         updateFeed();
+        updateNavUserInformation();
+
         // Add search listener
         searchFriendTextField.textProperty().addListener((observable, oldText, newText) -> {
             if (newText.isEmpty()) {
@@ -131,7 +136,7 @@ public class AppController {
 
     public void setProfileInfo(User user) {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
-        usernameFieldTop.setText(user.getUsername());
+        usernameFieldTop.setText("@" + user.getUsername());
         // set like amounts
         //posts
 
@@ -164,6 +169,7 @@ public class AppController {
         PostResult result = postService.makePost(post);
         // Make UI error message in case of access denied
         System.out.println(result);
+        postContent.clear();
         updateFeed();
     }
 
@@ -195,24 +201,32 @@ public class AppController {
     }
 
     private void updateFeed() {
-        feedPagePostList.setCellFactory(listView -> new ListCell<>() {
+        feedPagePostList.setCellFactory(listView -> new ListCell<Post>() {
             @Override
             protected void updateItem(Post post, boolean empty) {
                 super.updateItem(post, empty);
 
+                // Handle empty cells (gaps between posts)
                 if (empty || post == null) {
                     setGraphic(null);
+                    setStyle("-fx-background-color: transparent;");
                 } else {
                     try {
+                        // Load the post cell using FXML
                         FXMLLoader postloader = new FXMLLoader(getClass().getResource(Paths.POST));
                         Node cellRoot = postloader.load();
                         PostCellController controller = postloader.getController();
+
+                        // Set the post and its comments in the controller
                         controller.setPost(post);
                         controller.setComments(postService.getCommentsForPost(post.getId()));
+
+                        // Set the graphic for the cell (this will render the post content)
                         setGraphic(cellRoot);
-// TODO: If comment cell loading is needed in future, implement usage here.
-// FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
-// Node comment = commentloader.load();
+
+                        // TODO: If comment cell loading is needed in future, implement usage here.
+                        // FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
+                        // Node comment = commentloader.load();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -220,6 +234,27 @@ public class AppController {
             }
         });
 
-        feedPagePostList.getItems().setAll(postService.getAllPosts());
+        // Reverse posts - Latest first
+        List<Post> posts = postService.getAllPosts();
+        Collections.reverse(posts);  // Reverse posts to show the latest first
+
+        List<Post> postsWithGaps = new ArrayList<>();
+        for (int i = 0; i < posts.size(); i++) {
+            postsWithGaps.add(posts.get(i));  // Add the post itself
+
+            // Add an empty cell (gap) after each post, except after the last one
+            if (i < posts.size() - 1) {
+                postsWithGaps.add(null);  // Empty cell as a gap between posts
+            }
+        }
+
+        // Set the items for the ListView
+        feedPagePostList.getItems().setAll(postsWithGaps);
+    }
+
+    private void updateNavUserInformation(){
+        User user = SessionManager.getInstance().getUser();
+        appRealNameField.setText(user.getFirstName() + " " + user.getLastName());
+        appUsernameField.setText("@" + user.getUsername());
     }
 }
