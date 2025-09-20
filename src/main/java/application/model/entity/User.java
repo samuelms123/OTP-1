@@ -1,6 +1,9 @@
 package application.model.entity;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Entity class representing an entry in the "users" table.
  * This class maps user data stored in the database.
@@ -19,6 +22,19 @@ public class User {
     private int id;
 
     //private LocalDate date;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "followers",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+
+    private Set<User> following = new HashSet<>(); // Set of User entities who this User entity follows
+
+    @ManyToMany(mappedBy = "following", fetch = FetchType.LAZY) // Followers are always handled through following set
+    private Set<User> followers = new HashSet<>(); // Set of User entities who are following this User entity
+
 
     @Column(name="first_name")
     private String firstName;
@@ -81,5 +97,11 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public Set<User> getFollowing() {return following;}
+    public void setFollowing(Set<User> following) {this.following = following;}
+
+    public Set<User> getFollowers() {return followers;}
+    public void setFollowers(Set<User> followers) {this.followers = followers;}
 
 }

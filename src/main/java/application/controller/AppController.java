@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.data_objects.CommonResult;
 import application.model.data_objects.PostResult;
 import application.model.entity.Post;
 import application.model.entity.User;
@@ -24,6 +25,7 @@ public class AppController {
     PostService postService;
     AuthService authService;
     UserService userService;
+    User currentlyOpenedUserProfile;
 
     public AppController() {
 
@@ -102,10 +104,28 @@ public class AppController {
         toggleProfilePage();
     }
 
+    // This check is just for deciding which button to show in profile add friend/remove friend!
+    public boolean IsUserFollowed(User userToCheck) {
+        User loggedUser = SessionManager.getInstance().getUser();
+        for (User user : loggedUser.getFollowing()) {
+            if (user.getUsername().equals(userToCheck.getUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void openGuestProfilePage(User user) {
         changeInfoButton.setVisible(false);
         addFriendButton.setVisible(true);
+        currentlyOpenedUserProfile = user;
         setProfileInfo(user);
+        if (IsUserFollowed(user)) {
+            addFriendButton.setText("Remove friend");
+        }
+        else {
+            addFriendButton.setText("Add friend");
+        }
         toggleProfilePage();
     }
 
@@ -124,6 +144,7 @@ public class AppController {
     public void openFeedPage(ActionEvent actionEvent) {
         profilePage.setVisible(false);
         feedPage.setVisible(true);
+        currentlyOpenedUserProfile = null;
         updateFeed();
     }
 
@@ -151,7 +172,26 @@ public class AppController {
     }
 
     public void addFriend(ActionEvent actionEvent) {
-        System.out.println("addFriend");
+        User followerUser = SessionManager.getInstance().getUser();
+        User followedUser =  currentlyOpenedUserProfile;
+
+        if (followedUser == null) {
+            System.out.println("Bug in addFriend, followed user is null");
+            return;
+        }
+
+        String buttonText = addFriendButton.getText();
+
+        if (buttonText.equals("Add friend")) { // ADD FRIED BUTTON
+            CommonResult result = userService.followUser(followerUser, followedUser);
+            addFriendButton.setText("Remove friend");
+            System.out.println(result.getMessage());
+        }
+        else { // REMOVE FRIEND BUTTON
+            CommonResult result = userService.unfollowUser(followerUser, followedUser);
+            addFriendButton.setText("Add friend");
+            System.out.println(result.getMessage());
+        }
     }
 
     private void updateFeed() {

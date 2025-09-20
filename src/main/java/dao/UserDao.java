@@ -51,6 +51,21 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
         em.getTransaction().commit();
     }
 
+    // Save updated user ENTITY
+    public boolean merge(User user) {
+        try {
+            EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+            em.getTransaction().begin();
+            em.merge(user);
+            em.getTransaction().commit();
+            return true;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
     // find user by id
     @Override
     public User find(int id) {

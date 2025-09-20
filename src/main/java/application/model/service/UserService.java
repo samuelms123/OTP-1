@@ -1,6 +1,7 @@
 package application.model.service;
 
 import application.controller.SessionManager;
+import application.model.data_objects.CommonResult;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
@@ -73,6 +74,26 @@ public class UserService {
 
     public User getUserByUsername(String username) {
         return userDao.findUser(username);
+    }
+
+    public CommonResult followUser(User follower, User followed) {
+        follower.getFollowing().add(followed);
+        if (userDao.merge(follower)) {
+            return new CommonResult(true, "User followed successfully");
+        }
+        else {
+            return new CommonResult(false, "User followed unsuccessfully");
+        }
+    }
+
+    public CommonResult unfollowUser(User unFollower, User unFollowed) {
+        unFollower.getFollowing().remove(unFollowed);
+        if (userDao.merge(unFollower)) {
+            return new CommonResult(true, "User unfollowed successfully");
+        }
+        else {
+            return new CommonResult(false, "User unfollowed unsuccessfully");
+        }
     }
 
 }
