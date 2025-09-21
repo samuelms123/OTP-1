@@ -95,13 +95,14 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
         }
     }
 
-    public List<String> findUsersByQuery(String query) {
+    public List<String> findUsersByQuery(String query, String exclude) {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
         try {
             return em.createQuery(
-                            "SELECT u.username FROM User u WHERE u.username LIKE :username", String.class
+                            "SELECT u.username FROM User u WHERE u.username LIKE :username AND u.username <> :exclude", String.class
                     )
                     .setParameter("username", query + "%")
+                    .setParameter("exclude", exclude)
                     .setMaxResults(5)
                     .getResultList();
         } catch (Exception e) {

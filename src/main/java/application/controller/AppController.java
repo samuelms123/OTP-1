@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class AppController {
     PostService postService;
@@ -51,6 +52,8 @@ public class AppController {
     private Label likeAmountField;
     @FXML
     private Label postAmountField;
+    @FXML
+    private Label friendAmountField;
     @FXML
     private Label realNameFieldCenter;
     @FXML
@@ -84,7 +87,7 @@ public class AppController {
                 searchFriendList.getItems().clear();
                 return;
             }
-            List<String> users = userService.searchUsers(newText);
+            List<String> users = userService.searchUsers(newText, SessionManager.getInstance().getUser().getUsername());
             searchFriendList.setItems(FXCollections.observableList(users));
         });
 
@@ -92,8 +95,6 @@ public class AppController {
         searchFriendList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             User user = userService.getUserByUsername(newValue);
             openGuestProfilePage(user);
-
-            // STILL NEED TO PREVENT FINDING OWN USER
         });
     }
 
@@ -135,9 +136,15 @@ public class AppController {
         toggleProfilePage();
     }
 
+    public int countFriends(User user) {
+        Set<User> following = user.getFollowing();
+        return following.size();
+    }
+
     public void setProfileInfo(User user) {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
         usernameFieldTop.setText("@" + user.getUsername());
+        friendAmountField.setText("" + countFriends(user));
         // set like amounts
         //posts
 

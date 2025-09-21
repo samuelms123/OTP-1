@@ -68,8 +68,8 @@ public class UserService {
         return new LoginResult(false, "Password incorrect");
     }
 
-    public List<String> searchUsers(String query) {
-        return userDao.findUsersByQuery(query);
+    public List<String> searchUsers(String query, String exclude) {
+        return userDao.findUsersByQuery(query, exclude);
     }
 
     public User getUserByUsername(String username) {
@@ -77,6 +77,10 @@ public class UserService {
     }
 
     public CommonResult followUser(User follower, User followed) {
+        if (authService.authMe(SessionManager.getInstance().getToken()) == null) {
+            return new CommonResult(false, "Authentication failed");
+        }
+
         follower.getFollowing().add(followed);
         if (userDao.merge(follower)) {
             return new CommonResult(true, "User followed successfully");
@@ -87,6 +91,10 @@ public class UserService {
     }
 
     public CommonResult unfollowUser(User unFollower, User unFollowed) {
+        if (authService.authMe(SessionManager.getInstance().getToken()) == null) {
+            return new CommonResult(false, "Authentication failed");
+        }
+
         unFollower.getFollowing().remove(unFollowed);
         if (userDao.merge(unFollower)) {
             return new CommonResult(true, "User unfollowed successfully");
