@@ -5,9 +5,11 @@ import application.model.data_objects.LoginResult;
 import application.model.data_objects.PostResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.Comment;
+import application.model.entity.Like;
 import application.model.entity.Post;
 import application.model.entity.User;
 import dao.CommentDao;
+import dao.LikeDao;
 import dao.PostDao;
 import dao.UserDao;
 
@@ -17,11 +19,13 @@ public class PostService {
     PostDao postDao;
     AuthService authService;
     CommentDao commentDao;
+    LikeDao likeDao;
 
     public PostService() {
         postDao = new PostDao();
         authService = new AuthService();
         commentDao = new CommentDao();
+        likeDao = new LikeDao();
     }
 
     public PostResult makePost(Post post) {
@@ -38,6 +42,20 @@ public class PostService {
             return new PostResult(true, "Comment created successfully");
         }
         return new PostResult(false, "Access denied");
+    }
+
+    public boolean likePost(User user, Post post) {
+        if (authService.authMe(SessionManager.getInstance().getToken()) != null) {
+            if (!likeDao.checkIfUserLikedPost(post.getId(), user.getId())) {
+                likeDao.persist(new Like(user, post));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Like> getLikesForPost(int postId) {
+        return likeDao.findLikesByPostId(postId);
     }
 
     public List<Post> getAllPosts() {

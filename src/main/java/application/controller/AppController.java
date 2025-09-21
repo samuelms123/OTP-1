@@ -224,9 +224,7 @@ public class AppController {
                         // Set the graphic for the cell (this will render the post content)
                         setGraphic(cellRoot);
 
-                        // TODO: If comment cell loading is needed in future, implement usage here.
-                        // FXMLLoader commentloader = new FXMLLoader(getClass().getResource(Paths.COMMENT));
-                        // Node comment = commentloader.load();
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
