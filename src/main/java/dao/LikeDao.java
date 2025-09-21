@@ -78,6 +78,9 @@ public class LikeDao implements IDao<Like>{
     public void deleteLike(Like like) {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
         em.getTransaction().begin();
+        if (!em.contains(like)) {
+            like = em.merge(like);
+        }
         em.remove(like);
         em.getTransaction().commit();
     }
