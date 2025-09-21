@@ -77,6 +77,10 @@ public class UserService {
     }
 
     public CommonResult followUser(User follower, User followed) {
+        if (authService.authMe(SessionManager.getInstance().getToken()) == null) {
+            return new CommonResult(false, "Authentication failed");
+        }
+
         follower.getFollowing().add(followed);
         if (userDao.merge(follower)) {
             return new CommonResult(true, "User followed successfully");
@@ -87,6 +91,10 @@ public class UserService {
     }
 
     public CommonResult unfollowUser(User unFollower, User unFollowed) {
+        if (authService.authMe(SessionManager.getInstance().getToken()) == null) {
+            return new CommonResult(false, "Authentication failed");
+        }
+
         unFollower.getFollowing().remove(unFollowed);
         if (userDao.merge(unFollower)) {
             return new CommonResult(true, "User unfollowed successfully");

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class AppController {
     PostService postService;
@@ -51,6 +52,8 @@ public class AppController {
     private Label likeAmountField;
     @FXML
     private Label postAmountField;
+    @FXML
+    private Label friendAmountField;
     @FXML
     private Label realNameFieldCenter;
     @FXML
@@ -135,9 +138,19 @@ public class AppController {
         toggleProfilePage();
     }
 
+    public int countFriends(User user) {
+        int count = 0;
+        Set<User> following = user.getFollowing();
+        for (User u : following) {
+            count ++;
+        }
+        return count;
+    }
+
     public void setProfileInfo(User user) {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
         usernameFieldTop.setText("@" + user.getUsername());
+        friendAmountField.setText("" + countFriends(user));
         // set like amounts
         //posts
 
