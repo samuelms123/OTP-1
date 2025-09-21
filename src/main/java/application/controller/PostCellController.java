@@ -52,6 +52,10 @@ public class PostCellController {
         }
     }
 
+    public void setLikes(int likeCount) {
+        likeButton.setText(likeCount + " Likes");
+    }
+
     public void addComment(ActionEvent actionEvent) {
         String commentText = commentField.getText();
         if (!commentText.isEmpty()) {
@@ -60,6 +64,14 @@ public class PostCellController {
         }
         // persist comment on this post
         postService.makeComment(new Comment(SessionManager.getInstance().getUser().getId(), post.getId(), commentText));
+    }
+
+    public void addLike() {
+        // persist like on this post
+        if (postService.likePost(SessionManager.getInstance().getUser(), post)) {
+            int currentLikes = Integer.parseInt(likeButton.getText().split(" ")[0]);
+            setLikes(currentLikes + 1);
+        }
     }
 
     @FXML
@@ -77,8 +89,8 @@ public class PostCellController {
 
         // like service should be called here
         likeButton.setOnAction(e -> {
-                    System.out.println("Liked post " + post.getUserId());
-                    likeButton.setText("0" + " Likes"); //put here the amount of likes!!?!?!?!?!?
+                    System.out.println("Liked post " + post.getId());
+                    addLike();
                 });
         commentButton.setOnAction(this::addComment);
     }

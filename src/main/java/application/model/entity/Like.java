@@ -26,6 +26,7 @@ public class Like {
     public Like(User user, Post post) {
         this.user = user;
         this.post = post;
+        this.id = new LikeId(user.getId(), post.getId());
     }
 
     // Getters and Setters
@@ -43,6 +44,10 @@ public class Like {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public void setId(LikeId id) {
+        this.id = id;
     }
 
     @Embeddable

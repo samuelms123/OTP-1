@@ -34,13 +34,13 @@ public class LikeDao implements IDao<Like>{
     public List<Like> findLikesByPostId(int postId) {
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-            List<Like> likes = em.createQuery("SELECT c FROM Comment c WHERE c.post_id = :postId", Like.class)
+            List<Like> likes = em.createQuery("SELECT l FROM Like l WHERE l.post.id = :postId", Like.class)
                     .setParameter("postId", postId)
                     .getResultList();
             return likes;
         } catch (Exception e) {
-            System.err.println("CommentDao.java: Error finding comments by post ID. (Check connection to database.)");
-            return List.of(); // return empty list
+            System.err.println("LikeDao.java: Error finding likes by post id. (Check connection to database.)");
+            return List.of(); //return empty
         }
     }
 
