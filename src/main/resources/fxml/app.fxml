@@ -187,7 +187,7 @@
          <children>
             <AnchorPane fx:id="profilePage" prefHeight="714.0" prefWidth="713.0" style="-fx-background-color: #F8FAFC;" visible="false">
                <children>
-                  <VBox prefHeight="714.0" prefWidth="719.0">
+                  <VBox prefHeight="720.0" prefWidth="739.0">
                      <children>
                         <HBox prefHeight="139.0" prefWidth="763.0" style="-fx-background-color: white;">
                            <children>
@@ -359,6 +359,10 @@
                </children>
             </AnchorPane>
             <AnchorPane fx:id="feedPage" layoutX="-19.0" layoutY="-1.0" prefHeight="714.0" prefWidth="782.0" style="-fx-background-color: #F8FAFC;">
+            <VBox fx:id="feedPage" prefHeight="720.0" prefWidth="776.0" style="-fx-background-color: #F8FAFC;">
+               <effect>
+                  <InnerShadow color="#0000003a" height="0.0" radius="1.7850000000000001" width="9.14" />
+               </effect>
                <children>
                   <ListView fx:id="feedPagePostList" focusTraversable="false" layoutX="-8.0" prefHeight="756.0" prefWidth="790.0" styleClass="feed">
                      <padding>
@@ -438,7 +442,7 @@
             </AnchorPane>
          </children>
          <effect>
-            <InnerShadow color="#0000004d" height="0.0" radius="4.5" width="20.0" />
+            <InnerShadow color="#0000004d" height="10.0" radius="7.0" width="20.0" />
          </effect>
       </Pane>
       <VBox prefHeight="720.0" prefWidth="480.0" style="-fx-background-color: #ffffff;">

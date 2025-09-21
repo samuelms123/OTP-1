@@ -100,6 +100,7 @@ public class LogInController {
 
     public void createAccount(ActionEvent actionEvent){
         resultText.setText("");
+
         String password = newPassword.getText();
         String passwordConfirm = newPasswordConfirm.getText();
 
@@ -150,5 +151,23 @@ public class LogInController {
         else {
             resultText.setText(result.getMessage());
         }
+    }
+
+    public void goBackToLogin(ActionEvent actionEvent) throws IOException {
+        //empty all fields
+        newFirstname.clear();
+        newLastname.clear();
+        newUsername.clear();
+        newEmail.clear();
+        newBirthdate.setValue(null);
+        loginUsername.clear();
+        loginPassword.clear();
+        newPassword.clear();
+        newPasswordConfirm.clear();
+        resultText.setText("");
+
+        //change back to log in
+        createAccountMenu.setVisible(false);
+        loginMenu.setVisible(true);
     }
 }

@@ -191,7 +191,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label text="Username:">
+                                    <Label text="Last name:">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -199,7 +199,7 @@
                                           <Insets bottom="5.0" left="50.0" top="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="newUsername" prefHeight="52.0" prefWidth="272.0" scaleShape="false" style="-fx-background-color: #9BA9BC; -fx-background-radius: 40; -fx-border-color: transparent;">
+                                    <TextField fx:id="newLastname" prefHeight="52.0" prefWidth="272.0" scaleShape="false" style="-fx-background-color: #9BA9BC; -fx-background-radius: 40; -fx-border-color: transparent;">
                                        <font>
                                           <Font name="Ebrima Bold" size="14.0" />
                                        </font>
@@ -229,7 +229,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label text="Birthdate:">
+                                    <Label text="Birthdate: (DD.MM.YYYY)">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -257,7 +257,7 @@
                                           <Insets bottom="30.0" left="60.0" top="30.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Last name:">
+                                    <Label text="Username:">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -265,7 +265,7 @@
                                           <Insets bottom="5.0" left="50.0" top="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="newLastname" prefHeight="52.0" prefWidth="272.0" scaleShape="false" style="-fx-background-color: #9BA9BC; -fx-background-radius: 40; -fx-border-color: transparent;">
+                                    <TextField fx:id="newUsername" prefHeight="52.0" prefWidth="272.0" scaleShape="false" style="-fx-background-color: #9BA9BC; -fx-background-radius: 40; -fx-border-color: transparent;">
                                        <font>
                                           <Font name="Ebrima Bold" size="14.0" />
                                        </font>
@@ -314,14 +314,30 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </PasswordField>
-                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#createAccount" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="Register" textAlignment="CENTER" textFill="WHITE">
-                                       <font>
-                                          <Font name="Ebrima Bold" size="20.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="20.0" left="120.0" top="30.0" />
-                                       </VBox.margin>
-                                    </Button>
+                                    <HBox>
+                                       <Button alignment="CENTER" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="red-button" text="Back" textAlignment="CENTER" textFill="WHITE">
+                                          <HBox.margin>
+                                             <Insets top="25.0" left="50.0" />
+                                          </HBox.margin>
+                                          <font>
+                                             <Font name="Ebrima Bold" size="20.0" />
+                                          </font>
+                                          <VBox.margin>
+                                             <Insets bottom="20.0" left="120.0" top="30.0" />
+                                          </VBox.margin>
+                                       </Button>
+                                       <Button alignment="CENTER" mnemonicParsing="false" onAction="#createAccount" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="Register" textAlignment="CENTER" textFill="WHITE">
+                                          <HBox.margin>
+                                             <Insets top="25.0" left="26.0" right="25.0" />
+                                          </HBox.margin>
+                                          <font>
+                                             <Font name="Ebrima Bold" size="20.0" />
+                                          </font>
+                                          <VBox.margin>
+                                             <Insets bottom="20.0" left="120.0" top="30.0" />
+                                          </VBox.margin>
+                                       </Button>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>

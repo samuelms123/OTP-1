@@ -9,6 +9,17 @@
     -fx-background-color: #75366a;
 }
 
+.red-button {
+    -fx-background-color: #b31414;
+    -fx-text-fill: white;
+    -fx-background-radius: 40;
+    -fx-border-color: transparent;
+}
+
+.red-button:hover {
+    -fx-background-color: #8f1414;
+}
+
 .forgot-password{
     -fx-text-fill: #914182;
 }
@@ -24,7 +35,6 @@
     -fx-border-color: #914182;
     -fx-border-width: 1;
     -fx-border-radius: 100;
-    padding: 10;
 }
 
 .comment-button:hover{
