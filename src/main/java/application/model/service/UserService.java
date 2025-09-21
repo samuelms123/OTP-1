@@ -68,8 +68,8 @@ public class UserService {
         return new LoginResult(false, "Password incorrect");
     }
 
-    public List<String> searchUsers(String query) {
-        return userDao.findUsersByQuery(query);
+    public List<String> searchUsers(String query, String exclude) {
+        return userDao.findUsersByQuery(query, exclude);
     }
 
     public User getUserByUsername(String username) {

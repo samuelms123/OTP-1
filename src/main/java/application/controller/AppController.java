@@ -87,7 +87,7 @@ public class AppController {
                 searchFriendList.getItems().clear();
                 return;
             }
-            List<String> users = userService.searchUsers(newText);
+            List<String> users = userService.searchUsers(newText, SessionManager.getInstance().getUser().getUsername());
             searchFriendList.setItems(FXCollections.observableList(users));
         });
 
@@ -95,8 +95,6 @@ public class AppController {
         searchFriendList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             User user = userService.getUserByUsername(newValue);
             openGuestProfilePage(user);
-
-            // STILL NEED TO PREVENT FINDING OWN USER
         });
     }
 
@@ -139,12 +137,8 @@ public class AppController {
     }
 
     public int countFriends(User user) {
-        int count = 0;
         Set<User> following = user.getFollowing();
-        for (User u : following) {
-            count ++;
-        }
-        return count;
+        return following.size();
     }
 
     public void setProfileInfo(User user) {
