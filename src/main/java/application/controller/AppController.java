@@ -17,7 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +45,10 @@ public class AppController {
     @FXML
     private Button addFriendButton;
     @FXML
+    private Button openNewPostPanelButton;
+    @FXML
+    private Button cancelNewPostButton;
+    @FXML
     private Label realNameFieldTop;
     @FXML
     private Label usernameFieldTop;
@@ -66,7 +70,7 @@ public class AppController {
     @FXML private Label appUsernameField;
 
     @FXML
-    private VBox feedPage;
+    private AnchorPane feedPage;
     @FXML
     private TextArea postContent;
     @FXML
@@ -75,6 +79,8 @@ public class AppController {
     private ListView<String> searchFriendList;
     @FXML
     private TextField searchFriendTextField;
+    @FXML
+    private Pane newPostPanel;
 
     @FXML
     public void initialize() { // Called automatically when AppController is made aka when switching the scene
@@ -96,6 +102,9 @@ public class AppController {
             User user = userService.getUserByUsername(newValue);
             openGuestProfilePage(user);
         });
+
+        openNewPostPanelButton.setOnAction(this::toggleNewPostPanel);
+        cancelNewPostButton.setOnAction(this::toggleNewPostPanel);
     }
 
     public void toggleProfilePage() {
@@ -178,6 +187,7 @@ public class AppController {
         // Make UI error message in case of access denied
         System.out.println(result);
         postContent.clear();
+        toggleNewPostPanel(actionEvent);
         updateFeed();
     }
 
@@ -265,5 +275,10 @@ public class AppController {
         User user = SessionManager.getInstance().getUser();
         appRealNameField.setText(user.getFirstName() + " " + user.getLastName());
         appUsernameField.setText("@" + user.getUsername());
+    }
+
+    private void toggleNewPostPanel(ActionEvent actionEvent) {
+        postContent.clear();
+        newPostPanel.setVisible(!newPostPanel.isVisible());
     }
 }

@@ -116,3 +116,7 @@
     -fx-border-width: 1;
     -fx-border-radius: 15;
 }
+
+.opacity{
+    -fx-background-color: black;
+}
