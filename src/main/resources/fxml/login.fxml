@@ -19,7 +19,7 @@
    <children>
       <VBox layoutX="437.0" layoutY="4.0" minWidth="-Infinity" prefHeight="712.0" prefWidth="407.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="204.0" style="-fx-background-image: transparent;">
+            <HBox prefHeight="100.0" prefWidth="204.0">
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
