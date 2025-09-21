@@ -2,6 +2,7 @@ package application.controller;
 
 import application.model.data_objects.CommonResult;
 import application.model.data_objects.PostResult;
+import application.model.entity.Like;
 import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.AuthService;
@@ -217,9 +218,12 @@ public class AppController {
                         Node cellRoot = postloader.load();
                         PostCellController controller = postloader.getController();
 
-                        // Set the post and its comments in the controller
+                        // Set the post, likes and its comments in the controller
                         controller.setPost(post);
                         controller.setComments(postService.getCommentsForPost(post.getId()));
+                        // Get likes
+                        List<Like> likes = postService.getLikesForPost(post.getId());
+                        controller.setLikes(likes.size());
 
                         // Set the graphic for the cell (this will render the post content)
                         setGraphic(cellRoot);

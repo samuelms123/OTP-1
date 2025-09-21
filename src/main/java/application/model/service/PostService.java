@@ -46,7 +46,8 @@ public class PostService {
 
     public boolean likePost(User user, Post post) {
         if (authService.authMe(SessionManager.getInstance().getToken()) != null) {
-            if (!likeDao.checkIfUserLikedPost(post.getId(), user.getId())) {
+            // Correct order: userId first, then postId
+            if (!likeDao.checkIfUserLikedPost(user.getId(), post.getId())) {
                 likeDao.persist(new Like(user, post));
                 return true;
             }
