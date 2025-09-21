@@ -68,6 +68,9 @@ public class LikeDao implements IDao<Like>{
             return em.find(Like.class, likeId);
 
         } catch (Exception e) {
+            // Log the exception to aid debugging
+            System.err.println("Error finding Like for userId=" + userId + ", postId=" + postId);
+            e.printStackTrace();
             return null;
         }
     }
