@@ -53,7 +53,9 @@ public class PostCellController {
     }
 
     public void setLikes(int likeCount) {
-        likeButton.setText(likeCount + " Likes");
+        String plural = likeCount == 1 ? "" : "s";
+
+        likeButton.setText(likeCount + " Like" + plural);
     }
 
     public void addComment(ActionEvent actionEvent) {
@@ -67,10 +69,17 @@ public class PostCellController {
     }
 
     public void addLike() {
-        // persist like on this post
+        // persist like on this post true=newLike, false=removeExistingLike
         if (postService.likePost(SessionManager.getInstance().getUser(), post)) {
             int currentLikes = Integer.parseInt(likeButton.getText().split(" ")[0]);
+
             setLikes(currentLikes + 1);
+            System.out.println("Added like");
+        } else{
+            int currentLikes = Integer.parseInt(likeButton.getText().split(" ")[0]);
+
+            setLikes(currentLikes - 1);
+            System.out.println("Removed like");
         }
     }
 
