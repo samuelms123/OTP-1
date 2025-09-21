@@ -78,6 +78,10 @@ public class PostCellController {
         } else{
             int currentLikes = Integer.parseInt(likeButton.getText().split(" ")[0]);
 
+            //can not go under 0.
+            if(currentLikes <= 0)
+                return;
+
             setLikes(currentLikes - 1);
             System.out.println("Removed like");
         }
