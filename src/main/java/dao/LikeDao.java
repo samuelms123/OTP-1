@@ -60,4 +60,28 @@ public class LikeDao implements IDao<Like>{
             return false;
         }
     }
+
+    public Like findLike(int userId, int postId) {
+        try {
+            EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+            Like.LikeId likeId = new Like.LikeId(userId, postId);
+            return em.find(Like.class, likeId);
+
+        } catch (Exception e) {
+            // Log the exception to aid debugging
+            System.err.println("Error finding Like for userId=" + userId + ", postId=" + postId);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void deleteLike(Like like) {
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        em.getTransaction().begin();
+        if (!em.contains(like)) {
+            like = em.merge(like);
+        }
+        em.remove(like);
+        em.getTransaction().commit();
+    }
 }

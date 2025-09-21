@@ -50,8 +50,17 @@ public class PostService {
             if (!likeDao.checkIfUserLikedPost(user.getId(), post.getId())) {
                 likeDao.persist(new Like(user, post));
                 return true;
+            } else {
+                // User has already liked the post, so remove the like
+                Like existingLike = likeDao.findLike(user.getId(), post.getId());
+                likeDao.deleteLike(existingLike);
+
+                System.out.println("User has already liked the post, so remove the like.");
+                return false;
             }
         }
+
+        System.out.println("Something went wrong with likePost()????");
         return false;
     }
 
