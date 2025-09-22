@@ -76,7 +76,8 @@ public class PostService {
     }
 
     public List<Post> getPostsByFollowers(User user) {
-        Set<User> followers = user.getFollowers();
+        Set<User> followers = user.getFollowing();
+        followers.add(SessionManager.getInstance().getUser()); // include own posts as well
         return postDao.findPostsByUsers(followers);
     }
 
