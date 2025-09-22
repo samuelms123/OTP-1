@@ -7,11 +7,24 @@ pipeline {
     stages {
         stage('Create .env file') {
             steps {
+                powershell '''
+                    Write-Output "Creating .env file..."
+                    "SALT_ROUNDS=$env:SALT_ROUNDS" | Out-File -FilePath .env -Encoding ASCII
+                    "JWT_SECRET=$env:JWT_SECRET" | Out-File -FilePath .env -Encoding ASCII -Append
+                    Get-Content .env
+                '''
+            }
+        }
+        stage('Verify .env') {
+            steps {
                 bat '''
-                    echo Creating .env file...
-                    echo SALT_ROUNDS=%SALT_ROUNDS% > .env
-                    echo JWT_SECRET=%JWT_SECRET% >> .env
-                    type .env
+                    echo Checking if .env file exists...
+                    if exist .env (
+                        echo .env file found!
+                        type .env
+                    ) else (
+                        echo .env file NOT found!
+                    )
                 '''
             }
         }
@@ -22,7 +35,7 @@ pipeline {
         }
         stage('Cleanup') {
             steps {
-                bat 'del .env'
+                powershell 'Remove-Item .env -Force -ErrorAction SilentlyContinue'
             }
         }
     }
