@@ -5,24 +5,24 @@ pipeline {
         JWT_SECRET = credentials('secret-secret')
     }
     stages {
-        stage('Setup') {
+        stage('Create .env file') {
             steps {
-                sh '''
-                    # Create .env file for the application
-                    echo "SALT_ROUNDS=$SALT_ROUNDS" > .env
-                    echo "JWT_SECRET=$JWT_SECRET" >> .env
-                    chmod 600 .env  # Secure the file
+                bat '''
+                    echo Creating .env file...
+                    echo SALT_ROUNDS=%SALT_ROUNDS% > .env
+                    echo JWT_SECRET=%JWT_SECRET% >> .env
+                    type .env
                 '''
             }
         }
-        stage('Test') {
+        stage('Build and Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn clean install'
             }
         }
         stage('Cleanup') {
             steps {
-                sh 'rm -f .env'  # Remove sensitive file after tests
+                bat 'del .env'
             }
         }
     }
