@@ -33,6 +33,18 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
+        stage('Code Coverage') {
+            steps {
+                // Publish JaCoCo coverage report using modern coverage API
+                publishCoverage(
+                    adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')],
+                    sourceFileResolver: sourceFiles('NEVER_STORE')
+                )
+
+                // Archive the HTML coverage report
+                archiveArtifacts artifacts: 'target/site/jacoco/**/*', allowEmptyArchive: true
+            }
+        }
         stage('Cleanup') {
             steps {
                 powershell 'Remove-Item .env -Force -ErrorAction SilentlyContinue'
@@ -41,23 +53,15 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'target/site/jacoco/**/*', allowEmptyArchive: true
+            // Publish JUnit test results
             junit 'target/surefire-reports/**/*.xml'
 
-            jacoco(
-                execPattern: 'target/jacoco.exec',
-                classPattern: 'target/classes',
-                sourcePattern: 'src/main/java',
-                exclusionPattern: 'src/test/*',
-                skipCopyOfSrcFiles: false,
-                skipFailedBuild: true
+            // Optional: Record coverage trends (alternative approach)
+            recordCoverage(
+                tools: [
+                    [tool: jacoco(pattern: 'target/site/jacoco/jacoco.xml')]
+                ]
             )
-        }
-        success {
-            echo 'Build and tests completed successfully!'
-        }
-        failure {
-            echo 'Build or tests failed!'
         }
     }
 }
