@@ -254,7 +254,8 @@ public class AppController {
         });
 
         // Reverse posts - Latest first
-        List<Post> posts = postService.getAllPosts();
+        // add friends only post visibility here, SHOULD NOT GET ALL POSTS
+        List<Post> posts = postService.getPostsByFollowers(SessionManager.getInstance().getUser());
         Collections.reverse(posts);  // Reverse posts to show the latest first
 
         List<Post> postsWithGaps = new ArrayList<>();

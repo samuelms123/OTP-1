@@ -111,8 +111,6 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
         }
     }
 
-
-
     /**
      * Method for finding all User objects from the database.
      *

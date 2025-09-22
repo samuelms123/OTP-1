@@ -14,18 +14,21 @@ import dao.PostDao;
 import dao.UserDao;
 
 import java.util.List;
+import java.util.Set;
 
 public class PostService {
     PostDao postDao;
     AuthService authService;
     CommentDao commentDao;
     LikeDao likeDao;
+    UserDao userDao;
 
     public PostService() {
         postDao = new PostDao();
         authService = new AuthService();
         commentDao = new CommentDao();
         likeDao = new LikeDao();
+        userDao = new UserDao();
     }
 
     public PostResult makePost(Post post) {
@@ -70,6 +73,11 @@ public class PostService {
 
     public List<Post> getAllPosts() {
         return postDao.findAll();
+    }
+
+    public List<Post> getPostsByFollowers(User user) {
+        Set<User> followers = user.getFollowers();
+        return postDao.findPostsByUsers(followers);
     }
 
     public List<Comment> getCommentsForPost(int postId) {
