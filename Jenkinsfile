@@ -39,4 +39,25 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/site/jacoco/**/*', allowEmptyArchive: true
+            junit 'target/surefire-reports/**/*.xml'
+
+            jacoco(
+                execPattern: 'target/jacoco.exec',
+                classPattern: 'target/classes',
+                sourcePattern: 'src/main/java',
+                exclusionPattern: 'src/test/*',
+                skipCopyOfSrcFiles: false,
+                skipFailedBuild: true
+            )
+        }
+        success {
+            echo 'Build and tests completed successfully!'
+        }
+        failure {
+            echo 'Build or tests failed!'
+        }
+    }
 }
