@@ -35,33 +35,18 @@ pipeline {
         }
         stage('Code Coverage') {
             steps {
-                // Publish JaCoCo coverage report using modern coverage API
-                publishCoverage(
-                    adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')],
-                    sourceFileResolver: sourceFiles('NEVER_STORE')
-                )
-
-                // Archive the HTML coverage report
-                archiveArtifacts artifacts: 'target/site/jacoco/**/*', allowEmptyArchive: true
+                recordCoverage(tools: [[parser: 'JACOCO']],
+                        id: 'jacoco', name: 'JaCoCo Coverage',
+                        sourceCodeRetention: 'EVERY_BUILD',
+                        qualityGates: [
+                                [threshold: 60.0, metric: 'LINE', baseline: 'PROJECT', unstable: true],
+                                [threshold: 60.0, metric: 'BRANCH', baseline: 'PROJECT', unstable: true]])
             }
         }
         stage('Cleanup') {
             steps {
                 powershell 'Remove-Item .env -Force -ErrorAction SilentlyContinue'
             }
-        }
-    }
-    post {
-        always {
-            // Publish JUnit test results
-            junit 'target/surefire-reports/**/*.xml'
-
-            // Optional: Record coverage trends (alternative approach)
-            recordCoverage(
-                tools: [
-                    [tool: jacoco(pattern: 'target/site/jacoco/jacoco.xml')]
-                ]
-            )
         }
     }
 }
