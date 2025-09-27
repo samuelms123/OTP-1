@@ -14,6 +14,11 @@ pipeline {
         DOCKER_IMAGE_TAG = 'latest'
     }
     stages {
+        stage('Checkout') {
+            steps {
+                git branch:'main', url:'https://github.com/samuelms123/OTP-1'
+            }
+        }
         stage('Create .env file') {
             steps {
                 powershell '''
@@ -37,11 +42,7 @@ pipeline {
                 '''
             }
         }
-        stage('checkout') {
-                    steps {
-                        git branch:'main', url:'https://github.com/samuelms123/OTP-1'
-                    }
-                }
+
         stage('Build and Test') {
             steps {
                 bat 'mvn clean install'
