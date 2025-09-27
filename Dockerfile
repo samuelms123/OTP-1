@@ -9,4 +9,4 @@ COPY . /app
 
 RUN mvn package
 
-CMD ("java", "-jar", "target/Shout-jar-with-dependencies.jar")
+CMD ["java", "-jar", "target/Shout-jar-with-dependencies.jar"]
