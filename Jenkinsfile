@@ -3,6 +3,15 @@ pipeline {
     environment {
         SALT_ROUNDS = '7'
         JWT_SECRET = credentials('secret-secret')
+
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+
+        // Define Docker Hub credentials ID
+        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        // Define Docker Hub repository name
+        DOCKERHUB_REPO = 'aruraruri/ShoutOTP1'
+        // Define Docker image tag
+        DOCKER_IMAGE_TAG = 'latest'
     }
     stages {
         stage('Create .env file') {
@@ -28,6 +37,11 @@ pipeline {
                 '''
             }
         }
+        stage('checkout') {
+                    steps {
+                        git branch:'main', url:'https://github.com/samuelms123/OTP-1'
+                    }
+                }
         stage('Build and Test') {
             steps {
                 bat 'mvn clean install'
@@ -43,10 +57,29 @@ pipeline {
                                 [threshold: 60.0, metric: 'BRANCH', baseline: 'PROJECT', unstable: true]])
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t %DOCKERHUB_REPO%:%DOCKER_IMAGE_TAG% .'
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    bat '''
+                        docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+                        docker push %DOCKERHUB_REPO%:%DOCKER_IMAGE_TAG%
+                    '''
+                }
+            }
+        }
+
         stage('Cleanup') {
             steps {
                 powershell 'Remove-Item .env -Force -ErrorAction SilentlyContinue'
             }
         }
+
     }
 }
