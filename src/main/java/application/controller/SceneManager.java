@@ -26,4 +26,8 @@ public class SceneManager {
             e.printStackTrace();
         }
     }
+
+    public Stage getStage() {
+        return stage;
+    }
 }

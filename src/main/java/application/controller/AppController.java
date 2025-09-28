@@ -16,10 +16,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +42,8 @@ public class AppController {
     }
 
     // PROFILE
+    @FXML
+    private ImageView profilePicture;
     @FXML
     private AnchorPane profilePage;
     @FXML
@@ -76,6 +82,7 @@ public class AppController {
     @FXML private TextField modifyLastname;
     @FXML private TextField modifyEmail;
     @FXML private DatePicker modifyBirthdate;
+    @FXML private Button changeAvatarButton;
     // MODIFY PROFILE END
     @FXML
     private AnchorPane feedPage;
@@ -218,6 +225,18 @@ public class AppController {
     public void closeModifyProfilePanel() {
         staticProfile.setVisible(true);
         modifyProfile.setVisible(false);
+    }
+
+    public void changeAvatar(ActionEvent actionEvent) {
+        System.out.println("changeAvatar");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Avatar");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File selectedFile = fileChooser.showOpenDialog(GUI.getSceneManager().getStage());
+        Image image = new Image(selectedFile.toURI().toString());
+        profilePicture.setImage(image);
     }
 
     public void applyProfileChanges() {
