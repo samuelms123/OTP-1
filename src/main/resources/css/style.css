@@ -3,6 +3,20 @@
     -fx-text-fill: white;
     -fx-background-radius: 40;
     -fx-border-color: transparent;
+    -fx-font-family: Ebrima;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+}
+
+.input-fields{
+    -fx-background-color: #9BA9BC;
+    -fx-background-radius: 40;
+    -fx-border-color: transparent;
+    -fx-font-family: Ebrima;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
 }
 
 .purple-button:hover {
@@ -14,6 +28,10 @@
     -fx-text-fill: white;
     -fx-background-radius: 40;
     -fx-border-color: transparent;
+    -fx-font-size: 16px;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
 }
 
 .red-button:hover {
@@ -83,8 +101,6 @@
 .feed .list-cell .list-view{
     -fx-border-color: white;
 }
-
-
 
 .feed:focused, .feed .list-cell .list-view:focused {
     -fx-focus-color: transparent;

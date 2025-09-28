@@ -185,7 +185,7 @@
       </VBox>
       <Pane prefHeight="720.0" prefWidth="1417.0">
          <children>
-            <AnchorPane fx:id="profilePage" prefHeight="714.0" prefWidth="713.0" style="-fx-background-color: #F8FAFC;" visible="false">
+            <AnchorPane fx:id="profilePage" layoutX="-6.0" prefHeight="720.0" prefWidth="465.0" style="-fx-background-color: #F8FAFC;">
                <children>
                   <VBox prefHeight="720.0" prefWidth="739.0">
                      <children>
@@ -260,7 +260,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="changeInfoButton" mnemonicParsing="false" onAction="#changeInfo" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Change information" visible="false">
+                        <Button fx:id="changeInfoButton" mnemonicParsing="false" onAction="#toggleUserModifyPanel" style="-fx-background-radius: 40; -fx-border-color: transparent;" styleClass="purple-button" text="Change information" visible="false">
                            <font>
                               <Font name="Ebrima Bold" size="20.0" />
                            </font>
@@ -276,7 +276,115 @@
                               <DropShadow color="#5757574d" height="10.0" radius="4.5" width="10.0" />
                            </effect>
                            <children>
-                              <VBox prefHeight="279.0" prefWidth="663.0">
+                              <AnchorPane fx:id="modifyProfile" prefHeight="282.0" prefWidth="689.0" visible="false">
+                                 <children>
+                                    <VBox prefHeight="279.0" prefWidth="663.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" styleClass="purple-button" text="Change avatar" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="Ebrima Bold" size="16.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="40.0" top="15.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <HBox prefHeight="80.0" prefWidth="663.0">
+                                             <children>
+                                                <Label text="Name:">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="25.0" />
+                                                   </HBox.margin>
+                                                   <padding>
+                                                      <Insets right="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <TextField fx:id="modifyName" prefHeight="25.0" prefWidth="200.0" styleClass="input-fields" text="FIRSTNAME">
+                                                   <HBox.margin>
+                                                      <Insets top="16.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                                <Label text="Surname:">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" top="25.0" />
+                                                   </HBox.margin>
+                                                   <padding>
+                                                      <Insets right="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <TextField fx:id="modifyLastname" prefHeight="25.0" prefWidth="200.0" styleClass="input-fields" text="LASTNAME">
+                                                   <HBox.margin>
+                                                      <Insets top="16.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="80.0" prefWidth="663.0">
+                                             <children>
+                                                <Label text="Email:">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="25.0" />
+                                                   </HBox.margin>
+                                                   <padding>
+                                                      <Insets right="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <TextField fx:id="modifyEmail" prefHeight="43.0" prefWidth="530.0" styleClass="input-fields" text="EMAIL@ADDRESS.COM">
+                                                   <HBox.margin>
+                                                      <Insets top="16.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="80.0" prefWidth="663.0">
+                                             <children>
+                                                <Label text="Birthday:">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="20.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="15.0" />
+                                                   </HBox.margin>
+                                                   <padding>
+                                                      <Insets right="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <DatePicker fx:id="modifyBirthdate">
+                                                   <HBox.margin>
+                                                      <Insets top="16.0" />
+                                                   </HBox.margin>
+                                                </DatePicker>
+                                                <Button mnemonicParsing="false" onAction="#toggleUserModifyPanel" styleClass="red-button" text="Return" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="16.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="140.0" right="5.0" top="15.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#applyProfileChanges" styleClass="purple-button" text="Apply" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="16.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" right="5.0" top="15.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                              <VBox fx:id="staticProfile" prefHeight="279.0" prefWidth="663.0">
                                  <children>
                                     <Label text="Name:">
                                        <font>
@@ -358,7 +466,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="feedPage" layoutX="-19.0" layoutY="-1.0" prefHeight="714.0" prefWidth="782.0" style="-fx-background-color: #F8FAFC;">
+            <AnchorPane fx:id="feedPage" layoutX="-5.0" layoutY="-1.0" prefHeight="756.0" prefWidth="785.0" style="-fx-background-color: #F8FAFC;" visible="false">
                <effect>
                   <InnerShadow color="#0000003a" height="0.0" radius="1.7850000000000001" width="9.14" />
                </effect>

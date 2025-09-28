@@ -18,12 +18,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class AppController {
     PostService postService;
@@ -68,7 +68,15 @@ public class AppController {
     private Label birthdayFieldCenter;
     @FXML private Label appRealNameField;
     @FXML private Label appUsernameField;
+    @FXML private VBox staticProfile;
 
+    // MODIFY PROFILE START
+    @FXML private AnchorPane modifyProfile;
+    @FXML private TextField modifyName;
+    @FXML private TextField modifyLastname;
+    @FXML private TextField modifyEmail;
+    @FXML private DatePicker modifyBirthdate;
+    // MODIFY PROFILE END
     @FXML
     private AnchorPane feedPage;
     @FXML
@@ -111,7 +119,6 @@ public class AppController {
         feedPage.setVisible(false);
         profilePage.setVisible(true);
     }
-
 
     public void openOwnProfilePage(ActionEvent actionEvent) {
         changeInfoButton.setVisible(true);
@@ -164,6 +171,8 @@ public class AppController {
     }
 
     public void openFeedPage(ActionEvent actionEvent) {
+        closeModifyProfilePanel();
+
         profilePage.setVisible(false);
         feedPage.setVisible(true);
         currentlyOpenedUserProfile = null;
@@ -191,9 +200,55 @@ public class AppController {
         updateFeed();
     }
 
-    public void changeInfo(ActionEvent actionEvent) {
-        System.out.println("changeInfo");
+    public void toggleUserModifyPanel() {
+        staticProfile.setVisible(!staticProfile.isVisible());
+        modifyProfile.setVisible(!modifyProfile.isVisible());
+
+        modifyName.setText(SessionManager.getInstance().getUser().getFirstName());
+        modifyLastname.setText(SessionManager.getInstance().getUser().getLastName());
+        modifyEmail.setText(SessionManager.getInstance().getUser().getEmail());
+
+        String birthdateString = SessionManager.getInstance().getUser().getBirthdate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localBirthDate = LocalDate.parse(birthdateString, formatter);
+
+        modifyBirthdate.setValue(localBirthDate);
     }
+
+    public void closeModifyProfilePanel() {
+        staticProfile.setVisible(true);
+        modifyProfile.setVisible(false);
+    }
+
+    public void applyProfileChanges() {
+        if(!Objects.equals(modifyName.getText(), SessionManager.getInstance().getUser().getUsername())){
+            SessionManager.getInstance().getUser().setFirstName(modifyName.getText());
+        }
+
+        if(!Objects.equals(modifyLastname.getText(), SessionManager.getInstance().getUser().getLastName())){
+            SessionManager.getInstance().getUser().setLastName(modifyLastname.getText());
+        }
+
+        if(!Objects.equals(modifyEmail.getText(), SessionManager.getInstance().getUser().getEmail())){
+            SessionManager.getInstance().getUser().setEmail(modifyEmail.getText());
+        }
+
+        if(!Objects.equals(modifyBirthdate.getValue().toString(), SessionManager.getInstance().getUser().getBirthdate())){
+            SessionManager.getInstance().getUser().setBirthdate(modifyBirthdate.getValue().toString());
+        }
+
+        userService.updateUser(SessionManager.getInstance().getUser());
+
+        //Update UI information
+        setProfileInfo(SessionManager.getInstance().getUser());
+        updateNavUserInformation();
+
+        //Open static profile view
+        toggleUserModifyPanel();
+        System.out.println("Applying changes");
+    }
+
+
 
     public void addFriend(ActionEvent actionEvent) {
         User followerUser = SessionManager.getInstance().getUser();
