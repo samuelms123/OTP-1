@@ -106,7 +106,9 @@ public class AppController {
     public void initialize() { // Called automatically when AppController is made aka when switching the scene
         updateFeed();
         updateNavUserInformation();
-        miniProfilePicture.setImage(blobToImage(SessionManager.getInstance().getUser().getProfilePicture())); //sorry
+        if (SessionManager.getInstance().getUser().getProfilePicture() != null) {
+            miniProfilePicture.setImage(blobToImage(SessionManager.getInstance().getUser().getProfilePicture())); //sorry
+        }
 
         // Add search listener
         searchFriendTextField.textProperty().addListener((observable, oldText, newText) -> {
@@ -238,11 +240,19 @@ public class AppController {
     }
 
     public Image blobToImage(byte[] byteArray) {
+        if (byteArray == null) {
+            System.out.println("blob is null");
+            return null;
+        }
         InputStream iStream = new ByteArrayInputStream(byteArray);
         return new Image(iStream);
     }
 
     public byte[] imageToBlob(Image image) {
+        if (image == null) {
+            System.out.println("image is null");
+            return null;
+        }
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
 
         ByteArrayOutputStream oStream = new ByteArrayOutputStream();
