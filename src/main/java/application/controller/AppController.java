@@ -11,18 +11,28 @@ import application.model.service.UserService;
 import application.utils.Paths;
 import application.view.GUI;
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -40,6 +50,10 @@ public class AppController {
     }
 
     // PROFILE
+    @FXML
+    private ImageView miniProfilePicture;
+    @FXML
+    private ImageView profilePicture;
     @FXML
     private AnchorPane profilePage;
     @FXML
@@ -78,6 +92,8 @@ public class AppController {
     @FXML private TextField modifyLastname;
     @FXML private TextField modifyEmail;
     @FXML private DatePicker modifyBirthdate;
+    @FXML private Button changeAvatarButton;
+    @FXML private ImageView inspectImage;
     // MODIFY PROFILE END
     @FXML
     private AnchorPane feedPage;
@@ -96,6 +112,9 @@ public class AppController {
     public void initialize() { // Called automatically when AppController is made aka when switching the scene
         updateFeed();
         updateNavUserInformation();
+        if (SessionManager.getInstance().getUser().getProfilePicture() != null) {
+            miniProfilePicture.setImage(blobToImage(SessionManager.getInstance().getUser().getProfilePicture())); //sorry
+        }
 
         // Add search listener
         searchFriendTextField.textProperty().addListener((observable, oldText, newText) -> {
@@ -163,6 +182,9 @@ public class AppController {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
         usernameFieldTop.setText("@" + user.getUsername());
         friendAmountField.setText("" + countFriends(user));
+        if (user.getProfilePicture() != null) {
+            profilePicture.setImage(blobToImage(user.getProfilePicture()));
+        }
         // set like amounts
         //posts
 
@@ -209,6 +231,7 @@ public class AppController {
         modifyName.setText(SessionManager.getInstance().getUser().getFirstName());
         modifyLastname.setText(SessionManager.getInstance().getUser().getLastName());
         modifyEmail.setText(SessionManager.getInstance().getUser().getEmail());
+        inspectImage.setImage(null);
 
         String birthdateString = SessionManager.getInstance().getUser().getBirthdate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -220,6 +243,51 @@ public class AppController {
     public void closeModifyProfilePanel() {
         staticProfile.setVisible(true);
         modifyProfile.setVisible(false);
+    }
+
+    public Image blobToImage(byte[] byteArray) {
+        if (byteArray == null) {
+            System.out.println("blob is null");
+            return null;
+        }
+        InputStream iStream = new ByteArrayInputStream(byteArray);
+        return new Image(iStream);
+    }
+
+    public byte[] imageToBlob(Image image) {
+        if (image == null) {
+            System.out.println("image is null");
+            return null;
+        }
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+
+        ByteArrayOutputStream oStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bImage, "png", oStream);
+            byte[] imageBytes = oStream.toByteArray();
+            return imageBytes;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void changeAvatar(ActionEvent actionEvent) {
+        System.out.println("changeAvatar");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Avatar");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File selectedFile = fileChooser.showOpenDialog(GUI.getSceneManager().getStage());
+
+        if (selectedFile != null) {
+            // Temporary view of the image in profile picture slot
+            Image image = new Image(selectedFile.toURI().toString(), 100, 100, false, false);
+            inspectImage.setImage(image);
+        }
+
+
     }
 
     public void applyProfileChanges() {
@@ -237,6 +305,18 @@ public class AppController {
 
         if(!Objects.equals(modifyBirthdate.getValue().toString(), SessionManager.getInstance().getUser().getBirthdate())){
             SessionManager.getInstance().getUser().setBirthdate(modifyBirthdate.getValue().toString());
+        }
+
+        // Save picture from inspectPicture ImageView
+        if (inspectImage.getImage() != null) {
+            byte[] blob = imageToBlob(inspectImage.getImage());
+            if (blob != null) {
+                SessionManager.getInstance().getUser().setProfilePicture(blob);
+                miniProfilePicture.setImage(inspectImage.getImage());
+            }
+            else {
+                System.out.println("blob is null for some reason :P");
+            }
         }
 
         userService.updateUser(SessionManager.getInstance().getUser());
