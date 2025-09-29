@@ -5,6 +5,7 @@ import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.PostService;
 import application.model.service.UserService;
+import application.utils.ImageUtils;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public class PostCellController {
@@ -26,6 +29,7 @@ public class PostCellController {
     @FXML private Button likeButton;
     @FXML private Button commentButton;
     @FXML private ListView<String> postComments;
+    @FXML private ImageView postProfilePicture;
 
     private PostService postService;
     private UserService userService;
@@ -40,6 +44,12 @@ public class PostCellController {
         authorRealName.setText(author != null ? author.getFirstName() + " " + author.getLastName() : "Unknown User");
         authorUsername.setText(author != null ? "@" + author.getUsername() : "Unknown User");
         contentLabel.setText(post.getContent());
+
+        byte[] profilePicture = (author != null ? author.getProfilePicture(): null);
+        if (profilePicture != null) {
+            postProfilePicture.setImage(ImageUtils.blobToImage(profilePicture));
+        }
+
     }
 
     public void setComments(List<Comment> comments) {

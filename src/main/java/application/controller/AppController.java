@@ -37,6 +37,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static application.utils.ImageUtils.blobToImage;
+import static application.utils.ImageUtils.imageToBlob;
+
 public class AppController {
     PostService postService;
     AuthService authService;
@@ -243,33 +246,6 @@ public class AppController {
     public void closeModifyProfilePanel() {
         staticProfile.setVisible(true);
         modifyProfile.setVisible(false);
-    }
-
-    public Image blobToImage(byte[] byteArray) {
-        if (byteArray == null) {
-            System.out.println("blob is null");
-            return null;
-        }
-        InputStream iStream = new ByteArrayInputStream(byteArray);
-        return new Image(iStream);
-    }
-
-    public byte[] imageToBlob(Image image) {
-        if (image == null) {
-            System.out.println("image is null");
-            return null;
-        }
-        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
-
-        ByteArrayOutputStream oStream = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(bImage, "png", oStream);
-            byte[] imageBytes = oStream.toByteArray();
-            return imageBytes;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public void changeAvatar(ActionEvent actionEvent) {
