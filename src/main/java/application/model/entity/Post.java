@@ -1,6 +1,9 @@
 package application.model.entity;
 
 import jakarta.persistence.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.sql.Timestamp;
 
 /**
  * Entity class representing an entry in the "posts" table.
@@ -13,7 +16,7 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name="posts")
-public class Post {
+public class Post implements Comparable<Post>{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
@@ -24,12 +27,15 @@ public class Post {
     private String content;
     @Column(name="image_url")
     private String imageUrl;
+    @Column(name="created_at")
+    private Timestamp createdAt;
 
 
-    public Post(int userId, String content, String imageUrl) {
+    public Post(int userId, String content, String imageUrl, Timestamp createdAt) {
         this.userId = userId;
         this.content = content;
         this.imageUrl = imageUrl;
+        this.createdAt = createdAt;
     }
 
     /**
@@ -52,5 +58,18 @@ public class Post {
 
     public String imageUrl() {
         return imageUrl;
+    }
+
+    public Timestamp getCreatedAt() {return createdAt;}
+
+    // compare by timestamp
+    @Override
+    public int compareTo(@NotNull Post other) {
+        // null check to prevent crash if no timestamp
+        if (this.createdAt == null && other.createdAt == null) return 0;
+        if (this.createdAt == null) return 1; // nulls last
+        if (other.createdAt == null) return -1; // nulls last
+
+        return other.createdAt.compareTo(this.createdAt);
     }
 }

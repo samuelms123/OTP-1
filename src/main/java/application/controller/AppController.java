@@ -24,9 +24,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -209,7 +215,7 @@ public class AppController {
         }
 
         // implementation of images still missing
-        Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "");
+        Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "", Timestamp.from(Instant.now()));
         PostResult result = postService.makePost(post);
         // Make UI error message in case of access denied
         System.out.println(result);
@@ -384,10 +390,15 @@ public class AppController {
             }
         });
 
-        // Reverse posts - Latest first
+
         // add friends only post visibility here, SHOULD NOT GET ALL POSTS
         List<Post> posts = postService.getPostsByFollowers(SessionManager.getInstance().getUser());
-        Collections.reverse(posts);  // Reverse posts to show the latest first
+        // sort posts by TIMESTAMP HERE!!!!
+        // Post implements comparable interface which already reverses post order
+        // don't reverse order here or the order will be incorrect
+        Collections.sort(posts);
+
+        //Collections.reverse(posts);
 
         List<Post> postsWithGaps = new ArrayList<>();
         for (int i = 0; i < posts.size(); i++) {
