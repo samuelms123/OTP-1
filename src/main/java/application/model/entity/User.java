@@ -54,6 +54,10 @@ public class User {
     @Column(name="password")
     private String password;
 
+    @Lob // Store as a BLOB
+    @Column(name="profile_picture")
+    private byte[] profilePicture;
+
     // shorter constructor for login attempt
     public User(String username, String password) {
         this.username = username;
@@ -104,4 +108,6 @@ public class User {
     public Set<User> getFollowers() {return followers;}
     public void setFollowers(Set<User> followers) {this.followers = followers;}
 
+    public void setProfilePicture(byte[] profilePicture) { this.profilePicture = profilePicture; }
+    public byte[] getProfilePicture() { return profilePicture; }
 }

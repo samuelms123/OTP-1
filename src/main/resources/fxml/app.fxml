@@ -129,7 +129,7 @@
                         <Insets top="7.0" />
                      </VBox.margin>
                      <children>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
+                        <ImageView fx:id="miniProfilePicture" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar">
                            <HBox.margin>
                               <Insets left="10.0" top="20.0" />
                            </HBox.margin>
@@ -272,14 +272,23 @@
                                  <children>
                                     <VBox prefHeight="279.0" prefWidth="663.0">
                                        <children>
-                                          <Button fx:id="changeAvatarButton" mnemonicParsing="false" onAction="#changeAvatar" styleClass="purple-button" text="Change avatar" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="Ebrima Bold" size="16.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets left="40.0" top="15.0" />
-                                             </VBox.margin>
-                                          </Button>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Button fx:id="changeAvatarButton" mnemonicParsing="false" onAction="#changeAvatar" styleClass="purple-button" text="Change avatar" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="Ebrima Bold" size="16.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" top="25.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <ImageView fx:id="inspectImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                                   <HBox.margin>
+                                                      <Insets bottom="10.0" left="25.0" top="20.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                             </children>
+                                          </HBox>
                                           <HBox prefHeight="80.0" prefWidth="663.0">
                                              <children>
                                                 <Label text="Name:">
