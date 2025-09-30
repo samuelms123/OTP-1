@@ -13,12 +13,12 @@ This project is a small social media desktop application that works as a private
 ### Front-end:
 * Java
 * JavaFX
+* Scene Builder
 ### Backend:
 * MariaDb
 * ORM/Jakarta Persistence API
 * Java
-* JAAS Authentication
-* Minikube
+* JWT and Bcrypt for authentication
 * Docker
 ### Testing:
 * Jenkins
