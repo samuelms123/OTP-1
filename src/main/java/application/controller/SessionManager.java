@@ -23,4 +23,9 @@ public class SessionManager {
     public User getUser() {return user;}
 
     public void setUser(User user) {this.user = user;}
+
+    // for testing purposes only, ability to inject an instance.
+    public static void setInstance(SessionManager testInstance) {
+        instance = testInstance;
+    }
 }
