@@ -107,16 +107,16 @@ class LoginControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Initialize the controller and inject mocks
+        // initialize the controller and inject mocks
         loginController = new LogInController();
 
-        // Use reflection to inject the mocked dependencies
+        // inject the mocked dependencies
         try {
             var userServiceField = LogInController.class.getDeclaredField("userService");
             userServiceField.setAccessible(true);
             userServiceField.set(loginController, userService);
 
-            // Inject mocked FXML components
+            // inject mocked FXML components
             injectFXMLField("loginMenu", loginMenu);
             injectFXMLField("createAccountMenu", createAccountMenu);
             injectFXMLField("loginUsername", loginUsername);
@@ -138,16 +138,15 @@ class LoginControllerTest {
         testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
         mockActionEvent = mock(ActionEvent.class);
 
-        // Mock SessionManager singleton
+        // mock SessionManager singleton
         SessionManager.setInstance(sessionManager);
 
-        // Mock SceneManager - create a real instance with mocked stage
+        // mock SceneManager - create a real instance with mocked stage
         sceneManager = mock(SceneManager.class);
-        //unnecessary stubbing
-        //when(sceneManager.getStage()).thenReturn(mockStage);
 
-        // Mock GUI to return our mocked SceneManager
-        // You might need to add a setter method to your GUI class for testing
+
+        // mock GUI to return mocked SceneManager
+        // setter method in GUI class for testing
         setupGUIMock();
     }
 
@@ -159,16 +158,13 @@ class LoginControllerTest {
 
     private void setupGUIMock() {
         try {
-            // Use reflection to set the scene manager in GUI
-            // This assumes you have a way to set the scene manager in your GUI class
-            // If not, you might need to add a package-private or public setter for testing
 
             var getSceneManagerMethod = GUI.class.getMethod("getSceneManager");
             var setSceneManagerMethod = GUI.class.getMethod("setSceneManager", SceneManager.class);
             setSceneManagerMethod.invoke(null, sceneManager);
 
         } catch (NoSuchMethodException e) {
-            // If no setter exists, you might need to modify your GUI class temporarily
+            // if no setter exists, you might need to modify your GUI class temporarily
             // or use a different approach
             System.out.println("No setSceneManager method found in GUI class. Some navigation tests may not work.");
         } catch (Exception e) {
@@ -176,24 +172,15 @@ class LoginControllerTest {
         }
     }
 
-    // Add this helper method to test navigation
-    private void verifyNavigationOccurred() {
-        // Since we can't easily test the PauseTransition, we verify the service was called
-        // and the result message was set, indicating the navigation flow was triggered
-        verify(loginResultLabel).setText(any(String.class));
-    }
 
     // Login Tests
     @Test
     void login_WithEmptyFields_ShouldShowErrorMessage() throws IOException {
-        // Arrange
         when(loginUsername.getText()).thenReturn("");
         when(loginPassword.getText()).thenReturn("");
 
-        // Act
         loginController.login(mockActionEvent);
 
-        // Assert
         verify(loginResultLabel).setText("Please fill in all fields");
         verify(userService, never()).loginUser(any(User.class));
         verify(sessionManager, never()).setUser(any(User.class));
@@ -202,35 +189,28 @@ class LoginControllerTest {
 
     @Test
     void login_WithEmptyUsername_ShouldShowErrorMessage() throws IOException {
-        // Arrange
         when(loginUsername.getText()).thenReturn("");
         when(loginPassword.getText()).thenReturn("password");
 
-        // Act
         loginController.login(mockActionEvent);
 
-        // Assert
         verify(loginResultLabel).setText("Please fill in all fields");
         verify(userService, never()).loginUser(any(User.class));
     }
 
     @Test
     void login_WithEmptyPassword_ShouldShowErrorMessage() throws IOException {
-        // Arrange
         when(loginUsername.getText()).thenReturn("username");
         when(loginPassword.getText()).thenReturn("");
 
-        // Act
         loginController.login(mockActionEvent);
 
-        // Assert
         verify(loginResultLabel).setText("Please fill in all fields");
         verify(userService, never()).loginUser(any(User.class));
     }
 
     @Test
     void login_WithValidCredentials_ShouldSetSessionAndTriggerNavigation() throws IOException {
-        // Arrange
         String username = "testuser";
         String password = "password";
         String token = "jwt-token";
@@ -241,10 +221,8 @@ class LoginControllerTest {
         LoginResult successResult = new LoginResult(true, "Login successful",token, testUser);
         when(userService.loginUser(any(User.class))).thenReturn(successResult);
 
-        // Act
         loginController.login(mockActionEvent);
 
-        // Assert
         verify(userService).loginUser(argThat(user ->
                 user.getUsername().equals(username) && user.getPassword().equals(password)
         ));
@@ -254,22 +232,18 @@ class LoginControllerTest {
 
         // The navigation is triggered via PauseTransition, so we can't easily verify
         // sceneManager.switchScene() was called directly in a unit test
-        // This would be better tested with an integration test
     }
 
     @Test
     void login_WithInvalidCredentials_ShouldShowErrorMessage() throws IOException {
-        // Arrange
         when(loginUsername.getText()).thenReturn("wronguser");
         when(loginPassword.getText()).thenReturn("wrongpass");
 
         LoginResult failureResult = new LoginResult(false, "Invalid credentials", null, null);
         when(userService.loginUser(any(User.class))).thenReturn(failureResult);
 
-        // Act
         loginController.login(mockActionEvent);
 
-        // Assert
         verify(loginResultLabel).setText("Invalid credentials");
         verify(sessionManager, never()).setUser(any(User.class));
         verify(sessionManager, never()).setToken(any(String.class));
@@ -278,14 +252,12 @@ class LoginControllerTest {
 
     @Test
     void login_WhenServiceThrowsException_ShouldHandleGracefully() throws IOException {
-        // Arrange
         when(loginUsername.getText()).thenReturn("testuser");
         when(loginPassword.getText()).thenReturn("password");
         when(userService.loginUser(any(User.class))).thenThrow(new RuntimeException("Service unavailable"));
 
-        // Act & Assert
         assertDoesNotThrow(() -> loginController.login(mockActionEvent));
-        // Should handle exception without crashing
+        // should handle exception without crashing
 
         verify(resultText).setText("Login failed due to system error. Please try again.");
     }
@@ -304,17 +276,14 @@ class LoginControllerTest {
         when(newPassword.getText()).thenReturn("pass");
         when(newPasswordConfirm.getText()).thenReturn("pass");
 
-        // Act
         loginController.createAccount(mockActionEvent);
 
-        // Assert
         verify(resultText).setText("Please fill in all fields");
         verify(userService, never()).registerUser(any(User.class));
     }
 
     @Test
     void createAccount_WithInvalidEmail_ShouldShowErrorMessage() {
-        // Arrange
         when(newFirstname.getText()).thenReturn("First");
         when(newLastname.getText()).thenReturn("Last");
         when(newUsername.getText()).thenReturn("user");
@@ -323,17 +292,14 @@ class LoginControllerTest {
         when(newPassword.getText()).thenReturn("password");
         when(newPasswordConfirm.getText()).thenReturn("password");
 
-        // Act
         loginController.createAccount(mockActionEvent);
 
-        // Assert
         verify(resultText).setText("Please enter a valid email address");
         verify(userService, never()).registerUser(any(User.class));
     }
 
     @Test
     void createAccount_WithNonMatchingPasswords_ShouldShowErrorMessage() {
-        // Arrange
         when(newFirstname.getText()).thenReturn("First");
         when(newLastname.getText()).thenReturn("Last");
         when(newUsername.getText()).thenReturn("user");
@@ -342,17 +308,14 @@ class LoginControllerTest {
         when(newPassword.getText()).thenReturn("password1");
         when(newPasswordConfirm.getText()).thenReturn("password2");
 
-        // Act
         loginController.createAccount(mockActionEvent);
 
-        // Assert
         verify(resultText).setText("Passwords not matching");
         verify(userService, never()).registerUser(any(User.class));
     }
 
     @Test
     void createAccount_WithValidData_ShouldRegisterUser() {
-        // Arrange
         String firstName = "John";
         String lastName = "Doe";
         String username = "johndoe";
@@ -371,10 +334,8 @@ class LoginControllerTest {
         RegistrationResult successResult = new RegistrationResult(true, "Registration successful");
         when(userService.registerUser(any(User.class))).thenReturn(successResult);
 
-        // Act
         loginController.createAccount(mockActionEvent);
 
-        // Assert
         verify(userService).registerUser(argThat(user ->
                 user.getFirstName().equals(firstName) &&
                         user.getLastName().equals(lastName) &&
@@ -389,16 +350,13 @@ class LoginControllerTest {
 
     @Test
     void createAccount_WhenRegistrationFails_ShouldShowErrorMessage() {
-        // Arrange
         setupValidRegistrationFields();
 
         RegistrationResult failureResult = new RegistrationResult(false, "Username already exists");
         when(userService.registerUser(any(User.class))).thenReturn(failureResult);
 
-        // Act
         loginController.createAccount(mockActionEvent);
 
-        // Assert
         verify(resultText).setText("Username already exists");
         verify(createAccountMenu, never()).setVisible(false);
         verify(loginMenu, never()).setVisible(true);
@@ -406,16 +364,14 @@ class LoginControllerTest {
 
     @Test
     void createAccount_WhenServiceThrowsException_ShouldHandleGracefully() {
-        // Arrange
         setupValidRegistrationFields();
         when(userService.registerUser(any(User.class))).thenThrow(new RuntimeException("Database error"));
 
-        // Act & Assert
         assertDoesNotThrow(() -> loginController.createAccount(mockActionEvent));
 
         verify(resultText).setText("Registration failed due to system error. Please try again.");
 
-        // Verify that no navigation occurs when registration fails
+        // verify that no navigation occurs when registration fails
         verify(createAccountMenu, never()).setVisible(false);
         verify(loginMenu, never()).setVisible(true);
     }
@@ -423,20 +379,16 @@ class LoginControllerTest {
     // Navigation Tests
     @Test
     void register_ShouldSwitchToCreateAccountMenu() {
-        // Act
         loginController.register(mockActionEvent);
 
-        // Assert
         verify(loginMenu).setVisible(false);
         verify(createAccountMenu).setVisible(true);
     }
 
     @Test
     void goBackToLogin_ShouldClearFieldsAndSwitchToLoginMenu() throws IOException {
-        // Act
         loginController.goBackToLogin(mockActionEvent);
 
-        // Assert
         verify(newFirstname).clear();
         verify(newLastname).clear();
         verify(newUsername).clear();
@@ -451,10 +403,9 @@ class LoginControllerTest {
         verify(loginMenu).setVisible(true);
     }
 
-    // Security-focused Tests
     @Test
     void login_ShouldNotStorePasswordInMemoryLongerThanNecessary() throws IOException {
-        // This test verifies that passwords aren't unnecessarily retained
+        // this test verifies that passwords aren't unnecessarily retained
         when(loginUsername.getText()).thenReturn("user");
         when(loginPassword.getText()).thenReturn("secret123");
 
@@ -463,9 +414,8 @@ class LoginControllerTest {
 
         loginController.login(mockActionEvent);
 
-        // The password should only be used for authentication and not stored
+        // password should only be used for authentication and not stored
         verify(loginPassword, atLeastOnce()).getText();
-        // In a real security test, you might use a security scanner to check for password retention
     }
 
     private void setupValidRegistrationFields() {
