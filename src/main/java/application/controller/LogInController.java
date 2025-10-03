@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class LogInController {
-    UserService userService = new UserService();
+    UserService userService;
 
     @FXML
     private VBox loginMenu;
@@ -65,6 +65,16 @@ public class LogInController {
         createAccountMenu.setVisible(true);
     }
 
+    // Default constructor for JavaFX/FXML
+    public LogInController() {
+        this.userService = new UserService(); // Keep this for normal operation
+    }
+
+    // Constructor for testing - allow injection of mock service
+    public LogInController(UserService userService) {
+        this.userService = userService;
+    }
+
     public void login(ActionEvent actionEvent) throws IOException {
 
         resultText.setText("");
@@ -78,23 +88,30 @@ public class LogInController {
         }
 
         // attempt login
-        User user = new User(usernameText, passwordText);
-        LoginResult result = userService.loginUser(user);
+        try {
+            User user = new User(usernameText, passwordText);
+            if (userService == null) {
+                userService = new UserService();
+            }
+            LoginResult result = userService.loginUser(user);
 
-        if (result.isSuccess()) {
-            SessionManager.getInstance().setUser(result.getUser());
-            SessionManager.getInstance().setToken(result.getToken());
+            if (result.isSuccess()) {
+                SessionManager.getInstance().setUser(result.getUser());
+                SessionManager.getInstance().setToken(result.getToken());
 
-            loginResultLabel.setText(result.getMessage());
+                loginResultLabel.setText(result.getMessage());
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
-            pause.setOnFinished(e -> {
-                GUI.getSceneManager().switchScene(Paths.APP);
-            });
-            pause.play();
+                PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
+                pause.setOnFinished(e -> {
+                    GUI.getSceneManager().switchScene(Paths.APP);
+                });
+                pause.play();
 
-        } else {
-            loginResultLabel.setText(result.getMessage());
+            } else {
+                loginResultLabel.setText(result.getMessage());
+            }
+        } catch (Exception e) {
+            resultText.setText("Login failed due to system error. Please try again.");
         }
     }
 
@@ -136,20 +153,26 @@ public class LogInController {
         String birthdate = newBirthdate.getValue().toString();
 
         // create new user entity
-        User user = new User(firstName, lastName, email, username, birthdate, password);
-        RegistrationResult result = userService.registerUser(user);
+        try {
+            User user = new User(firstName, lastName, email, username, birthdate, password);
+            if (userService == null) {
+                userService = new UserService();
+            }
+            RegistrationResult result = userService.registerUser(user);
 
-        if (result.isSuccess()) {
-            resultText.setText(result.getMessage());
-            PauseTransition pause = new PauseTransition(Duration.seconds(2)); // Cannot use sleep, because it blocks UI
-            pause.setOnFinished(e -> {
-                createAccountMenu.setVisible(false);
-                loginMenu.setVisible(true); // Return to log in menu after 2 sec
-            });
-            pause.play();
-        }
-        else {
-            resultText.setText(result.getMessage());
+            if (result.isSuccess()) {
+                resultText.setText(result.getMessage());
+                PauseTransition pause = new PauseTransition(Duration.seconds(2)); // Cannot use sleep, because it blocks UI
+                pause.setOnFinished(e -> {
+                    createAccountMenu.setVisible(false);
+                    loginMenu.setVisible(true); // Return to log in menu after 2 sec
+                });
+                pause.play();
+            } else {
+                resultText.setText(result.getMessage());
+            }
+        } catch (Exception e) {
+            resultText.setText("Registration failed due to system error. Please try again.");
         }
     }
 

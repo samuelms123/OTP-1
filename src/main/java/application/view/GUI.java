@@ -21,6 +21,11 @@ public class GUI extends Application {
        sceneManager.switchScene(Paths.LOGIN);
     }
 
+    // for testing purposes
+    public static void setSceneManager(SceneManager manager) {
+        sceneManager = manager;
+    }
+
     public static SceneManager getSceneManager() {
         return sceneManager;
     }
