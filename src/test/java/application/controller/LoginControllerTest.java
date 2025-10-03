@@ -164,8 +164,6 @@ class LoginControllerTest {
             setSceneManagerMethod.invoke(null, sceneManager);
 
         } catch (NoSuchMethodException e) {
-            // if no setter exists, you might need to modify your GUI class temporarily
-            // or use a different approach
             System.out.println("No setSceneManager method found in GUI class. Some navigation tests may not work.");
         } catch (Exception e) {
             System.out.println("Failed to setup GUI mock: " + e.getMessage());
