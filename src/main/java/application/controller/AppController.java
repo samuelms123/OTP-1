@@ -212,8 +212,8 @@ public class AppController {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        SessionManager.getInstance().reset();
         GUI.getSceneManager().switchScene(Paths.LOGIN);
-        // Reset SessionManger
     }
 
     public void addPost(ActionEvent actionEvent) {
