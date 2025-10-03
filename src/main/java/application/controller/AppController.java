@@ -45,11 +45,13 @@ public class AppController {
     AuthService authService;
     UserService userService;
     User currentlyOpenedUserProfile;
+    Image defaultProfilePicture;
 
     public AppController() {
 
         postService = new PostService();
         userService = new UserService();
+        defaultProfilePicture = new Image(getClass().getResourceAsStream("/images/mock/empty-avatar.jpg"));
     }
 
     // PROFILE
@@ -185,8 +187,11 @@ public class AppController {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
         usernameFieldTop.setText("@" + user.getUsername());
         friendAmountField.setText("" + countFriends(user));
+
         if (user.getProfilePicture() != null) {
             profilePicture.setImage(blobToImage(user.getProfilePicture()));
+        } else {
+            profilePicture.setImage(defaultProfilePicture);
         }
         // set like amounts
         //posts

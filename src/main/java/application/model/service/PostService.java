@@ -13,6 +13,7 @@ import dao.LikeDao;
 import dao.PostDao;
 import dao.UserDao;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -76,9 +77,9 @@ public class PostService {
     }
 
     public List<Post> getPostsByFollowers(User user) {
-        Set<User> followers = user.getFollowing();
-        followers.add(SessionManager.getInstance().getUser()); // include own posts as well
-        return postDao.findPostsByUsers(followers);
+        Set<User> tempSet = new HashSet<User>(user.getFollowing());
+        tempSet.add(SessionManager.getInstance().getUser());// include own posts as well
+        return postDao.findPostsByUsers(tempSet);
     }
 
     public List<Comment> getCommentsForPost(int postId) {
