@@ -40,7 +40,7 @@ import java.util.*;
 import static application.utils.ImageUtils.blobToImage;
 import static application.utils.ImageUtils.imageToBlob;
 
-public class AppController {
+public class AppController implements PostListener{
     PostService postService;
     AuthService authService;
     UserService userService;
@@ -113,10 +113,13 @@ public class AppController {
     @FXML
     private Pane newPostPanel;
 
+    AppController appController = this;
+
     @FXML
     public void initialize() { // Called automatically when AppController is made aka when switching the scene
         updateFeed();
         updateNavUserInformation();
+        postService.addListener(appController);
         if (SessionManager.getInstance().getUser().getProfilePicture() != null) {
             miniProfilePicture.setImage(blobToImage(SessionManager.getInstance().getUser().getProfilePicture())); //sorry
         }
@@ -352,6 +355,7 @@ public class AppController {
                         FXMLLoader postloader = new FXMLLoader(getClass().getResource(Paths.POST));
                         Node cellRoot = postloader.load();
                         PostCellController controller = postloader.getController();
+                        controller.setPostService(postService);
 
                         // Set the post, likes and its comments in the controller
                         controller.setPost(post);
@@ -404,5 +408,10 @@ public class AppController {
     private void toggleNewPostPanel(ActionEvent actionEvent) {
         postContent.clear();
         newPostPanel.setVisible(!newPostPanel.isVisible());
+    }
+
+    @Override
+    public void notifyDelete() {
+        updateFeed();
     }
 }
