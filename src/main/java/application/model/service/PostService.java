@@ -1,6 +1,8 @@
 package application.model.service;
 
+import application.controller.PostListener;
 import application.controller.SessionManager;
+import application.model.data_objects.CommonResult;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.PostResult;
 import application.model.data_objects.RegistrationResult;
@@ -13,6 +15,7 @@ import dao.LikeDao;
 import dao.PostDao;
 import dao.UserDao;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +26,7 @@ public class PostService {
     CommentDao commentDao;
     LikeDao likeDao;
     UserDao userDao;
+    List<PostListener> listeners;
 
     public PostService() {
         postDao = new PostDao();
@@ -30,6 +34,18 @@ public class PostService {
         commentDao = new CommentDao();
         likeDao = new LikeDao();
         userDao = new UserDao();
+        listeners = new ArrayList<>();
+    }
+
+    public void notifyListeners() {
+        for (PostListener listener : listeners) {
+            listener.notifyDelete();
+        }
+    }
+
+    public void addListener(PostListener listener) {
+        System.out.println("LISTENER ADDED");
+        listeners.add(listener);
     }
 
     public PostResult makePost(Post post) {
@@ -86,4 +102,15 @@ public class PostService {
         return commentDao.findCommentsByPostId(postId);
     }
 
+    public CommonResult deletePost(Post post) {
+        if (authService.authMe(SessionManager.getInstance().getToken()) != null) {
+            if (postDao.deletePostById(post.getId())) {
+                notifyListeners();
+                return new CommonResult(true, "Post deleted successfully");
+            } else {
+                return new CommonResult(false, "Post not found");
+            }
+        }
+        return new CommonResult(false, "Access denied");
+    }
 }

@@ -58,6 +58,24 @@ public class PostDao implements IDao<Post>{
         }
     }
 
+    public boolean deletePostById(int id) {
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            Post post = em.find(Post.class, id);
+            if (post != null) {
+                em.remove(post);
+                em.getTransaction().commit();
+                return true;
+            } else {
+                em.getTransaction().rollback();
+                return false; // post not found
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Override
     public void deleteAll() {
 

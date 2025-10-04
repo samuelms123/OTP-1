@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.data_objects.CommonResult;
 import application.model.entity.Comment;
 import application.model.entity.Post;
 import application.model.entity.User;
@@ -18,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostCellController {
@@ -30,16 +32,26 @@ public class PostCellController {
     @FXML private Button commentButton;
     @FXML private ListView<String> postComments;
     @FXML private ImageView postProfilePicture;
+    @FXML private Button deletePostButton;
 
     private PostService postService;
     private UserService userService;
 
     private ObservableList<String> commentItems = FXCollections.observableArrayList();
 
+
     private Post post;
+
+    public void deletePost(ActionEvent event) {
+        CommonResult result = postService.deletePost(this.post);
+        System.out.println(result.getMessage());
+    }
 
     public void setPost(Post post) {
         this.post = post;
+        //if current user == post author -> delete button visible
+        deletePostButton.setVisible(SessionManager.getInstance().getUser().getId() == post.getUserId());
+
         User author = userService.getUserById(post.getUserId());
         authorRealName.setText(author != null ? author.getFirstName() + " " + author.getLastName() : "Unknown User");
         authorUsername.setText(author != null ? "@" + author.getUsername() : "Unknown User");
@@ -97,9 +109,12 @@ public class PostCellController {
         }
     }
 
+    public void setPostService(PostService postService) {
+        this.postService = postService;
+    }
+
     @FXML
     private void initialize() {
-        postService = new PostService();
         userService = new UserService();
 
         // set items for observable list view
