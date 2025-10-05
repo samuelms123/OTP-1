@@ -9,24 +9,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SessionManagerTest {
-    private static User testUser;
-    private static User testUser2;
-    private static String testToken;
-    private static AuthService authService;
-    @BeforeAll
-    static void setup() {
-        authService = new AuthService();
-        testUser2 = new User("testname2", "testlastname2", "test2@example.com", "testusername2", "1.1.1999", "password2");
-        testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
-        testToken = authService.createToken(testUser);
-    }
+
+    private User testUser;
+    private User testUser2;
+    private String testToken;
+    private AuthService authService;
 
     @BeforeEach
-    void setUpBeforeEach() {
+    void setup() {
+        authService = new AuthService();
+        testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
+        testUser2 = new User("testname2", "testlastname2", "test2@example.com", "testusername2", "1.1.1999", "password2");
+        testToken = authService.createToken(testUser);
         SessionManager.getInstance().setUser(testUser);
         SessionManager.getInstance().setToken(testToken);
     }
-
 
     @Test
     void getInstance() {
@@ -46,7 +43,8 @@ class SessionManagerTest {
         assertEquals(testUser.getBirthdate(), user.getBirthdate());
     }
 
-    @Test void setUser() {
+    @Test
+    void setUser() {
         SessionManager.getInstance().setUser(testUser2);
         User user = SessionManager.getInstance().getUser();
         assertEquals(testUser2.getUsername(), user.getUsername());
@@ -55,27 +53,21 @@ class SessionManagerTest {
         assertEquals(testUser2.getFirstName(), user.getFirstName());
         assertEquals(testUser2.getLastName(), user.getLastName());
         assertEquals(testUser2.getBirthdate(), user.getBirthdate());
-
     }
 
-    @Test void getToken() {
+    @Test
+    void getToken() {
         String token = SessionManager.getInstance().getToken();
         assertNotNull(token);
         assertEquals(testToken, token);
     }
 
-    @Test void setToken() {
+    @Test
+    void setToken() {
         String token2 = "dsadasfdfafa";
         SessionManager.getInstance().setToken(token2);
         String token = SessionManager.getInstance().getToken();
         assertNotNull(token);
         assertEquals(token2, token);
     }
-
-
-
-
-
-
-
 }
