@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch:'samuel-docker', url:'https://github.com/samuelms123/OTP-1'
+                git branch:'samuel-docker', url:'https://github.com/samuelms123/OTP-1.git'
             }
         }
         stage('Create .env file') {
