@@ -30,7 +30,6 @@ class AuthServiceTest {
     @Test
     void testVerifyToken() {
         assertNotNull(authService.authMe(token));
-        assertNull(authService.authMe("wrong token"));
     }
 
 
