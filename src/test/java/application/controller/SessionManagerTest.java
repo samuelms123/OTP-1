@@ -5,6 +5,7 @@ import application.model.service.AuthService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,16 +15,19 @@ class SessionManagerTest {
     private User testUser2;
     private String testToken;
     private AuthService authService;
+    private SessionManager sessionManager;
 
     @BeforeEach
     void setup() {
-        SessionManager.getInstance().reset();
         authService = new AuthService();
         testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
         testUser2 = new User("testname2", "testlastname2", "test2@example.com", "testusername2", "1.1.1999", "password2");
         testToken = authService.createToken(testUser);
-        SessionManager.getInstance().setUser(testUser);
-        SessionManager.getInstance().setToken(testToken);
+
+        sessionManager = SessionManager.getInstance();
+        sessionManager.reset();
+        sessionManager.setUser(testUser);
+        sessionManager.setToken(testToken);
     }
 
     @Test
@@ -34,7 +38,7 @@ class SessionManagerTest {
 
     @Test
     void getUser() {
-        User user = SessionManager.getInstance().getUser();
+        User user = sessionManager.getInstance().getUser();
         assertNotNull(user);
         assertEquals(testUser.getUsername(), user.getUsername());
         assertEquals(testUser.getPassword(), user.getPassword());
