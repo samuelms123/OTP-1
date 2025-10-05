@@ -27,7 +27,6 @@ public class SessionManager {
     public void reset() {
         user = null;
         token = null;
-        instance = null;
     }
 
     // for testing purposes only, ability to inject an instance.
