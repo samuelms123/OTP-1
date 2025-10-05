@@ -9,28 +9,31 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AuthServiceTest {
-    private static User testUser;
-    private static AuthService authService;
-    private static String token;
+    private User testUser;
+    private AuthService authService;
+    private String token;
 
-    @BeforeAll
-    static void setup() {
+    @BeforeEach
+    void setup() {
         authService = new AuthService();
-        testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
+        testUser = new User(
+                "testname",
+                "testlastname",
+                "test@example.com",
+                "testusername",
+                "1.1.1999",
+                "password"
+        );
+        token = authService.createToken(testUser);
     }
-
 
     @Test
     void testCreateToken() {
-        String token = authService.createToken(testUser);
         assertNotNull(token);
-        this.token = token;
     }
 
     @Test
     void testVerifyToken() {
         assertNotNull(authService.authMe(token));
     }
-
-
 }
