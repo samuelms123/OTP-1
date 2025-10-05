@@ -17,6 +17,7 @@ class SessionManagerTest {
 
     @BeforeEach
     void setup() {
+        SessionManager.getInstance().reset();
         authService = new AuthService();
         testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
         testUser2 = new User("testname2", "testlastname2", "test2@example.com", "testusername2", "1.1.1999", "password2");
