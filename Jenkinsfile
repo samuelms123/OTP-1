@@ -7,16 +7,16 @@ pipeline {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
 
         // Define Docker Hub credentials ID
-        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        DOCKERHUB_CREDENTIALS_ID = 'docker_hub'
         // Define Docker Hub repository name
-        DOCKERHUB_REPO = 'aruraruri/shout-otp'
+        DOCKERHUB_REPO = 'samuelms123/shout-otp'
         // Define Docker image tag
         DOCKER_IMAGE_TAG = 'latest'
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch:'main', url:'https://github.com/samuelms123/OTP-1'
+                git branch:'samuel-docker', url:'https://github.com/samuelms123/OTP-1'
             }
         }
         stage('Create .env file') {
