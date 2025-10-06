@@ -177,7 +177,7 @@
       </VBox>
       <Pane prefHeight="720.0" prefWidth="1417.0">
          <children>
-            <AnchorPane fx:id="profilePage" layoutX="-6.0" prefHeight="720.0" prefWidth="465.0" style="-fx-background-color: #F8FAFC;">
+            <AnchorPane fx:id="profilePage" layoutX="-6.0" prefHeight="720.0" prefWidth="465.0" style="-fx-background-color: #F8FAFC;" visible="false">
                <children>
                   <VBox prefHeight="720.0" prefWidth="739.0">
                      <children>
@@ -451,7 +451,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="feedPage" layoutX="-5.0" layoutY="-1.0" prefHeight="756.0" prefWidth="785.0" style="-fx-background-color: #F8FAFC;" visible="false">
+            <AnchorPane fx:id="feedPage" layoutX="-5.0" layoutY="-1.0" prefHeight="756.0" prefWidth="785.0" style="-fx-background-color: #F8FAFC;">
                <effect>
                   <InnerShadow color="#0000003a" height="0.0" radius="1.7850000000000001" width="9.14" />
                </effect>
