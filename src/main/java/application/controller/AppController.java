@@ -74,10 +74,6 @@ public class AppController implements PostListener{
     @FXML
     private Label usernameFieldTop;
     @FXML
-    private Label likeAmountField;
-    @FXML
-    private Label postAmountField;
-    @FXML
     private Label friendAmountField;
     @FXML
     private Label realNameFieldCenter;
