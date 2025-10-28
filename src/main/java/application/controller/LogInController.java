@@ -219,8 +219,11 @@ public class LogInController {
         Image iranIcon = new Image(getClass().getResourceAsStream("/images/flags/iran-icon.png"));
         LanguageOption iran = new LanguageOption("Persian", "fa", "IR", iranIcon);
 
+        Image finlandIcon = new Image(getClass().getResourceAsStream("/images/flags/finland-icon.png"));
+        LanguageOption finland = new LanguageOption("Finland", "fi", "FI", finlandIcon);
 
-        languageOptions.getItems().addAll(uk, jp, iran);
+
+        languageOptions.getItems().addAll(finland, jp, iran, uk);
 
 
         languageOptions.setCellFactory(param -> new ListCell<>() {
