@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.model.data_objects.LanguageOption;
+
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.Post;
@@ -10,17 +12,18 @@ import application.view.GUI;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
+import java.util.Set;
 
 public class LogInController {
     UserService userService;
@@ -33,6 +36,8 @@ public class LogInController {
     private TextArea postContent;
     @FXML
     private ListView<Post> feedPagePostList;
+    @FXML
+    private ComboBox<LanguageOption> languageOptions;
 
     // Login
     @FXML
@@ -60,9 +65,10 @@ public class LogInController {
     @FXML
     private Label resultText;
 
-    public void register(ActionEvent actionEvent){
-        loginMenu.setVisible(false);
-        createAccountMenu.setVisible(true);
+    //this method is used for safely initializing fxml components after they have been loaded.
+    @FXML
+    private void initialize() {
+        SetLanguageOptions();
     }
 
     // Default constructor for JavaFX/FXML
@@ -80,6 +86,7 @@ public class LogInController {
         resultText.setText("");
         String usernameText = loginUsername.getText();
         String passwordText = loginPassword.getText();
+
 
         // check that all fields are filled
         if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty()) {
@@ -113,6 +120,11 @@ public class LogInController {
         } catch (Exception e) {
             resultText.setText("Login failed due to system error. Please try again.");
         }
+    }
+
+    public void register(ActionEvent actionEvent){
+        loginMenu.setVisible(false);
+        createAccountMenu.setVisible(true);
     }
 
     public void createAccount(ActionEvent actionEvent){
@@ -192,5 +204,48 @@ public class LogInController {
         //change back to log in
         createAccountMenu.setVisible(false);
         loginMenu.setVisible(true);
+    }
+
+    public void SetLanguageOptions() {
+        languageOptions.getItems().clear();
+
+
+        Image ukIcon = new Image(getClass().getResourceAsStream("/images/flags/uk-icon.png"));
+        LanguageOption uk = new LanguageOption("English", "en", "UK", ukIcon);
+
+        Image jpIcon = new Image(getClass().getResourceAsStream("/images/flags/japan-icon.png"));
+        LanguageOption jp = new LanguageOption("Japanese", "ja", "JP", jpIcon);
+
+        Image iranIcon = new Image(getClass().getResourceAsStream("/images/flags/iran-icon.png"));
+        LanguageOption iran = new LanguageOption("Persian", "fa", "IR", iranIcon);
+
+
+        languageOptions.getItems().addAll(uk, jp, iran);
+
+
+        languageOptions.setCellFactory(param -> new ListCell<>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(LanguageOption item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    imageView.setImage(item.getIcon());
+                    imageView.setFitHeight(40);
+                    imageView.setFitWidth(40);
+                    setGraphic(imageView);
+                }
+            }
+        });
+
+        languageOptions.setButtonCell(languageOptions.getCellFactory().call(null));
+        languageOptions.getSelectionModel().select(uk);
+    }
+
+    public void changeLanguage(ActionEvent actionEvent) {
+        SessionManager.getInstance().setLanguage(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
     }
 }
