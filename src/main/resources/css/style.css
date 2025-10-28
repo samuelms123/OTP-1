@@ -139,16 +139,33 @@
 }
 
 .language-box,
-.language-box .list-cell
+.language-box .list-cell,
+.language-box .list-cell:filled,
+.language-box .list-cell:filled:selected,
+.language-box .list-cell:filled:hover,
+.language-box .combo-box-popup,
+.combo-box-popup,
+.language-box .list-view,
+.combo-box-popup > .list-view
 {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-effect: none;
 }
 
 .language-box .combo-box-base,
-.language-box .combo-box-base:focused
+.language-box .combo-box-base:focused,
+.combo-box .combo-box-base,
+.language-box .combo-box-popup,
+.combo-box .combo-box-popup,
+.combo-box-popup
 {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+    -fx-start-margin: 0;
+    -fx-end-margin: 0;
+    -fx-effect: none;
 }
