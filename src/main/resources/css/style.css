@@ -136,3 +136,18 @@
 .opacity{
     -fx-background-color: black;
 }
+
+.language-box,
+.language-box .list-cell
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.language-box .combo-box-base,
+.language-box .combo-box-base:focused
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0;
+}
