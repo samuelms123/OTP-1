@@ -62,7 +62,7 @@
                      <children>
                         <VBox layoutX="-3.0" layoutY="10.0" prefHeight="360.0" prefWidth="348.0">
                            <children>
-                              <Label text="Username:">
+                              <Label text="%login.username">
                                  <font>
                                     <Font name="Ebrima Bold" size="22.0" />
                                  </font>

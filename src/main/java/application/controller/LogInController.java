@@ -23,6 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class LogInController {
@@ -249,6 +251,9 @@ public class LogInController {
     }
 
     public void changeLanguage(ActionEvent actionEvent) {
-        SessionManager.getInstance().setLanguage(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
+        Locale locale = new Locale(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
+        ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
+        GUI.getSceneManager().setResBundle(rb);
+        GUI.getSceneManager().switchScene(Paths.LOGIN);
     }
 }

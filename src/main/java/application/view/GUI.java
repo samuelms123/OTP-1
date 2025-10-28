@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class GUI extends Application {
@@ -16,8 +18,10 @@ public class GUI extends Application {
         stage.setResizable(false);
         Image icon = new Image(getClass().getResourceAsStream("/images/icons/logo.png"));
         stage.getIcons().add(icon);
+        Locale locale = new Locale("en", "UK");
+        ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
 
-       sceneManager = new SceneManager(stage);
+       sceneManager = new SceneManager(stage, rb);
        sceneManager.switchScene(Paths.LOGIN);
     }
 
