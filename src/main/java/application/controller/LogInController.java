@@ -71,6 +71,7 @@ public class LogInController {
     @FXML
     private void initialize() {
         SetLanguageOptions();
+
     }
 
     // Default constructor for JavaFX/FXML
@@ -247,13 +248,16 @@ public class LogInController {
         });
 
         languageOptions.setButtonCell(languageOptions.getCellFactory().call(null));
-        languageOptions.getSelectionModel().select(uk);
+        //languageOptions.getSelectionModel().select(uk);
     }
 
     public void changeLanguage(ActionEvent actionEvent) {
+        System.out.println(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode());
+        System.out.println(languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
         Locale locale = new Locale(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
         ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
         GUI.getSceneManager().setResBundle(rb);
         GUI.getSceneManager().switchScene(Paths.LOGIN);
     }
+
 }

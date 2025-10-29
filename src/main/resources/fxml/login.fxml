@@ -81,7 +81,7 @@
                                     <Insets left="30.0" right="30.0" />
                                  </padding>
                               </TextField>
-                              <Label text="Password:">
+                              <Label text="%login.password">
                                  <font>
                                     <Font name="Ebrima Bold" size="22.0" />
                                  </font>
@@ -100,7 +100,7 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </PasswordField>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="Login" textAlignment="CENTER" textFill="WHITE">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="%login.loginbutton" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="Ebrima Bold" size="20.0" />
                                  </font>
@@ -136,7 +136,7 @@
                      <children>
                         <VBox prefHeight="145.0" prefWidth="344.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="70.0" prefWidth="350.0" text="Not a user yet?" textAlignment="CENTER">
+                              <Label alignment="CENTER" prefHeight="70.0" prefWidth="350.0" text="%login.notuserprompt" textAlignment="CENTER">
                                  <font>
                                     <Font name="Ebrima Bold" size="20.0" />
                                  </font>
@@ -144,7 +144,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="225.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="Create a new user!" textAlignment="CENTER" textFill="WHITE">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="225.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="%login.createuser" textAlignment="CENTER" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="60.0" />
                                  </VBox.margin>
@@ -170,7 +170,7 @@
                            <children>
                               <VBox prefHeight="518.0" prefWidth="348.0">
                                  <children>
-                                    <Label text="Register to SHOUT!" textAlignment="CENTER">
+                                    <Label text="%register.title" textAlignment="CENTER">
                                        <font>
                                           <Font name="Ebrima Bold" size="26.0" />
                                        </font>
@@ -178,7 +178,7 @@
                                           <Insets bottom="20.0" left="60.0" top="20.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label layoutX="60.0" layoutY="99.0" text="First name:">
+                                    <Label layoutX="60.0" layoutY="99.0" text="%register.name">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -197,7 +197,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label text="Last name:">
+                                    <Label text="%register.surname">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -216,7 +216,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label text="Email:">
+                                    <Label text="%register.email">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -235,7 +235,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label text="Birthdate: (DD.MM.YYYY)">
+                                    <Label text="%register.birthdate">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -243,7 +243,7 @@
                                           <Insets bottom="5.0" left="50.0" top="15.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <DatePicker fx:id="newBirthdate" prefHeight="25.0" prefWidth="272.0" promptText="Select your birthdate...">
+                                    <DatePicker fx:id="newBirthdate" prefHeight="25.0" prefWidth="272.0" promptText="%register.birthdateprompt">
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="40.0" />
                                        </VBox.margin>
@@ -263,7 +263,7 @@
                                           <Insets bottom="30.0" left="60.0" top="30.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Username:">
+                                    <Label text="%register.username">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -282,7 +282,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label text="Password:">
+                                    <Label text="%register.password">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -301,7 +301,7 @@
                                           <Insets left="40.0" right="40.0" />
                                        </VBox.margin>
                                     </PasswordField>
-                                    <Label text="Password again:">
+                                    <Label text="%register.passwordagain">
                                        <font>
                                           <Font name="Ebrima Bold" size="20.0" />
                                        </font>
@@ -322,7 +322,7 @@
                                     </PasswordField>
                                     <HBox>
                                        <children>
-                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="red-button" text="Back" textAlignment="CENTER" textFill="WHITE">
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="red-button" text="%register.back" textAlignment="CENTER" textFill="WHITE">
                                              <HBox.margin>
                                                 <Insets left="50.0" top="25.0" />
                                              </HBox.margin>
@@ -333,7 +333,7 @@
                                                 <Insets bottom="20.0" left="120.0" top="30.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#createAccount" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="Register" textAlignment="CENTER" textFill="WHITE">
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#createAccount" prefHeight="50.0" prefWidth="110.0" style="-fx-border-color: Transparent; -fx-background-radius: 40;" styleClass="purple-button" text="%register.register" textAlignment="CENTER" textFill="WHITE">
                                              <HBox.margin>
                                                 <Insets left="26.0" right="25.0" top="25.0" />
                                              </HBox.margin>
