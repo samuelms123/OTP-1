@@ -23,11 +23,11 @@ public class UserService {
 
     public RegistrationResult registerUser(User user) {
         if (!userDao.isUserEmailUnique(user.getEmail())) {
-            return new RegistrationResult(false, "Email already taken");
+            return new RegistrationResult(false, SceneManager.getSceneManager().getResBundle().getString("register.emailtaken"));
         }
 
         if (!userDao.isUserNameUnique(user.getUsername())) {
-            return new RegistrationResult(false, "Username already taken");
+            return new RegistrationResult(false, SceneManager.getSceneManager().getResBundle().getString("register.usernametaken"));
         }
 
         try {
@@ -35,7 +35,7 @@ public class UserService {
                     .hashToString(Integer.parseInt(Config.SALT_ROUNDS), user.getPassword().toCharArray());
             user.setPassword(hashedPassword);
             userDao.persist(user);
-            return new RegistrationResult(true, "User registered successfully");
+            return new RegistrationResult(true, SceneManager.getSceneManager().getResBundle().getString("register.succesfulprompt"));
 
         } catch (Exception e) {
             e.printStackTrace();
