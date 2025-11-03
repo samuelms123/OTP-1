@@ -57,7 +57,7 @@ public class UserService {
         User userResult = userDao.findUser(user.getUsername());
 
         if (userResult == null) {
-            return new LoginResult(false, "User not found");
+            return new LoginResult(false, SceneManager.getSceneManager().getResBundle().getString("login.incorrectinfo"));
         }
 
         if (verifyPassword(user.getPassword(), userResult.getPassword())) {
@@ -66,7 +66,7 @@ public class UserService {
             return new LoginResult(true, SceneManager.getSceneManager().getResBundle().getString("login.succesfulprompt"), token, userResult);
         }
 
-        return new LoginResult(false, "Password incorrect");
+        return new LoginResult(false, SceneManager.getSceneManager().getResBundle().getString("login.passwordincorrect"));
     }
 
     public List<String> searchUsers(String query, String exclude) {
