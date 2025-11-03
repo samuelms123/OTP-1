@@ -159,8 +159,8 @@ class LoginControllerTest {
     private void setupGUIMock() {
         try {
 
-            var getSceneManagerMethod = GUI.class.getMethod("getSceneManager");
-            var setSceneManagerMethod = GUI.class.getMethod("setSceneManager", SceneManager.class);
+            var getSceneManagerMethod = SceneManager.class.getMethod("getSceneManager");
+            var setSceneManagerMethod = SceneManager.class.getMethod("setSceneManager", SceneManager.class);
             setSceneManagerMethod.invoke(null, sceneManager);
 
         } catch (NoSuchMethodException e) {

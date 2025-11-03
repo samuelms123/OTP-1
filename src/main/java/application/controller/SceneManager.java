@@ -9,12 +9,24 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SceneManager {
+    private static SceneManager instance;
     private Stage stage;
     private ResourceBundle rb;
 
-    public SceneManager(Stage stage, ResourceBundle rb) {
-        this.stage = stage;
-        this.rb = rb;
+    private SceneManager() {
+
+    }
+
+    public static SceneManager getSceneManager() {
+        if (instance == null) {
+            instance = new SceneManager();
+        }
+        return instance;
+    }
+
+    // FOR TESTING PURPOSES ONLY!
+    public void setSceneManager(SceneManager manager) {
+        instance = manager;
     }
 
     public void switchScene(String fxmlPath) {
@@ -34,7 +46,16 @@ public class SceneManager {
         return stage;
     }
 
+    public void setStage(Stage stage, ResourceBundle rb) {
+        this.stage = stage;
+        this.rb = rb;
+    }
+
     public void setResBundle(ResourceBundle rb) {
         this.rb = rb;
+    }
+
+    public ResourceBundle getResBundle() {
+        return rb;
     }
 }

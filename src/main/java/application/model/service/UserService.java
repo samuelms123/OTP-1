@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.controller.SceneManager;
 import application.controller.SessionManager;
 import application.model.data_objects.CommonResult;
 import application.model.data_objects.LoginResult;
@@ -62,7 +63,7 @@ public class UserService {
         if (verifyPassword(user.getPassword(), userResult.getPassword())) {
             String token = authService.createToken(user);
 
-            return new LoginResult(true, "User logged in successfully", token, userResult);
+            return new LoginResult(true, SceneManager.getSceneManager().getResBundle().getString("login.succesfulprompt"), token, userResult);
         }
 
         return new LoginResult(false, "Password incorrect");

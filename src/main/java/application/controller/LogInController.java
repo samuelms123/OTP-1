@@ -113,7 +113,7 @@ public class LogInController {
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
                 pause.setOnFinished(e -> {
-                    GUI.getSceneManager().switchScene(Paths.APP);
+                    SceneManager.getSceneManager().switchScene(Paths.APP);
                 });
                 pause.play();
 
@@ -256,8 +256,8 @@ public class LogInController {
         System.out.println(languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
         Locale locale = new Locale(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
         ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
-        GUI.getSceneManager().setResBundle(rb);
-        GUI.getSceneManager().switchScene(Paths.LOGIN);
+        SceneManager.getSceneManager().setResBundle(rb);
+        SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
 
 }

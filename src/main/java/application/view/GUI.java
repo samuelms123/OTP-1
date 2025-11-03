@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 
 public class GUI extends Application {
-    private static SceneManager sceneManager;
 
     public void start(Stage stage) throws Exception {
         stage.setTitle("Shout!");
@@ -20,17 +19,9 @@ public class GUI extends Application {
         stage.getIcons().add(icon);
         Locale locale = new Locale("en", "UK");
         ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
-
-       sceneManager = new SceneManager(stage, rb);
-       sceneManager.switchScene(Paths.LOGIN);
+        SceneManager.getSceneManager().setStage(stage, rb);
+        //sceneManager = new SceneManager(stage, rb);
+        SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
 
-    // for testing purposes
-    public static void setSceneManager(SceneManager manager) {
-        sceneManager = manager;
-    }
-
-    public static SceneManager getSceneManager() {
-        return sceneManager;
-    }
 }
