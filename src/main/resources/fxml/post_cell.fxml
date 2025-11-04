@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +20,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: transparent;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.PostCellController">
+<AnchorPane style="-fx-background-color: transparent;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.PostCellController">
    <children>
        <VBox fx:id="postCellVBox" spacing="15.0" styleClass="post" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
           <children>
@@ -62,7 +69,7 @@
               </Label>
               <HBox spacing="10">
                  <children>
-                     <Button fx:id="likeButton" styleClass="interactive-button" stylesheets="@../css/style.css" text="%post.likes">
+                     <Button fx:id="likeButton" styleClass="interactive-button" stylesheets="@../css/style.css" text="0">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -71,7 +78,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                     <Button styleClass="interactive-button" stylesheets="@../css/style.css" text="%post.comments">
+                     <Button fx:id="commentButtonView" styleClass="interactive-button" stylesheets="@../css/style.css" text="0">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
