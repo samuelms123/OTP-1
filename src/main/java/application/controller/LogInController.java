@@ -93,7 +93,7 @@ public class LogInController {
 
         // check that all fields are filled
         if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty()) {
-            loginResultLabel.setText("Please fill in all fields");
+            loginResultLabel.setText(SceneManager.getSceneManager().getResBundle().getString("login.fieldsmissingprompt"));
             return;
         }
 
@@ -121,7 +121,7 @@ public class LogInController {
                 loginResultLabel.setText(result.getMessage());
             }
         } catch (Exception e) {
-            resultText.setText("Login failed due to system error. Please try again.");
+            loginResultLabel.setText(SceneManager.getSceneManager().getResBundle().getString("login.systemerrorprompt"));
         }
     }
 
