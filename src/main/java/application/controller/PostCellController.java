@@ -30,6 +30,7 @@ public class PostCellController {
     @FXML private Label contentLabel;
     @FXML private Button likeButton;
     @FXML private Button commentButton;
+    @FXML private Button commentButtonView;
     @FXML private ListView<String> postComments;
     @FXML private ImageView postProfilePicture;
     @FXML private Button deletePostButton;
@@ -41,6 +42,7 @@ public class PostCellController {
 
 
     private Post post;
+    private int commentAmount;
 
     public void deletePost(ActionEvent event) {
         CommonResult result = postService.deletePost(this.post);
@@ -66,6 +68,9 @@ public class PostCellController {
 
     public void setComments(List<Comment> comments) {
         commentItems.clear();
+        commentAmount = comments.size();
+        commentButtonView.setText(commentAmount + " ");
+
         // add to observable list after clear
         for (Comment comment : comments) {
             User commentAuthor = userService.getUserById(comment.getUserId());
@@ -75,12 +80,13 @@ public class PostCellController {
     }
 
     public void setLikes(int likeCount) {
-        String plural = likeCount == 1 ? "" : "s";
-
-        likeButton.setText(likeCount + " " +SceneManager.getSceneManager().getResBundle().getString("post.like") + plural);
+        likeButton.setText(likeCount + " ");
     }
 
     public void addComment(ActionEvent actionEvent) {
+        commentAmount++;
+        commentButtonView.setText(commentAmount + " ");
+
         String commentText = commentField.getText();
         if (!commentText.isEmpty()) {
             commentItems.add(SessionManager.getInstance().getUser().getUsername() + ": " + commentText);
