@@ -212,7 +212,7 @@ public class AppController implements PostListener{
 
     public void logout(ActionEvent actionEvent) throws IOException {
         SessionManager.getInstance().reset();
-        GUI.getSceneManager().switchScene(Paths.LOGIN);
+        SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
 
     public void addPost(ActionEvent actionEvent) {
@@ -259,7 +259,7 @@ public class AppController implements PostListener{
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
-        File selectedFile = fileChooser.showOpenDialog(GUI.getSceneManager().getStage());
+        File selectedFile = fileChooser.showOpenDialog(SceneManager.getSceneManager().getStage());
 
         if (selectedFile != null) {
             // Temporary view of the image in profile picture slot

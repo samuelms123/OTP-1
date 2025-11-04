@@ -6,27 +6,22 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class GUI extends Application {
-    private static SceneManager sceneManager;
 
     public void start(Stage stage) throws Exception {
         stage.setTitle("Shout!");
         stage.setResizable(false);
         Image icon = new Image(getClass().getResourceAsStream("/images/icons/logo.png"));
         stage.getIcons().add(icon);
-
-       sceneManager = new SceneManager(stage);
-       sceneManager.switchScene(Paths.LOGIN);
+        Locale locale = new Locale("en", "UK");
+        ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
+        SceneManager.getSceneManager().setStage(stage, rb);
+        //sceneManager = new SceneManager(stage, rb);
+        SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
 
-    // for testing purposes
-    public static void setSceneManager(SceneManager manager) {
-        sceneManager = manager;
-    }
-
-    public static SceneManager getSceneManager() {
-        return sceneManager;
-    }
 }

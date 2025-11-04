@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.controller.SceneManager;
 import application.controller.SessionManager;
 import application.model.data_objects.CommonResult;
 import application.model.data_objects.LoginResult;
@@ -22,11 +23,11 @@ public class UserService {
 
     public RegistrationResult registerUser(User user) {
         if (!userDao.isUserEmailUnique(user.getEmail())) {
-            return new RegistrationResult(false, "Email already taken");
+            return new RegistrationResult(false, SceneManager.getSceneManager().getResBundle().getString("register.emailtaken"));
         }
 
         if (!userDao.isUserNameUnique(user.getUsername())) {
-            return new RegistrationResult(false, "Username already taken");
+            return new RegistrationResult(false, SceneManager.getSceneManager().getResBundle().getString("register.usernametaken"));
         }
 
         try {
@@ -34,7 +35,7 @@ public class UserService {
                     .hashToString(Integer.parseInt(Config.SALT_ROUNDS), user.getPassword().toCharArray());
             user.setPassword(hashedPassword);
             userDao.persist(user);
-            return new RegistrationResult(true, "User registered successfully");
+            return new RegistrationResult(true, SceneManager.getSceneManager().getResBundle().getString("register.succesfulprompt"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,16 +57,16 @@ public class UserService {
         User userResult = userDao.findUser(user.getUsername());
 
         if (userResult == null) {
-            return new LoginResult(false, "User not found");
+            return new LoginResult(false, SceneManager.getSceneManager().getResBundle().getString("login.incorrectinfo"));
         }
 
         if (verifyPassword(user.getPassword(), userResult.getPassword())) {
             String token = authService.createToken(user);
 
-            return new LoginResult(true, "User logged in successfully", token, userResult);
+            return new LoginResult(true, SceneManager.getSceneManager().getResBundle().getString("login.succesfulprompt"), token, userResult);
         }
 
-        return new LoginResult(false, "Password incorrect");
+        return new LoginResult(false, SceneManager.getSceneManager().getResBundle().getString("login.passwordincorrect"));
     }
 
     public List<String> searchUsers(String query, String exclude) {

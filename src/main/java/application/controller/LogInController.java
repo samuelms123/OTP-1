@@ -23,6 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class LogInController {
@@ -69,6 +71,7 @@ public class LogInController {
     @FXML
     private void initialize() {
         SetLanguageOptions();
+
     }
 
     // Default constructor for JavaFX/FXML
@@ -90,7 +93,7 @@ public class LogInController {
 
         // check that all fields are filled
         if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty()) {
-            loginResultLabel.setText("Please fill in all fields");
+            loginResultLabel.setText(SceneManager.getSceneManager().getResBundle().getString("login.fieldsmissingprompt"));
             return;
         }
 
@@ -110,7 +113,7 @@ public class LogInController {
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
                 pause.setOnFinished(e -> {
-                    GUI.getSceneManager().switchScene(Paths.APP);
+                    SceneManager.getSceneManager().switchScene(Paths.APP);
                 });
                 pause.play();
 
@@ -118,7 +121,7 @@ public class LogInController {
                 loginResultLabel.setText(result.getMessage());
             }
         } catch (Exception e) {
-            resultText.setText("Login failed due to system error. Please try again.");
+            loginResultLabel.setText(SceneManager.getSceneManager().getResBundle().getString("login.systemerrorprompt"));
         }
     }
 
@@ -142,20 +145,20 @@ public class LogInController {
                 newPassword.getText().isEmpty() ||
                 newPasswordConfirm.getText().isEmpty()) {
 
-            resultText.setText("Please fill in all fields");
+            resultText.setText(SceneManager.getSceneManager().getResBundle().getString("register.fillfields"));
             return;
         }
 
         // Lazy email validation
         String email = newEmail.getText();
         if (!email.contains("@") || !email.contains(".")) {
-            resultText.setText("Please enter a valid email address");
+            resultText.setText(SceneManager.getSceneManager().getResBundle().getString("register.promptvalidemail"));
             return;
         }
 
         // check password matching
         if (!password.equals(passwordConfirm)) {
-            resultText.setText("Passwords not matching");
+            resultText.setText(SceneManager.getSceneManager().getResBundle().getString("register.passwordsnotmatching"));
             return;
         }
         // get other inputs
@@ -245,10 +248,16 @@ public class LogInController {
         });
 
         languageOptions.setButtonCell(languageOptions.getCellFactory().call(null));
-        languageOptions.getSelectionModel().select(uk);
+        //languageOptions.getSelectionModel().select(uk);
     }
 
     public void changeLanguage(ActionEvent actionEvent) {
-        SessionManager.getInstance().setLanguage(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
+        System.out.println(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode());
+        System.out.println(languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
+        Locale locale = new Locale(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
+        ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
+        SceneManager.getSceneManager().setResBundle(rb);
+        SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
+
 }
