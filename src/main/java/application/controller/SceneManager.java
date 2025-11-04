@@ -2,6 +2,8 @@ package application.controller;
 
 import application.utils.Paths;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -33,7 +35,15 @@ public class SceneManager {
         try {
             URL fxml = application.view.GUI.class.getResource(fxmlPath);
             FXMLLoader loader = new FXMLLoader(fxml, rb);
-            Scene scene = new Scene(loader.load());
+            Parent root = loader.load();
+            String lang = rb.getLocale().getLanguage();
+            if (lang.equals("fa")) {
+                root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            } else {
+                root.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+            }
+
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }

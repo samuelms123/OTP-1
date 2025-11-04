@@ -136,3 +136,17 @@ Acceptance Criteria:
 Acceptance Criteria:
 *   Change password option in profile.
 
+---
+
+### General
+
+---
+
+**User Story : As a user, I want to be able to change UI language**
+
+Acceptance Criteria:
+* User can select desired language from dropdown menu.
+* Right-to-left support for RTL languages.
+
+---
+
