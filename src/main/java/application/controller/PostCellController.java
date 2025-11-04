@@ -77,7 +77,7 @@ public class PostCellController {
     public void setLikes(int likeCount) {
         String plural = likeCount == 1 ? "" : "s";
 
-        likeButton.setText(likeCount + " Like" + plural);
+        likeButton.setText(likeCount + SceneManager.getSceneManager().getResBundle().getString("post.like") + plural);
     }
 
     public void addComment(ActionEvent actionEvent) {

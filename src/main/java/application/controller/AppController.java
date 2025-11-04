@@ -347,8 +347,8 @@ public class AppController implements PostListener{
                     setStyle("-fx-background-color: transparent;");
                 } else {
                     try {
-                        // Load the post cell using FXML
-                        FXMLLoader postloader = new FXMLLoader(getClass().getResource(Paths.POST));
+                        // Load the post cell using FXML, pass in translations bundle too too
+                        FXMLLoader postloader = new FXMLLoader(getClass().getResource(Paths.POST), SceneManager.getSceneManager().getResBundle());
                         Node cellRoot = postloader.load();
                         PostCellController controller = postloader.getController();
                         controller.setPostService(postService);

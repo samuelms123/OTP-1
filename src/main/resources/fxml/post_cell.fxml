@@ -44,7 +44,7 @@
                           </Label>
                      </children>
                   </VBox>
-                  <Button fx:id="deletePostButton" mnemonicParsing="false" onAction="#deletePost" styleClass="red-button" text="Delete">
+                  <Button fx:id="deletePostButton" mnemonicParsing="false" onAction="#deletePost" styleClass="red-button" text="%post.delete">
                      <HBox.margin>
                         <Insets left="250.0" />
                      </HBox.margin>
@@ -62,7 +62,7 @@
               </Label>
               <HBox spacing="10">
                  <children>
-                     <Button fx:id="likeButton" styleClass="interactive-button" stylesheets="@../css/style.css" text="0 Likes">
+                     <Button fx:id="likeButton" styleClass="interactive-button" stylesheets="@../css/style.css" text="%post.likes">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -71,7 +71,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                     <Button styleClass="interactive-button" stylesheets="@../css/style.css" text="0 Comments">
+                     <Button styleClass="interactive-button" stylesheets="@../css/style.css" text="%post.comments">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -88,12 +88,12 @@
             <Line endX="600.0" stroke="#e2e8f0" strokeWidth="2.0" />
             <HBox prefHeight="0.0" prefWidth="602.0">
                <children>
-                    <TextField fx:id="commentField" prefWidth="500.0" promptText="Write a comment..." style="-fx-background-radius: 25;" stylesheets="@../css/style.css">
+                    <TextField fx:id="commentField" prefWidth="500.0" promptText="%post.commentprompt" style="-fx-background-radius: 25;" stylesheets="@../css/style.css">
                      <HBox.margin>
                         <Insets top="12.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="commentButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" onAction="#addComment" style="-fx-background-radius: 100;" styleClass="comment-button" text="Comment" textFill="WHITE">
+                  <Button fx:id="commentButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" onAction="#addComment" style="-fx-background-radius: 100;" styleClass="comment-button" text="%post.comment" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="comment-button">
                            <image>
