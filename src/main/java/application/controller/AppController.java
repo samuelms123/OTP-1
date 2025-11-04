@@ -169,10 +169,10 @@ public class AppController implements PostListener{
         currentlyOpenedUserProfile = user;
         setProfileInfo(user);
         if (IsUserFollowed(user)) {
-            addFriendButton.setText("Remove friend");
+            addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.removefriend"));
         }
         else {
-            addFriendButton.setText("Add friend");
+            addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"));
         }
         toggleProfilePage();
     }
@@ -255,7 +255,7 @@ public class AppController implements PostListener{
     public void changeAvatar(ActionEvent actionEvent) {
         System.out.println("changeAvatar");
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Avatar");
+        fileChooser.setTitle(SceneManager.getSceneManager().getResBundle().getString("changeinfo.changeavatar"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
@@ -323,14 +323,14 @@ public class AppController implements PostListener{
 
         String buttonText = addFriendButton.getText();
 
-        if (buttonText.equals("Add friend")) { // ADD FRIED BUTTON
+        if (buttonText.equals(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"))) { // ADD FRIED BUTTON
             CommonResult result = userService.followUser(followerUser, followedUser);
-            addFriendButton.setText("Remove friend");
+            addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.removefriend"));
             System.out.println(result.getMessage());
         }
         else { // REMOVE FRIEND BUTTON
             CommonResult result = userService.unfollowUser(followerUser, followedUser);
-            addFriendButton.setText("Add friend");
+            addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"));
             System.out.println(result.getMessage());
         }
     }
