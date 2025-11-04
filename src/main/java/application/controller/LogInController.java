@@ -93,7 +93,7 @@ public class LogInController {
 
         // check that all fields are filled
         if (loginUsername.getText().isEmpty() || loginPassword.getText().isEmpty()) {
-            loginResultLabel.setText("Please fill in all fields");
+            loginResultLabel.setText(SceneManager.getSceneManager().getResBundle().getString("register.fillfields"));
             return;
         }
 
@@ -145,20 +145,20 @@ public class LogInController {
                 newPassword.getText().isEmpty() ||
                 newPasswordConfirm.getText().isEmpty()) {
 
-            resultText.setText("Please fill in all fields");
+            resultText.setText(SceneManager.getSceneManager().getResBundle().getString("register.fillfields"));
             return;
         }
 
         // Lazy email validation
         String email = newEmail.getText();
         if (!email.contains("@") || !email.contains(".")) {
-            resultText.setText("Please enter a valid email address");
+            resultText.setText(SceneManager.getSceneManager().getResBundle().getString("register.promptvalidemail"));
             return;
         }
 
         // check password matching
         if (!password.equals(passwordConfirm)) {
-            resultText.setText("Passwords not matching");
+            resultText.setText(SceneManager.getSceneManager().getResBundle().getString("register.passwordsnotmatching"));
             return;
         }
         // get other inputs
