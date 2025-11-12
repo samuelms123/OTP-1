@@ -5,13 +5,11 @@ import application.model.data_objects.PostResult;
 import application.model.entity.Like;
 import application.model.entity.Post;
 import application.model.entity.User;
-import application.model.service.AuthService;
 import application.model.service.PostService;
 import application.model.service.UserService;
 import application.utils.Paths;
-import application.view.GUI;
+import com.sun.jdi.event.ExceptionEvent;
 import javafx.collections.FXCollections;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 import java.io.IOException;
@@ -42,7 +38,6 @@ import static application.utils.ImageUtils.imageToBlob;
 
 public class AppController implements PostListener{
     PostService postService;
-    AuthService authService;
     UserService userService;
     User currentlyOpenedUserProfile;
     Image defaultProfilePicture;
@@ -117,7 +112,7 @@ public class AppController implements PostListener{
         updateNavUserInformation();
         postService.addListener(appController);
         if (SessionManager.getInstance().getUser().getProfilePicture() != null) {
-            miniProfilePicture.setImage(blobToImage(SessionManager.getInstance().getUser().getProfilePicture())); //sorry
+            miniProfilePicture.setImage(blobToImage(SessionManager.getInstance().getUser().getProfilePicture()));
         }
 
         // Add search listener
@@ -153,7 +148,7 @@ public class AppController implements PostListener{
     }
 
     // This check is just for deciding which button to show in profile add friend/remove friend!
-    public boolean IsUserFollowed(User userToCheck) {
+    public boolean isUserFollowed(User userToCheck) {
         User loggedUser = SessionManager.getInstance().getUser();
         for (User user : loggedUser.getFollowing()) {
             if (user.getUsername().equals(userToCheck.getUsername())) {
@@ -168,7 +163,7 @@ public class AppController implements PostListener{
         addFriendButton.setVisible(true);
         currentlyOpenedUserProfile = user;
         setProfileInfo(user);
-        if (IsUserFollowed(user)) {
+        if (isUserFollowed(user)) {
             addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.removefriend"));
         }
         else {
@@ -225,22 +220,22 @@ public class AppController implements PostListener{
         Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "", Timestamp.from(Instant.now()));
         PostResult result = postService.makePost(post);
         // Make UI error message in case of access denied
-        System.out.println(result);
         postContent.clear();
         toggleNewPostPanel(actionEvent);
         updateFeed();
     }
 
     public void toggleUserModifyPanel() {
+        User user = SessionManager.getInstance().getUser();
         staticProfile.setVisible(!staticProfile.isVisible());
         modifyProfile.setVisible(!modifyProfile.isVisible());
 
-        modifyName.setText(SessionManager.getInstance().getUser().getFirstName());
-        modifyLastname.setText(SessionManager.getInstance().getUser().getLastName());
-        modifyEmail.setText(SessionManager.getInstance().getUser().getEmail());
+        modifyName.setText(user.getFirstName());
+        modifyLastname.setText(user.getLastName());
+        modifyEmail.setText(user.getEmail());
         inspectImage.setImage(null);
 
-        String birthdateString = SessionManager.getInstance().getUser().getBirthdate();
+        String birthdateString = user.getBirthdate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localBirthDate = LocalDate.parse(birthdateString, formatter);
 
@@ -253,7 +248,6 @@ public class AppController implements PostListener{
     }
 
     public void changeAvatar(ActionEvent actionEvent) {
-        System.out.println("changeAvatar");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(SceneManager.getSceneManager().getResBundle().getString("changeinfo.changeavatar"));
         fileChooser.getExtensionFilters().addAll(
@@ -271,43 +265,44 @@ public class AppController implements PostListener{
     }
 
     public void applyProfileChanges() {
-        if(!Objects.equals(modifyName.getText(), SessionManager.getInstance().getUser().getUsername())){
-            SessionManager.getInstance().getUser().setFirstName(modifyName.getText());
+        User user = SessionManager.getInstance().getUser();
+
+        if(!Objects.equals(modifyName.getText(), user.getUsername())){
+            user.setFirstName(modifyName.getText());
         }
 
-        if(!Objects.equals(modifyLastname.getText(), SessionManager.getInstance().getUser().getLastName())){
-            SessionManager.getInstance().getUser().setLastName(modifyLastname.getText());
+        if(!Objects.equals(modifyLastname.getText(), user.getLastName())){
+            user.setLastName(modifyLastname.getText());
         }
 
-        if(!Objects.equals(modifyEmail.getText(), SessionManager.getInstance().getUser().getEmail())){
-            SessionManager.getInstance().getUser().setEmail(modifyEmail.getText());
+        if(!Objects.equals(modifyEmail.getText(), user.getEmail())){
+            user.setEmail(modifyEmail.getText());
         }
 
-        if(!Objects.equals(modifyBirthdate.getValue().toString(), SessionManager.getInstance().getUser().getBirthdate())){
-            SessionManager.getInstance().getUser().setBirthdate(modifyBirthdate.getValue().toString());
+        if(!Objects.equals(modifyBirthdate.getValue().toString(), user.getBirthdate())){
+            user.setBirthdate(modifyBirthdate.getValue().toString());
         }
 
         // Save picture from inspectPicture ImageView
         if (inspectImage.getImage() != null) {
             byte[] blob = imageToBlob(inspectImage.getImage());
             if (blob != null) {
-                SessionManager.getInstance().getUser().setProfilePicture(blob);
+                user.setProfilePicture(blob);
                 miniProfilePicture.setImage(inspectImage.getImage());
             }
             else {
-                System.out.println("blob is null for some reason :P");
+                throw new NullPointerException("inspectImage is Null");
             }
         }
 
-        userService.updateUser(SessionManager.getInstance().getUser());
+        userService.updateUser(user);
 
         //Update UI information
-        setProfileInfo(SessionManager.getInstance().getUser());
+        setProfileInfo(user);
         updateNavUserInformation();
 
         //Open static profile view
         toggleUserModifyPanel();
-        System.out.println("Applying changes");
     }
 
 
@@ -317,8 +312,7 @@ public class AppController implements PostListener{
         User followedUser =  currentlyOpenedUserProfile;
 
         if (followedUser == null) {
-            System.out.println("Bug in addFriend, followed user is null");
-            return;
+            throw new NullPointerException("followedUser cannot be null in addFriend");
         }
 
         String buttonText = addFriendButton.getText();
@@ -326,12 +320,10 @@ public class AppController implements PostListener{
         if (buttonText.equals(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"))) { // ADD FRIED BUTTON
             CommonResult result = userService.followUser(followerUser, followedUser);
             addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.removefriend"));
-            System.out.println(result.getMessage());
         }
         else { // REMOVE FRIEND BUTTON
             CommonResult result = userService.unfollowUser(followerUser, followedUser);
             addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"));
-            System.out.println(result.getMessage());
         }
     }
 

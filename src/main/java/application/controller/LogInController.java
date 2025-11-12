@@ -8,7 +8,6 @@ import application.model.entity.Post;
 import application.model.entity.User;
 import application.model.service.UserService;
 import application.utils.Paths;
-import application.view.GUI;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +24,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class LogInController {
     UserService userService;
@@ -70,7 +68,7 @@ public class LogInController {
     //this method is used for safely initializing fxml components after they have been loaded.
     @FXML
     private void initialize() {
-        SetLanguageOptions();
+        setLanguageOptions();
 
     }
 
@@ -209,7 +207,7 @@ public class LogInController {
         loginMenu.setVisible(true);
     }
 
-    public void SetLanguageOptions() {
+    public void setLanguageOptions() {
         languageOptions.getItems().clear();
 
 
@@ -252,8 +250,6 @@ public class LogInController {
     }
 
     public void changeLanguage(ActionEvent actionEvent) {
-        System.out.println(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode());
-        System.out.println(languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
         Locale locale = new Locale(languageOptions.getSelectionModel().getSelectedItem().getLanguageCode(), languageOptions.getSelectionModel().getSelectedItem().getCountryCode());
         ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
         SceneManager.getSceneManager().setResBundle(rb);

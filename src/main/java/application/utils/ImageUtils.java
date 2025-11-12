@@ -7,14 +7,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageUtils {
 
     public static Image blobToImage(byte[] byteArray) {
         if (byteArray == null) {
-            System.out.println("blob is null");
-            return null;
+            throw new NullPointerException("byteArray cannot be null");
         }
         InputStream iStream = new ByteArrayInputStream(byteArray);
         return new Image(iStream);
@@ -22,19 +22,17 @@ public class ImageUtils {
 
     public static byte[] imageToBlob(Image image) {
         if (image == null) {
-            System.out.println("image is null");
-            return null;
+            throw new NullPointerException("image cannot be null");
         }
         BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
 
         ByteArrayOutputStream oStream = new ByteArrayOutputStream();
         try {
             ImageIO.write(bImage, "png", oStream);
-            byte[] imageBytes = oStream.toByteArray();
-            return imageBytes;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return oStream.toByteArray();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error converting blob to image", e);
         }
     }
 }

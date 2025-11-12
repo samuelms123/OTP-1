@@ -25,7 +25,6 @@ public class PostService {
     AuthService authService;
     CommentDao commentDao;
     LikeDao likeDao;
-    UserDao userDao;
     List<PostListener> listeners;
 
     public PostService() {
@@ -33,7 +32,6 @@ public class PostService {
         authService = new AuthService();
         commentDao = new CommentDao();
         likeDao = new LikeDao();
-        userDao = new UserDao();
         listeners = new ArrayList<>();
     }
 
@@ -44,7 +42,6 @@ public class PostService {
     }
 
     public void addListener(PostListener listener) {
-        System.out.println("LISTENER ADDED");
         listeners.add(listener);
     }
 
@@ -74,13 +71,10 @@ public class PostService {
                 // User has already liked the post, so remove the like
                 Like existingLike = likeDao.findLike(user.getId(), post.getId());
                 likeDao.deleteLike(existingLike);
-
-                System.out.println("User has already liked the post, so remove the like.");
                 return false;
             }
         }
 
-        System.out.println("Something went wrong with likePost()????");
         return false;
     }
 
