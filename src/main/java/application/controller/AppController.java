@@ -8,7 +8,6 @@ import application.model.entity.User;
 import application.model.service.PostService;
 import application.model.service.UserService;
 import application.utils.Paths;
-import com.sun.jdi.event.ExceptionEvent;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -180,7 +179,7 @@ public class AppController implements PostListener{
     public void setProfileInfo(User user) {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
         usernameFieldTop.setText("@" + user.getUsername());
-        friendAmountField.setText("" + countFriends(user));
+        friendAmountField.setText(Integer.toString(countFriends(user)));
 
         if (user.getProfilePicture() != null) {
             profilePicture.setImage(blobToImage(user.getProfilePicture()));
@@ -291,7 +290,7 @@ public class AppController implements PostListener{
                 miniProfilePicture.setImage(inspectImage.getImage());
             }
             else {
-                throw new NullPointerException("inspectImage is Null");
+                throw new IllegalStateException("inspectImage is Null");
             }
         }
 
@@ -312,7 +311,7 @@ public class AppController implements PostListener{
         User followedUser =  currentlyOpenedUserProfile;
 
         if (followedUser == null) {
-            throw new NullPointerException("followedUser cannot be null in addFriend");
+            throw new IllegalStateException("followedUser cannot be null in addFriend");
         }
 
         String buttonText = addFriendButton.getText();

@@ -4,8 +4,11 @@ import application.model.entity.Comment;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CommentDao implements IDao<Comment>{
+    private final Logger logger = Logger.getLogger(CommentDao.class.getName());
 
     @Override
     public void persist(Comment entity) {
@@ -39,7 +42,7 @@ public class CommentDao implements IDao<Comment>{
                     .getResultList();
             return comments;
         } catch (Exception e) {
-            System.err.println("CommentDao.java: Error finding comments by post ID. (Check connection to database.)");
+            logger.log(Level.WARNING, "CommentDao.java: Error finding comments by post ID. (Check connection to database.)");
             return List.of(); // return empty list
         }
     }

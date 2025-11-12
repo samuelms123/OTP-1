@@ -2,13 +2,20 @@ package datasource;
 
 import jakarta.persistence.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Class for creating a connection to the MariaDB database using JPA
  */
-public class MariaDbJpaConnection {
+public final class MariaDbJpaConnection {
+    private final static Logger LOGGER = Logger.getLogger(MariaDbJpaConnection.class.getName());
+    private static EntityManagerFactory emFactory;
+    private static EntityManager entityManager;
 
-    private static EntityManagerFactory emf = null;
-    private static EntityManager em = null;
+    private MariaDbJpaConnection() {
+        throw new AssertionError("Cannot instantiate utility class");
+    }
 
     /**
      * Method for getting the EntityManager object
@@ -17,15 +24,15 @@ public class MariaDbJpaConnection {
      */
     public static EntityManager getInstance() {
         try {
-            if (em == null) {
-                if (emf == null) {
-                    emf = Persistence.createEntityManagerFactory("ShoutMariaDbUnit");
+            if (entityManager == null) {
+                if (emFactory == null) {
+                    emFactory = Persistence.createEntityManagerFactory("ShoutMariaDbUnit");
                 }
-                em = emf.createEntityManager();
+                entityManager = emFactory.createEntityManager();
             }
         } catch (Exception e) {
-            System.err.println("MariaDbJpaConnection.java: Error in creating/finding/creating database.");
+            LOGGER.log(Level.WARNING, "MariaDbJpaConnection.java: Error in creating/finding/creating database.");
         }
-        return em;
+        return entityManager;
     }
 }

@@ -4,8 +4,12 @@ import application.model.entity.Like;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LikeDao implements IDao<Like>{
+    private final Logger logger = Logger.getLogger(LikeDao.class.getName());
+
 
     @Override
     public void persist(Like entity) {
@@ -39,7 +43,7 @@ public class LikeDao implements IDao<Like>{
                     .getResultList();
             return likes;
         } catch (Exception e) {
-            System.err.println("LikeDao.java: Error finding likes by post id. (Check connection to database.)");
+            logger.log(Level.WARNING,"LikeDao.java: Error finding likes by post id. (Check connection to database.)");
             return List.of(); //return empty
         }
     }
@@ -69,8 +73,10 @@ public class LikeDao implements IDao<Like>{
 
         } catch (Exception e) {
             // Log the exception to aid debugging
-            System.err.println("Error finding Like for userId=" + userId + ", postId=" + postId);
-            e.printStackTrace();
+            if (logger.isLoggable(Level.WARNING)) {
+                logger.log(Level.WARNING,"Error finding Like for userId=" + userId + ", postId=" + postId);
+            }
+
             return null;
         }
     }
