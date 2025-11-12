@@ -46,7 +46,6 @@ public class PostCellController {
 
     public void deletePost(ActionEvent event) {
         CommonResult result = postService.deletePost(this.post);
-        System.out.println(result.getMessage());
     }
 
     public void setPost(Post post) {
@@ -102,7 +101,6 @@ public class PostCellController {
             int currentLikes = Integer.parseInt(likeButton.getText().split(" ")[0]);
 
             setLikes(currentLikes + 1);
-            System.out.println("Added like");
         } else{
             int currentLikes = Integer.parseInt(likeButton.getText().split(" ")[0]);
 
@@ -111,7 +109,6 @@ public class PostCellController {
                 return;
 
             setLikes(currentLikes - 1);
-            System.out.println("Removed like");
         }
     }
 
@@ -133,7 +130,6 @@ public class PostCellController {
 
         // like service should be called here
         likeButton.setOnAction(e -> {
-                    System.out.println("Liked post " + post.getId());
                     addLike();
                 });
         commentButton.setOnAction(this::addComment);

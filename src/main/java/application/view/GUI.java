@@ -20,7 +20,6 @@ public class GUI extends Application {
         Locale locale = new Locale("en", "UK");
         ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", locale);
         SceneManager.getSceneManager().setStage(stage, rb);
-        //sceneManager = new SceneManager(stage, rb);
         SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
 

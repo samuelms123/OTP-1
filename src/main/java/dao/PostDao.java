@@ -7,9 +7,12 @@ import jakarta.persistence.EntityManager;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PostDao implements IDao<Post>{
+    private final Logger logger = Logger.getLogger(PostDao.class.getName());
 
     @Override
     public void persist(Post post) {
@@ -31,7 +34,7 @@ public class PostDao implements IDao<Post>{
             List<Post> posts = em.createQuery("select e from Post e").getResultList();
             return posts;
         } catch (Exception e) {
-            System.err.println("UserDao.java: Error finding all users. (Check connection to database.)");
+            logger.log(Level.WARNING, "UserDao.java: Error finding all users. (Check connection to database.)");
             return new LinkedList<>(); //return empty
         }
     }
@@ -53,7 +56,9 @@ public class PostDao implements IDao<Post>{
 
             return posts;
         } catch (Exception e) {
-            System.err.println("PostDao.java: Error finding posts by users: " + e.getMessage());
+            if (logger.isLoggable(Level.WARNING)) {
+                logger.log(Level.WARNING, "PostDao.java: Error finding posts by users: " + e.getMessage());
+            }
             return List.of();
         }
     }

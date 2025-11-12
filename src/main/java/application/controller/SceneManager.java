@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.utils.Paths;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
