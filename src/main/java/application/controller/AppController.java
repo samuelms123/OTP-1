@@ -216,7 +216,7 @@ public class AppController implements PostListener{
         }
 
         // implementation of images still missing
-        Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "", Timestamp.from(Instant.now()));
+        Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
         PostResult result = postService.makePost(post);
         // Make UI error message in case of access denied
         postContent.clear();
