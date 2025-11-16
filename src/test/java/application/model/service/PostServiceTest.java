@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.controller.SceneManager;
 import application.controller.SessionManager;
 import application.model.data_objects.PostResult;
 import application.model.entity.*;
@@ -63,7 +64,7 @@ class PostServiceTest {
     void setUp() {
         testToken = "test-token";
         testUser = new User("testname", "testlastname", "test@example.com", "testusername", "1.1.1999", "password");
-        testPost = new Post(1, "Test Post", "Test Content", Timestamp.from(Instant.now()));
+        testPost = new Post(1, "Test Post", "Test Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
         testComment = new Comment(1, 1, "Test Comment");
         testLike = new Like(testUser, testPost);
 
@@ -194,9 +195,9 @@ class PostServiceTest {
 
         testUser.setFollowing(following);
 
-        Post post1 = new Post(follower1.getId(), "Follower1 Post", "Content", Timestamp.from(Instant.now()));
-        Post post2 = new Post(follower2.getId(), "Follower2 Post", "Content", Timestamp.from(Instant.now()));
-        Post currentUserPost = new Post(1, "My Post", "Content", Timestamp.from(Instant.now()));
+        Post post1 = new Post(follower1.getId(), "Follower1 Post", "Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
+        Post post2 = new Post(follower2.getId(), "Follower2 Post", "Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
+        Post currentUserPost = new Post(1, "My Post", "Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
 
         List<Post> expectedPosts = Arrays.asList(post1, post2, currentUserPost);
 

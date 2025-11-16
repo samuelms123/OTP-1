@@ -29,13 +29,16 @@ public class Post implements Comparable<Post>{
     private String imageUrl;
     @Column(name="created_at")
     private Timestamp createdAt;
+    @Column(name="locale")
+    private String locale;
 
 
-    public Post(int userId, String content, String imageUrl, Timestamp createdAt) {
+    public Post(int userId, String content, String imageUrl, Timestamp createdAt, String locale) {
         this.userId = userId;
         this.content = content;
         this.imageUrl = imageUrl;
         this.createdAt = createdAt;
+        this.locale = locale;
     }
 
     /**
@@ -61,6 +64,8 @@ public class Post implements Comparable<Post>{
     }
 
     public Timestamp getCreatedAt() {return createdAt;}
+
+    public String getLocale() {return locale;}
 
     // compare by timestamp
     @Override
