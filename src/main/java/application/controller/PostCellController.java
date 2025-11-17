@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.model.data_objects.CommonResult;
 import application.model.entity.Comment;
 import application.model.entity.Post;
 import application.model.entity.User;
@@ -37,6 +36,7 @@ public class PostCellController {
 
     private PostService postService;
     private UserService userService;
+    private String unknownUserPrompt = "Unknown User";
 
     private ObservableList<String> commentItems = FXCollections.observableArrayList();
 
@@ -44,18 +44,16 @@ public class PostCellController {
     private Post post;
     private int commentAmount;
 
-    public void deletePost(ActionEvent event) {
-        CommonResult result = postService.deletePost(this.post);
+    public void deletePost(ActionEvent event) { postService.deletePost(this.post);
     }
 
     public void setPost(Post post) {
         this.post = post;
-        //if current user == post author -> delete button visible
         deletePostButton.setVisible(SessionManager.getInstance().getUser().getId() == post.getUserId());
 
         User author = userService.getUserById(post.getUserId());
-        authorRealName.setText(author != null ? author.getFirstName() + " " + author.getLastName() : "Unknown User");
-        authorUsername.setText(author != null ? "@" + author.getUsername() : "Unknown User");
+        authorRealName.setText(author != null ? author.getFirstName() + " " + author.getLastName() : unknownUserPrompt);
+        authorUsername.setText(author != null ? "@" + author.getUsername() : unknownUserPrompt);
         contentLabel.setText(post.getContent());
 
         byte[] profilePicture = (author != null ? author.getProfilePicture(): null);
@@ -73,7 +71,7 @@ public class PostCellController {
         // add to observable list after clear
         for (Comment comment : comments) {
             User commentAuthor = userService.getUserById(comment.getUserId());
-            String username = commentAuthor != null ? commentAuthor.getUsername() : "Unknown User";
+            String username = commentAuthor != null ? commentAuthor.getUsername() : unknownUserPrompt;
             commentItems.add(username + ": " + comment.getContent());
         }
     }
@@ -129,9 +127,7 @@ public class PostCellController {
         postComments.setFixedCellSize(LIST_CELL_HEIGHT);
 
         // like service should be called here
-        likeButton.setOnAction(e -> {
-                    addLike();
-                });
+        likeButton.setOnAction(e -> addLike());
         commentButton.setOnAction(this::addComment);
     }
 }
