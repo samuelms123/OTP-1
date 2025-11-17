@@ -43,3 +43,5 @@ build/
 sonar-project.properties
 
 .env
+
+.scannerwork/
