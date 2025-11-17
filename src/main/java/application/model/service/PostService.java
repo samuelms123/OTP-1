@@ -26,6 +26,7 @@ public class PostService {
     CommentDao commentDao;
     LikeDao likeDao;
     List<PostListener> listeners;
+    private final String accessDeniedPrompt = "Access denied";
 
     public PostService() {
         postDao = new PostDao();
@@ -50,7 +51,7 @@ public class PostService {
             postDao.persist(post);
             return new PostResult(true, "Post created successfully");
         }
-        return new PostResult(false, "Access denied");
+        return new PostResult(false, accessDeniedPrompt);
     }
 
     public PostResult makeComment(Comment comment) {
@@ -58,7 +59,7 @@ public class PostService {
             commentDao.persist(comment);
             return new PostResult(true, "Comment created successfully");
         }
-        return new PostResult(false, "Access denied");
+        return new PostResult(false, accessDeniedPrompt);
     }
 
     public boolean likePost(User user, Post post) {
@@ -87,7 +88,7 @@ public class PostService {
     }
 
     public List<Post> getPostsByFollowers(User user) {
-        Set<User> tempSet = new HashSet<User>(user.getFollowing());
+        Set<User> tempSet = new HashSet<>(user.getFollowing());
         tempSet.add(SessionManager.getInstance().getUser());// include own posts as well
         return postDao.findPostsByUsers(tempSet);
     }
@@ -105,6 +106,6 @@ public class PostService {
                 return new CommonResult(false, "Post not found");
             }
         }
-        return new CommonResult(false, "Access denied");
+        return new CommonResult(false, accessDeniedPrompt);
     }
 }
