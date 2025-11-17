@@ -38,10 +38,9 @@ public class LikeDao implements IDao<Like>{
     public List<Like> findLikesByPostId(int postId) {
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-            List<Like> likes = em.createQuery("SELECT l FROM Like l WHERE l.post.id = :postId", Like.class)
+            return em.createQuery("SELECT l FROM Like l WHERE l.post.id = :postId", Like.class)
                     .setParameter("postId", postId)
                     .getResultList();
-            return likes;
         } catch (Exception e) {
             logger.log(Level.WARNING,"LikeDao.java: Error finding likes by post id. (Check connection to database.)");
             return List.of(); //return empty
@@ -74,7 +73,7 @@ public class LikeDao implements IDao<Like>{
         } catch (Exception e) {
             // Log the exception to aid debugging
             if (logger.isLoggable(Level.WARNING)) {
-                logger.log(Level.WARNING,"Error finding Like for userId=" + userId + ", postId=" + postId);
+                logger.log(Level.WARNING, () -> "Error finding Like for userId=" + userId + ", postId=" + postId);
             }
 
             return null;

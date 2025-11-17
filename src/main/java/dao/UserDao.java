@@ -17,7 +17,6 @@ import java.util.logging.Logger;
  */
 
 public class UserDao implements IDao<User>, IReadOnlyDao<User> {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(UserDao.class);
     private final Logger logger = Logger.getLogger(UserDao.class.getName());
 
     public boolean isUserNameUnique(String userName) {
@@ -75,8 +74,7 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
     @Override
     public User find(int id) {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-        User user = em.find(User.class, id);
-        return user;
+        return em.find(User.class, id);
     }
 
     /**
@@ -88,12 +86,11 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
     public User findUser(String name) {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
         try {
-            User user = (User) em.createQuery(
+            return (User) em.createQuery(
                             "SELECT u FROM User u WHERE u.username = :username"
                     )
                     .setParameter("username", name)
                     .getSingleResult();
-            return user;
         } catch (Exception e) {
             logger.log(Level.WARNING, "UserDao.java: Error finding user. (Check connection to database.)");
             return null;
@@ -112,7 +109,7 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
                     .getResultList();
         } catch (Exception e) {
             if (logger.isLoggable(Level.WARNING)) {
-                logger.log(Level.WARNING, "UserDao.java: Error finding users. " + e.getMessage());
+                logger.log(Level.WARNING, () -> "UserDao.java: Error finding users. " + e.getMessage());
             }
             return null;
         }
@@ -126,8 +123,7 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
     public List<User> findAll() {
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-            List<User> users = em.createQuery("select e from User e").getResultList();
-            return users;
+            return em.createQuery("select e from User e").getResultList();
         } catch (Exception e) {
             logger.log(Level.WARNING, "UserDao.java: Error finding all users. (Check connection to database.)");
             return new LinkedList<>(); //return empty
@@ -154,7 +150,7 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
             }
             if (logger.isLoggable(Level.WARNING)) {
 
-                logger.log(Level.WARNING, "UserDao.java: Error deleting all users. " + e.getMessage());
+                logger.log(Level.WARNING, () -> "UserDao.java: Error deleting all users. " + e.getMessage());
             }
         }
     }
