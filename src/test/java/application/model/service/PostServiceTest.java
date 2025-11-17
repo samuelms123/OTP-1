@@ -194,10 +194,11 @@ class PostServiceTest {
         following.add(follower2);
 
         testUser.setFollowing(following);
+        String imageUrl = "Content";
 
-        Post post1 = new Post(follower1.getId(), "Follower1 Post", "Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
-        Post post2 = new Post(follower2.getId(), "Follower2 Post", "Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
-        Post currentUserPost = new Post(1, "My Post", "Content", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
+        Post post1 = new Post(follower1.getId(), "Follower1 Post", imageUrl, Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
+        Post post2 = new Post(follower2.getId(), "Follower2 Post", imageUrl, Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
+        Post currentUserPost = new Post(1, "My Post", imageUrl, Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
 
         List<Post> expectedPosts = Arrays.asList(post1, post2, currentUserPost);
 

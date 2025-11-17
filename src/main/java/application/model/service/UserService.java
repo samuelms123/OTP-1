@@ -11,6 +11,8 @@ import config.Config;
 import dao.UserDao;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserService {
     UserDao userDao;
@@ -38,7 +40,8 @@ public class UserService {
             return new RegistrationResult(true, SceneManager.getSceneManager().getResBundle().getString("register.succesfulprompt"));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create user: ", e);
             return new RegistrationResult(false, e.getMessage());
         }
     }

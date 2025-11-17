@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SceneManager {
     private static SceneManager instance;
@@ -47,7 +49,10 @@ public class SceneManager {
             stage.show();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(getClass().getName());
+            if (logger.isLoggable(Level.SEVERE)) {
+                logger.severe(() -> "Failed to switch scene: " + fxmlPath);
+            }
         }
     }
 

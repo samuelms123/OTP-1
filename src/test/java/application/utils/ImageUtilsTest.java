@@ -34,8 +34,12 @@ public class ImageUtilsTest {
 
     @Test
     void testBlobToImageWithNullBytes() {
-        Image image = ImageUtils.blobToImage(null);
-        assertNull(image);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> ImageUtils.blobToImage(null)
+        );
+
+        assertEquals("byteArray cannot be null", exception.getMessage());
     }
 
     @Test
@@ -48,8 +52,12 @@ public class ImageUtilsTest {
 
     @Test
     void testImageToBlobWithNullImage() {
-        byte[] bytes = ImageUtils.imageToBlob(null);
-        assertNull(bytes);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> ImageUtils.imageToBlob(null)
+        );
+
+        assertEquals("image cannot be null", exception.getMessage());
     }
 
     @Test

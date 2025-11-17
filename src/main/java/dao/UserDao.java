@@ -65,7 +65,7 @@ public class UserDao implements IDao<User>, IReadOnlyDao<User> {
             em.getTransaction().commit();
             return true;
         }catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Failed to merge user ", e);
             return false;
         }
 

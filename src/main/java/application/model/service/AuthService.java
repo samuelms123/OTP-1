@@ -7,6 +7,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import config.Config;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class AuthService {
 
     public String createToken(User user) {
@@ -20,7 +23,8 @@ public class AuthService {
                     .sign(algorithm);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create token ", e);
             return null;
         }
     }
@@ -32,7 +36,8 @@ public class AuthService {
                     .build();
             return verifier.verify(token);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to decode token ", e);
             return null;
         }
     }
