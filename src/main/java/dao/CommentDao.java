@@ -37,10 +37,9 @@ public class CommentDao implements IDao<Comment>{
     public List<Comment> findCommentsByPostId(int postId) {
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-            List<Comment> comments = em.createQuery("SELECT c FROM Comment c WHERE c.post_id = :postId", Comment.class)
+             return em.createQuery("SELECT c FROM Comment c WHERE c.post_id = :postId", Comment.class)
                     .setParameter("postId", postId)
                     .getResultList();
-            return comments;
         } catch (Exception e) {
             logger.log(Level.WARNING, "CommentDao.java: Error finding comments by post ID. (Check connection to database.)");
             return List.of(); // return empty list

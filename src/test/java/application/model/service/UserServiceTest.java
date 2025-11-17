@@ -1,5 +1,6 @@
 package application.model.service;
 
+import application.controller.SceneManager;
 import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
@@ -11,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -25,7 +29,9 @@ class UserServiceTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this); // init mocks
+        MockitoAnnotations.openMocks(this);// init mocks
+        ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", new Locale("en", "UK"));
+        SceneManager.getSceneManager().setResBundle(rb);
         user = new User();
         user.setEmail("test@example.com");
         user.setUsername("testuser");
@@ -38,7 +44,7 @@ class UserServiceTest {
 
         RegistrationResult result = userService.registerUser(user);
         assertFalse(result.isSuccess()); // assert registration failure
-        assertEquals("Email already taken", result.getMessage());
+        assertEquals("Email already taken.", result.getMessage());
         verify(userDao, never()).persist(any(User.class)); // Basically verifies that persist method is not called during this test, because the email is already taken.
     }
 
@@ -49,7 +55,7 @@ class UserServiceTest {
 
         RegistrationResult result = userService.registerUser(user);
         assertFalse(result.isSuccess());
-        assertEquals("Username already taken", result.getMessage());
+        assertEquals("Username already taken.", result.getMessage());
         verify(userDao, never()).persist(any(User.class));
     }
 
@@ -60,7 +66,7 @@ class UserServiceTest {
 
         RegistrationResult result = userService.registerUser(user);
         assertTrue(result.isSuccess());
-        assertEquals("User registered successfully", result.getMessage());
+        assertEquals("User registered successfully.", result.getMessage());
         verify(userDao).persist(user); // Verify that the persist method is called!
     }
 
@@ -70,7 +76,7 @@ class UserServiceTest {
 
         LoginResult result = userService.loginUser(user);
         assertFalse(result.isSuccess());
-        assertEquals("User not found", result.getMessage());
+        assertEquals("User not found.", result.getMessage());
     }
 
     @Test
@@ -80,7 +86,7 @@ class UserServiceTest {
         User logInUser = new User("testuser", "wrongpassword");
         LoginResult result = userService.loginUser(logInUser);
         assertFalse(result.isSuccess());
-        assertEquals("Password incorrect", result.getMessage());
+        assertEquals("Password incorrect.", result.getMessage());
     }
 
     @Test
@@ -90,6 +96,6 @@ class UserServiceTest {
         User logInUser = new User("testuser", "password");
         LoginResult result = userService.loginUser(logInUser);
         assertTrue(result.isSuccess());
-        assertEquals("User logged in successfully", result.getMessage());
+        assertEquals("User logged in successfully.", result.getMessage());
     }
 }

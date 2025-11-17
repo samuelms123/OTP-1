@@ -21,8 +21,6 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    //private LocalDate date;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "followers",

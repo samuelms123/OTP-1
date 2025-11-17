@@ -110,9 +110,7 @@ public class LogInController {
                 loginResultLabel.setText(result.getMessage());
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(1)); // Cannot use sleep, because it blocks UI
-                pause.setOnFinished(e -> {
-                    SceneManager.getSceneManager().switchScene(Paths.APP);
-                });
+                pause.setOnFinished(e -> SceneManager.getSceneManager().switchScene(Paths.APP));
                 pause.play();
 
             } else {
@@ -246,7 +244,6 @@ public class LogInController {
         });
 
         languageOptions.setButtonCell(languageOptions.getCellFactory().call(null));
-        //languageOptions.getSelectionModel().select(uk);
     }
 
     public void changeLanguage(ActionEvent actionEvent) {

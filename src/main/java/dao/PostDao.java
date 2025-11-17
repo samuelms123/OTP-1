@@ -31,8 +31,7 @@ public class PostDao implements IDao<Post>{
     public List<Post> findAll() {
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-            List<Post> posts = em.createQuery("select e from Post e").getResultList();
-            return posts;
+            return em.createQuery("select e from Post e").getResultList();
         } catch (Exception e) {
             logger.log(Level.WARNING, "UserDao.java: Error finding all users. (Check connection to database.)");
             return new LinkedList<>(); //return empty
@@ -49,15 +48,14 @@ public class PostDao implements IDao<Post>{
                     .map(User::getId)
                     .collect(Collectors.toList());
 
-            List<Post> posts = em.createQuery(
+            return em.createQuery(
                             "SELECT p FROM Post p WHERE p.userId IN :userIds", Post.class)
                     .setParameter("userIds", userIds)
                     .getResultList();
 
-            return posts;
         } catch (Exception e) {
             if (logger.isLoggable(Level.WARNING)) {
-                logger.log(Level.WARNING, "PostDao.java: Error finding posts by users: " + e.getMessage());
+                logger.log(Level.WARNING, () -> "PostDao.java: Error finding posts by users: " + e.getMessage());
             }
             return List.of();
         }

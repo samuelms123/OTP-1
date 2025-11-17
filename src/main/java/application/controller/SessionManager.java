@@ -33,8 +33,4 @@ public class SessionManager {
     public static void setInstance(SessionManager testInstance) {
         instance = testInstance;
     }
-
-    public void setLanguage(String language, String country) {
-        System.out.println("Set localization to '_" + language + ", " + country + "'.");
-    }
 }

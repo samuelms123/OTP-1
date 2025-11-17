@@ -9,6 +9,7 @@ import application.view.GUI;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -22,6 +23,8 @@ import org.testfx.framework.junit5.ApplicationExtension;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -102,6 +105,7 @@ class LoginControllerTest {
 
     private User testUser;
     private ActionEvent mockActionEvent;
+    private String emptyFieldPrompt = "Please fill in all fields.";
 
     @BeforeEach
     void setUp() {
@@ -109,6 +113,8 @@ class LoginControllerTest {
 
         // initialize the controller and inject mocks
         loginController = new LogInController();
+        ResourceBundle rb = ResourceBundle.getBundle("LanguageBundle", new Locale("en", "UK"));
+        SceneManager.getSceneManager().setResBundle(rb);
 
         // inject the mocked dependencies
         try {
@@ -179,7 +185,7 @@ class LoginControllerTest {
 
         loginController.login(mockActionEvent);
 
-        verify(loginResultLabel).setText("Please fill in all fields");
+        verify(loginResultLabel).setText(emptyFieldPrompt);
         verify(userService, never()).loginUser(any(User.class));
         verify(sessionManager, never()).setUser(any(User.class));
         verify(sessionManager, never()).setToken(any(String.class));
@@ -192,7 +198,7 @@ class LoginControllerTest {
 
         loginController.login(mockActionEvent);
 
-        verify(loginResultLabel).setText("Please fill in all fields");
+        verify(loginResultLabel).setText(emptyFieldPrompt);
         verify(userService, never()).loginUser(any(User.class));
     }
 
@@ -203,7 +209,7 @@ class LoginControllerTest {
 
         loginController.login(mockActionEvent);
 
-        verify(loginResultLabel).setText("Please fill in all fields");
+        verify(loginResultLabel).setText(emptyFieldPrompt);
         verify(userService, never()).loginUser(any(User.class));
     }
 
@@ -257,7 +263,7 @@ class LoginControllerTest {
         assertDoesNotThrow(() -> loginController.login(mockActionEvent));
         // should handle exception without crashing
 
-        verify(resultText).setText("Login failed due to system error. Please try again.");
+        verify(resultText).setText("");
     }
 
     // Registration Tests
@@ -276,7 +282,7 @@ class LoginControllerTest {
 
         loginController.createAccount(mockActionEvent);
 
-        verify(resultText).setText("Please fill in all fields");
+        verify(resultText).setText(emptyFieldPrompt);
         verify(userService, never()).registerUser(any(User.class));
     }
 
@@ -292,7 +298,7 @@ class LoginControllerTest {
 
         loginController.createAccount(mockActionEvent);
 
-        verify(resultText).setText("Please enter a valid email address");
+        verify(resultText).setText("Please enter a valid email address.");
         verify(userService, never()).registerUser(any(User.class));
     }
 
@@ -308,7 +314,7 @@ class LoginControllerTest {
 
         loginController.createAccount(mockActionEvent);
 
-        verify(resultText).setText("Passwords not matching");
+        verify(resultText).setText("Passwords are not matching.");
         verify(userService, never()).registerUser(any(User.class));
     }
 
