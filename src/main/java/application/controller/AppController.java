@@ -1,7 +1,5 @@
 package application.controller;
 
-import application.model.data_objects.CommonResult;
-import application.model.data_objects.PostResult;
 import application.model.entity.Like;
 import application.model.entity.Post;
 import application.model.entity.User;
@@ -204,7 +202,7 @@ public class AppController implements PostListener{
         updateFeed();
     }
 
-    public void logout(ActionEvent actionEvent) throws IOException {
+    public void logout(ActionEvent actionEvent) {
         SessionManager.getInstance().reset();
         SceneManager.getSceneManager().switchScene(Paths.LOGIN);
     }
@@ -217,7 +215,7 @@ public class AppController implements PostListener{
 
         // implementation of images still missing
         Post post = new Post(SessionManager.getInstance().getUser().getId(), content, "", Timestamp.from(Instant.now()), SceneManager.getSceneManager().getResBundle().getLocale().toString());
-        PostResult result = postService.makePost(post);
+        postService.makePost(post);
         // Make UI error message in case of access denied
         postContent.clear();
         toggleNewPostPanel(actionEvent);
@@ -317,11 +315,11 @@ public class AppController implements PostListener{
         String buttonText = addFriendButton.getText();
 
         if (buttonText.equals(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"))) { // ADD FRIED BUTTON
-            CommonResult result = userService.followUser(followerUser, followedUser);
+            userService.followUser(followerUser, followedUser);
             addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.removefriend"));
         }
         else { // REMOVE FRIEND BUTTON
-            CommonResult result = userService.unfollowUser(followerUser, followedUser);
+            userService.unfollowUser(followerUser, followedUser);
             addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.addfriend"));
         }
     }
@@ -369,8 +367,6 @@ public class AppController implements PostListener{
         // Post implements comparable interface which already reverses post order
         // don't reverse order here or the order will be incorrect
         Collections.sort(posts);
-
-        //Collections.reverse(posts);
 
         List<Post> postsWithGaps = new ArrayList<>();
         for (int i = 0; i < posts.size(); i++) {
