@@ -140,7 +140,7 @@ public class AppController implements PostListener{
     public void openOwnProfilePage(ActionEvent actionEvent) {
         changeInfoButton.setVisible(true);
         addFriendButton.setVisible(false);
-        setProfileInfo(SessionManager.getInstance().getUser());
+        changeProfileInfo(SessionManager.getInstance().getUser());
         toggleProfilePage();
     }
 
@@ -159,7 +159,7 @@ public class AppController implements PostListener{
         changeInfoButton.setVisible(false);
         addFriendButton.setVisible(true);
         currentlyOpenedUserProfile = user;
-        setProfileInfo(user);
+        changeProfileInfo(user);
         if (isUserFollowed(user)) {
             addFriendButton.setText(SceneManager.getSceneManager().getResBundle().getString("profile.removefriend"));
         }
@@ -174,7 +174,7 @@ public class AppController implements PostListener{
         return following.size();
     }
 
-    public void setProfileInfo(User user) {
+    public void changeProfileInfo(User user) {
         realNameFieldTop.setText(user.getFirstName() + " " + user.getLastName());
         usernameFieldTop.setText("@" + user.getUsername());
         friendAmountField.setText(Integer.toString(countFriends(user)));
@@ -295,7 +295,7 @@ public class AppController implements PostListener{
         userService.updateUser(user);
 
         //Update UI information
-        setProfileInfo(user);
+        changeProfileInfo(user);
         updateNavUserInformation();
 
         //Open static profile view
