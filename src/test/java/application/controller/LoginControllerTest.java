@@ -4,9 +4,6 @@ import application.model.data_objects.LoginResult;
 import application.model.data_objects.RegistrationResult;
 import application.model.entity.User;
 import application.model.service.UserService;
-import application.utils.Paths;
-import application.view.GUI;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -377,7 +374,7 @@ class LoginControllerTest {
     // Navigation Tests
     @Test
     void register_ShouldSwitchToCreateAccountMenu() {
-        loginController.register(mockActionEvent);
+        loginController.goToRegisterView(mockActionEvent);
 
         verify(loginMenu).setVisible(false);
         verify(createAccountMenu).setVisible(true);
@@ -385,7 +382,7 @@ class LoginControllerTest {
 
     @Test
     void goBackToLogin_ShouldClearFieldsAndSwitchToLoginMenu() throws IOException {
-        loginController.goBackToLogin(mockActionEvent);
+        loginController.goToLoginView(mockActionEvent);
 
         verify(newFirstname).clear();
         verify(newLastname).clear();

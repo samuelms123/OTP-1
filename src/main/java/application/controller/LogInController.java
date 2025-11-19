@@ -123,7 +123,7 @@ public class LogInController {
         }
     }
 
-    public void register(ActionEvent actionEvent){
+    public void goToRegisterView(ActionEvent actionEvent){
         loginMenu.setVisible(false);
         createAccountMenu.setVisible(true);
     }
@@ -189,7 +189,7 @@ public class LogInController {
         }
     }
 
-    public void goBackToLogin(ActionEvent actionEvent) throws IOException {
+    public void goToLoginView(ActionEvent actionEvent) throws IOException {
         //empty all fields
         newFirstname.clear();
         newLastname.clear();
