@@ -33,9 +33,9 @@ Localization was done for Persian, English, Finnish and Japanese. Changing betwe
 
 ### Database:
 **ERD**
-![Database ERD](docs/db/erd.png)<br><br>
+![Database ERD](docs/diagrams/db/erd.png)<br><br>
 **RDB**
-![Database RDB](docs/db/rdb.png)
+![Database RDB](docs/diagrams/db/rdb.png)
 
 ## Screenshots:
 ![Login SS](docs/screenshots/login-ss.png)<br><br>
