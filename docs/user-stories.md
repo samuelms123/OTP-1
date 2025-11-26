@@ -45,11 +45,11 @@ Acceptance Criteria:
 
 ---
 
-**User Story : As a user, I want to only see my friends' posts.**
+**User Story : As a user, I want to only see my own and friends' posts.**
 
 Acceptance Criteria:
 
-*   User can only see posts made by friends.
+*   User can only see posts made by friends or themselves.
 
 
 ---
