@@ -45,29 +45,28 @@ Acceptance Criteria:
 
 ---
 
-**User Story : As a user, I want to see my friends list so that I can keep track with whom I'm posting with.**
+**User Story : As a user, I want to only see my friends' posts.**
 
 Acceptance Criteria:
 
-*   List user friends under profile view.
+*   User can only see posts made by friends.
 
 
 ---
 
-**User Story : As a user, I want to send friend requests to other users so that I can connect with them on the platform.**
+**User Story : As a user, I want to be able to add other users as friends so that I can connect with them on the platform.**
 
 Acceptance Criteria:
 
-*   An 'Add Friend!' functionality is available to find other users by username or email.
-*   The recipient should be able to accept or decline.
+*   An 'Add Friend!' functionality is available to find other users by email.
 
 ---
 
-**User Story : As a user, I want to remove users from my friends list.**
+**User Story : As a user, I want to be able to remove users from my friends list.**
 
 Acceptance Criteria:
 
-*   'Remove friend' button in personal friends list and/or in users page.
+*   'Unfollow' button in users' page.
 
 ---
 
@@ -81,7 +80,7 @@ Acceptance Criteria:
 Acceptance Criteria:
 
 *   "Add New Post" button is available on the main feed.
-*   The post creation form allows text input and optional image upload.
+*   The post creation form allows text input.
 *   Upon submission, the post appears in the main feed and is visible to all friends.
 
 ---
@@ -90,13 +89,6 @@ Acceptance Criteria:
 
 Acceptance Criteria:
 *   Delete button visible for the owner of the post.
-
----
-
-**User Story : As a user, I want to delete my own comments from other users posts if necessary.**
-
-Acceptance Criteria:
-*   Delete button visible for the owner of the comment.
 
 ---
 
@@ -111,10 +103,10 @@ Acceptance Criteria:
 
 ---
 
-**User Story : As a user, I want to see who liked my post.**
+**User Story : As a user, I want to see the amount of likes on my post.**
 
 Acceptance Criteria:
-*   Make like amount on the post clickable and show list of usernames who liked the post.
+*   Have a like amount counter on the post.
 
 ---
 
@@ -128,13 +120,6 @@ Acceptance Criteria:
 *  A "Profile" section is accessible from the main feed.
 *  Users can update their info.
 *  Changes are saved and reflected immediately.
-
----
-
-**User Story : As a user, I want to change my password regularly so that I can keep my account secure.**
-
-Acceptance Criteria:
-*   Change password option in profile.
 
 ---
 
