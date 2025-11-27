@@ -5,18 +5,19 @@ pipeline {
         JWT_SECRET = credentials('secret-secret')
 
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        JMETER_HOME = 'C:\\Tools\\apache-jmeter-5.6.3'
 
         // Define Docker Hub credentials ID
-        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        DOCKERHUB_CREDENTIALS_ID = 'docker_hub'
         // Define Docker Hub repository name
-        DOCKERHUB_REPO = 'aruraruri/shout-otp'
+        DOCKERHUB_REPO = 'samuelms123/shout'
         // Define Docker image tag
         DOCKER_IMAGE_TAG = 'latest'
     }
     stages {
         stage('Checkout') {
             steps {
-                git branch:'main', url:'https://github.com/samuelms123/OTP-1'
+                git branch:'main', url:'https://github.com/samuelms123/OTP-1/tree/jmeter'
             }
         }
         stage('Create .env file') {
@@ -48,6 +49,13 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
+
+        stage('Non-Functional Test') {
+            steps {
+                bat 'jmeter -n -t tests/performance/demo.jmx -l result.jtl'
+            }
+        }
+
         stage('Code Coverage') {
             steps {
                 recordCoverage(tools: [[parser: 'JACOCO']],
@@ -79,6 +87,13 @@ pipeline {
         stage('Cleanup') {
             steps {
                 powershell 'Remove-Item .env -Force -ErrorAction SilentlyContinue'
+            }
+        }
+
+        post {
+            always {
+                archiveArtifacts artifacts: 'result.jtl', allowEmptyArchive: true
+                perfReport sourceDataFiles: 'result.jtl'
             }
         }
 
