@@ -7,7 +7,7 @@ pipeline {
         //PATH = "C:\\Tools\\apache-jmeter-5.6.3\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
         JMETER_HOME = 'C:\\Tools\\apache-jmeter-5.6.3'
-        PATH = "${JAVA_HOME}\\bin;${JMETER_HOME}\\bin;${env.PATH}"
+        PATH = "${JAVA_HOME}\\bin;${JMETER_HOME}\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
 
         // Define Docker Hub credentials ID
         DOCKERHUB_CREDENTIALS_ID = 'docker_hub'
