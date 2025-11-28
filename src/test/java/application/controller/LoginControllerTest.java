@@ -269,7 +269,7 @@ class LoginControllerTest {
     // Registration Tests
     @Test
     void createAccount_WithEmptyFields_ShouldShowErrorMessage() {
-        // Arrange
+        // arrange
         when(newFirstname.getText()).thenReturn("");
         /*
         when(newLastname.getText()).thenReturn("Last");

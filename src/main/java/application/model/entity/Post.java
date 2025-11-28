@@ -77,4 +77,13 @@ public class Post implements Comparable<Post>{
 
         return other.createdAt.compareTo(this.createdAt);
     }
+
+    // For PostDao tests
+    public void setId(int i) {
+        id = i;
+    }
+
+    public void setUserId(int i) {
+        userId = i;
+    }
 }
