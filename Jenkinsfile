@@ -52,7 +52,7 @@ pipeline {
         }
         stage('Non-Functional Test') {
             steps {
-                bat 'jmeter -n -t "%WORKSPACE%\\performance\\plan.jmx" -l "%WORKSPACE%\\result.jtl"'
+                bat 'jmeter -n -t performance/plan.jmx -l result.jtl'
             }
         }
 
