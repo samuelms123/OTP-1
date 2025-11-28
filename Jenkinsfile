@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch:'main', url:'https://github.com/samuelms123/OTP-1'
+                git branch:'jmeter', url:'https://github.com/samuelms123/OTP-1'
             }
         }
         stage('Create .env file') {
@@ -53,7 +53,7 @@ pipeline {
         }
         stage('Non-Functional Test') {
             steps {
-                bat 'jmeter -n -t performance/plan.jmx -l result.jtl'
+                bat 'jmeter -n -t tests/performance/plan.jmx -l result.jtl'
             }
         }
 
