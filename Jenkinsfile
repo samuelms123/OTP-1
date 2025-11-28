@@ -5,6 +5,7 @@ pipeline {
         JWT_SECRET = credentials('secret-secret')
 
         PATH = "C:\\Tools\\apache-jmeter-5.6.3\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
         JMETER_HOME = 'C:\\Tools\\apache-jmeter-5.6.3'
 
         // Define Docker Hub credentials ID
@@ -17,7 +18,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch:'jmeter', url:'https://github.com/samuelms123/OTP-1'
+                git branch:'main', url:'https://github.com/samuelms123/OTP-1'
             }
         }
         stage('Create .env file') {
@@ -51,7 +52,7 @@ pipeline {
         }
         stage('Non-Functional Test') {
             steps {
-                bat 'jmeter -n -t "%WORKSPACE%\\tests\\performance\\demo.jmx" -l "%WORKSPACE%\\result.jtl"'
+                bat 'jmeter -n -t "%WORKSPACE%\\performance\\plan.jmx" -l "%WORKSPACE%\\result.jtl"'
             }
         }
 
