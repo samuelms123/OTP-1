@@ -4,7 +4,7 @@ pipeline {
         SALT_ROUNDS = '7'
         JWT_SECRET = credentials('secret-secret')
 
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        PATH = "C:\\Tools\\apache-jmeter-5.6.3\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         JMETER_HOME = 'C:\\Tools\\apache-jmeter-5.6.3'
 
         // Define Docker Hub credentials ID
@@ -49,10 +49,9 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-
         stage('Non-Functional Test') {
             steps {
-                bat '"%JMETER_HOME%\\bin\\jmeter.bat" -n -t tests/performance/demo.jmx -l result.jtl'
+                bat 'jmeter -n -t "%WORKSPACE%\\tests\\performance\\demo.jmx" -l "%WORKSPACE%\\result.jtl"'
             }
         }
 
