@@ -44,4 +44,9 @@ public class Comment {
     public String getContent() {
         return content;
     }
+
+    // For CommentDao tests
+    public void setId(int id) {
+        this.id = id;
+    }
 }

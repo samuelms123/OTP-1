@@ -39,9 +39,13 @@ public class PostDao implements IDao<Post>{
     }
 
     public List<Post> findPostsByUsers(Set<User> users) {
+        if (users == null) {
+            return List.of();
+        }
         if (users.isEmpty()) {
             return List.of();
         }
+
         try {
             EntityManager em = datasource.MariaDbJpaConnection.getInstance();
             List<Integer> userIds = users.stream()
