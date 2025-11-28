@@ -4,12 +4,15 @@ pipeline {
         SALT_ROUNDS = '7'
         JWT_SECRET = credentials('secret-secret')
 
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        //PATH = "C:\\Tools\\apache-jmeter-5.6.3\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
+        JMETER_HOME = 'C:\\Tools\\apache-jmeter-5.6.3'
+        PATH = "${JAVA_HOME}\\bin;${JMETER_HOME}\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
 
         // Define Docker Hub credentials ID
-        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        DOCKERHUB_CREDENTIALS_ID = 'docker_hub'
         // Define Docker Hub repository name
-        DOCKERHUB_REPO = 'aruraruri/shout-otp'
+        DOCKERHUB_REPO = 'samuelms123/shout'
         // Define Docker image tag
         DOCKER_IMAGE_TAG = 'latest'
     }
@@ -48,6 +51,12 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
+        stage('Non-Functional Test') {
+            steps {
+                bat 'jmeter -n -t tests/performance/plan.jmx -l result.jtl'
+            }
+        }
+
         stage('Code Coverage') {
             steps {
                 recordCoverage(tools: [[parser: 'JACOCO']],
@@ -82,5 +91,12 @@ pipeline {
             }
         }
 
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'result.jtl', allowEmptyArchive: true
+            perfReport sourceDataFiles: 'result.jtl'
+        }
     }
 }
