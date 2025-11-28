@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch:'jmeter', url:'https://github.com/samuelms123/OTP-1'
+                git branch:'main', url:'https://github.com/samuelms123/OTP-1'
             }
         }
         stage('Create .env file') {
