@@ -62,8 +62,11 @@ public class Like {
             this.postId = postId;
         }
         public int getUserId() { return userId; }
-        public void setUserId(int userId) { this.userId = userId; }
         public int getPostId() { return postId; }
+
+        // for tests
+
+        public void setUserId(int userId) { this.userId = userId; }
         public void setPostId(int postId) { this.postId = postId; }
 
     }
