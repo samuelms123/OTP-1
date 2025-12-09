@@ -24,18 +24,22 @@ This project is a small social media desktop application that works as a private
 * Jenkins
 * JUnit (integration- and unit testing)
 * SonarQube
+* JMeter
 
 Java FX is used for the front-end. The backend is powered by MariaDB for data storage, with ORM/Jakarta Persistence API for database interactions. JAAS Authentication is implemented for secure user authentication. Java was chosen for front- and backend to have a more unified tech stack which will make testing more streamlined.
 
 ### Localization:
 
-Localization was done for Persian, English, Finnish and Japanese. Changing between languages is possible in login view (right top corner).
+Localization was done for English, Farsi, Finnish and Japanese. Changing between languages is possible in login view (right top corner).
 
 ### Database:
-**ERD**
+**ERD**<br>
 ![Database ERD](docs/diagrams/db/erd.png)<br><br>
-**RDB**
+**RDB**<br>
 ![Database RDB](docs/diagrams/db/rdb.png)
+
+### Activity diagram:
+![Activity-Diagram](docs/diagrams/img/activity-diagram-modify-profile.png)
 
 ## Screenshots:
 ![Login SS](docs/screenshots/login-ss.png)<br><br>
