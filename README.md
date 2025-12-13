@@ -41,3 +41,19 @@ Localization was done for Persian, English, Finnish and Japanese. Changing betwe
 ![Login SS](docs/screenshots/login-ss.png)<br><br>
 ![FEED SS](docs/screenshots/feed.jpg)
 [View more screenshots...](/docs/screenshots)
+
+## Installation
+
+* Clone the repo: ``git clone https://github.com/samuelms123/OTP-1``
+
+* ``cd OTP-1``
+
+* ``cp .env.example .env``
+
+* Fill in the .env file SALT_ROUNDS=5 and JWT_SECRET=DSIASIDUAHSDIHA3 or whatever you
+  like
+
+* Create new MariaDB database, script found in the docs -folder of the project
+
+* Start the program in the root directory: ``mvn javafx:run``
+
